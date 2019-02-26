@@ -53,10 +53,8 @@ public class DataCreator implements CommandLineRunner {
     public void run(String... strings) throws Exception {
         String r = env.getProperty("isInitData");
         if (r.equals("true")) {
-            createDefaultTree();
             createUserRoles();
             createRoleMenus();
-            InitRegion();
             createDefaultCateAndPro();
         }
     }
@@ -69,56 +67,6 @@ public class DataCreator implements CommandLineRunner {
         }};
         _categoryService.insertBatch(cates);
     }
-
-    public void createDefaultTree() {
-//        EntityWrapper<Tree> ew = new EntityWrapper<>();
-//        ew.eq("name","未分配设备");
-//        Tree  t = _treeService.selectOne(ew);
-//        if(t==null){
-//            _treeService.insert(new Tree("未分配设备",null,null));
-//        }
-    }
-
-    public void InitRegion() {
-        String path = getClass().getClassLoader().getResource("area.json").toString();
-        path = path.replace("\\", "/");
-        if (path.contains(":")) {
-            //path = path.substring(6);// 1
-            path = path.replace("file:/", "");// 2
-        }
-        JSONObject jsonObject = null;
-        try {
-            String input = FileUtils.readFully(new FileReader(path));
-            jsonObject = JSONObject.parseObject(input);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        List<Region> rs = new ArrayList<>();
-        if (jsonObject != null) {
-            Map<String, String> pl = (Map<String, String>) jsonObject.get("province_list");
-            for (String key :
-                    pl.keySet()) {
-                String o = pl.get(key);
-                rs.add(new Region(key, o, 1));
-            }
-
-            Map<String, String> cl = (Map<String, String>) jsonObject.get("city_list");
-            for (String key :
-                    cl.keySet()) {
-                String o = cl.get(key);
-                rs.add(new Region(key, o, 2));
-            }
-            Map<String, String> col = (Map<String, String>) jsonObject.get("county_list");
-            for (String key :
-                    col.keySet()) {
-                String o = col.get(key).toString();
-                rs.add(new Region(key, o, 3));
-            }
-        }
-        Boolean r = _regionService.insertBatch(rs, 100);
-    }
-
     public void createUserRoles() {
         EntityWrapper<User> ew = new EntityWrapper<>();
         ew.eq("account", InitConst._defaultUser.admin);

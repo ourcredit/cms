@@ -55,11 +55,10 @@ public class MpGenerator {
             }
         });
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("znhgj");
-        dsc.setPassword("znhgj@2018");
-        dsc.setUrl("jdbc:mysql://rm-2zehp4p1df18szor22o.mysql.rds.aliyuncs.com:3306/dryer?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC");
+        dsc.setUsername("root");
+        dsc.setPassword("Dizhu20!&");
+        dsc.setUrl("jdbc:47.94.214.199:3306/dryer?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC");
         mpg.setDataSource(dsc);
-
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意

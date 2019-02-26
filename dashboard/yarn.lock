@@ -2,10 +2,6 @@
 # yarn lockfile v1
 
 
-"@aspnet/signalr@^1.0.0-preview2-final":
-  version "1.0.0-rtm-30793"
-  resolved "https://dotnet.myget.org/F/aspnetcore-dev/npm/@aspnet/signalr/-/@aspnet/signalr-1.0.0-rtm-30793.tgz#a5f3aa6f256b6c8127d71740957eebed59c8ef26"
-
 "@babel/code-frame@7.0.0-beta.47":
   version "7.0.0-beta.47"
   resolved "http://registry.npm.taobao.org/@babel/code-frame/download/@babel/code-frame-7.0.0-beta.47.tgz#d18c2f4c4ba8d093a2bcfab5616593bfe2441a27"
