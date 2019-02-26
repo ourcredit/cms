@@ -14,8 +14,6 @@
 				<fileNamePattern>${DEV_FILE_PATH}/warn.%d{yyyy-MM-dd}.log
 				</fileNamePattern>
 			<MaxHistory>20</MaxHistory>
-				 <!-- 最大64MB 超过最大值，会重新建一个文件-->
-                   <maxFileSize>1 MB</maxFileSize>
 			</rollingPolicy>
 			<layout class="ch.qos.logback.classic.PatternLayout">
 				<pattern>${PATTERN}</pattern>
