@@ -2,7 +2,6 @@ package com.monkey.web.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.monkey.application.Controls.IUserService;
-import com.monkey.application.customer.ICustomerService;
 import com.monkey.common.base.Constant;
 import com.monkey.common.base.PublicResult;
 import com.monkey.common.base.PublicResultConstant;

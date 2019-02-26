@@ -3,7 +3,6 @@ package com.monkey.web.config;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.monkey.application.Device.ICategoryService;
-import com.monkey.application.Device.IProductService;
 import com.monkey.application.Device.IRegionService;
 import com.monkey.application.Device.ITreeService;
 import com.monkey.application.Menus.IMenuService;
@@ -46,8 +45,6 @@ public class DataCreator implements CommandLineRunner {
     IRegionService _regionService;
     @Autowired
     ICategoryService _categoryService;
-    @Autowired
-    IProductService _productService;
 
     /**
      * 初始化数据结构
@@ -71,12 +68,6 @@ public class DataCreator implements CommandLineRunner {
             add(new Category("其他"));
         }};
         _categoryService.insertBatch(cates);
-        List<Product> procs = new ArrayList<Product>() {{
-            add(new Product("纯棉", "cm", "纯棉", 1D));
-            add(new Product("化纤", "hx", "化纤", 1D));
-            add(new Product("其他", "qt", "其他", 1D));
-        }};
-        _productService.insertBatch(procs);
     }
 
     public void createDefaultTree() {

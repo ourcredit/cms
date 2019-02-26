@@ -3,8 +3,6 @@ package com.monkey.web.controller;
 
 import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.monkey.application.Device.IDeviceService;
-import com.monkey.application.Device.IPointService;
 import com.monkey.application.Device.ITreeService;
 import com.monkey.common.base.Constant;
 import com.monkey.common.base.PublicResult;
@@ -36,10 +34,6 @@ import java.util.UUID;
 public class TreeController {
     @Autowired
     ITreeService _treeService;
-    @Autowired
-    IDeviceService _deviceService;
-    @Autowired
-    IPointService _pointService;
     @ApiOperation(value = "获取机构列表",notes = "机构列表")
     @RequestMapping(value = "",method = RequestMethod.POST)
     public PublicResult<List<Tree>> Trees( @CurrentUser User current) throws Exception{
@@ -100,8 +94,6 @@ public class TreeController {
     public PublicResult<Object> delete(@PathVariable Integer id) throws Exception{
         EntityWrapper ew=new EntityWrapper();
         ew.eq("areaId",id);
-         Integer count=   _pointService.selectCount(ew);
-         if(count>0)   return new PublicResult<>(PublicResultConstant.FAILED, "该机构下有点位存在无法删除");
         Boolean r=_treeService.deleteById(id);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }
