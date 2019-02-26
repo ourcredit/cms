@@ -1,7 +1,7 @@
 package com.monkey.application.Menus;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.core.entity.Menu;
 import com.monkey.core.mapper.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +27,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuRepository, Menu> implement
     @Override
     @Cacheable(value = "MenuServiceImpl:selectByIds", key = "'role_'.concat(#root.args[0])")
     public List<Menu> selectByIds(List<Integer> permissionIds) {
-        EntityWrapper<Menu> ew = new EntityWrapper<>();
+        QueryWrapper<Menu> ew = new QueryWrapper<>();
         ew.in("menu_id", permissionIds);
-        return this.selectList(ew);
+        return this.list(ew);
     }
 
 

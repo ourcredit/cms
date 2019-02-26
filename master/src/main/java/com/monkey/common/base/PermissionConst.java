@@ -2,11 +2,11 @@ package com.monkey.common.base;
 
 public interface PermissionConst {
 
-    public static class _dashboard {
+    class _dashboard {
         public static final String list = "dashboard:show";
     }
 
-    public static class _channel {
+    class _channel {
         public static final String show = "channel:show";
 
         public static class _channelList {
@@ -18,7 +18,7 @@ public interface PermissionConst {
         }
     }
 
-    public static class _relation {
+    class _relation {
         public static final String show = "relation:show";
 
         public static class _customer {
@@ -45,7 +45,17 @@ public interface PermissionConst {
             public static final String first = "force:first";
         }
     }
-    public static  class  _report{
+    class  _contract{
+        public  static  final  String show="report:show";
+        public  static  class  _contractList{
+            public static final String list = "contractList:list";
+            public static final String modify = "contractList:modify";
+            public static final String delete = "contractList:delete";
+            public static final String batch = "contractList:batch";
+            public static final String first = "contractList:first";
+        }
+    }
+    class  _report{
         public  static  final  String show="report:show";
         public  static  class  _a{
             public  static  final  String list="a:show";

@@ -6,40 +6,21 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author zhaohejing123
- * @since 2018-06-07
- */
-@TableName("sale_file")
+@TableName("sale_customer")
 @Data
-public class File implements  Serializable  {
+public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
+    public  Customer(){}
     /**
-     * key
+     * 主键id
      */
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.AUTO)
     private String id;
     /**
-     * 文件名
+     * 分类名
      */
     private String name;
-    /**
-     * 大小
-     */
-    private Long size;
-    /**
-     * 后缀
-     */
-    private String ext;
-    /**
-     * 路径
-     */
-    private String path;
-
+    private String parent;
     /**
      * 创建时间
      */

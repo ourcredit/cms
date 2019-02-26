@@ -1,8 +1,8 @@
 package com.monkey.web.controller;
 
 
-import com.baomidou.mybatisplus.enums.SqlLike;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.enums.SqlLike;
 import com.monkey.application.Device.ITreeService;
 import com.monkey.common.base.Constant;
 import com.monkey.common.base.PublicResult;
@@ -37,21 +37,21 @@ public class TreeController {
     @ApiOperation(value = "获取机构列表",notes = "机构列表")
     @RequestMapping(value = "",method = RequestMethod.POST)
     public PublicResult<List<Tree>> Trees( @CurrentUser User current) throws Exception{
-        EntityWrapper<Tree> filter = new EntityWrapper<>();
+        QueryWrapper<Tree> filter = new QueryWrapper<>();
         Tree t;List<Tree> res;
         if(current.getAreaId()!=null){
-             t=_treeService.selectById(current.getAreaId());
+             t=_treeService.getById(current.getAreaId());
             if(t!=null){
-                filter.like("levelCode",t.getLevelCode(), SqlLike.DEFAULT);
+                filter.like("levelCode",t.getLevelCode());
             }
-             res= _treeService.selectList( filter);
+             res= _treeService.list( filter);
             res.forEach(c->{
                 if(c.getId()==t.getId()){
                     c.setParentId(null  );
                 }
             });
         }else {
-            res= _treeService.selectList( filter);
+            res= _treeService.list( filter);
         }
         Tree tt=new Tree("未分配设备",null, Constant.UnknownCode);
         tt.setId(999);
@@ -62,7 +62,7 @@ public class TreeController {
     @ApiOperation(value = "获取机构详情",notes = "机构列表")
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public PublicResult<Tree> Tree(@PathVariable Integer id) throws Exception{
-        Tree m=_treeService.selectById(id);
+        Tree m=_treeService.getById(id);
         return new PublicResult<>(PublicResultConstant.SUCCESS, m);
     }
     @ApiOperation(value = "批量添加机构",notes = "机构列表")
@@ -74,33 +74,33 @@ public class TreeController {
     @ApiOperation(value = "添加或编辑机构",notes = "机构列表")
     @RequestMapping(method = RequestMethod.PUT)
     public PublicResult<Object> insert(@RequestBody Tree model) throws Exception{
-        EntityWrapper ew=new EntityWrapper();
+        QueryWrapper ew=new QueryWrapper();
         String code=UUID.randomUUID().toString().split("-")[0];
         if(model.getLevelCode()==null||model.getLevelCode().isEmpty()){
             if(model.getParentId()!=null){
                 ew.eq("id",model.getParentId());
-             Tree parent=   _treeService.selectOne(ew);
+             Tree parent=   _treeService.getOne(ew);
              if(parent!=null    ){
                  code=parent.getLevelCode()+"."+code;
              }
             }
             model.setLevelCode(code);
         }
-        Boolean r=_treeService.insertOrUpdate(model);
+        Boolean r=_treeService.saveOrUpdate(model);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }
     @ApiOperation(value = "删除机构",notes = "机构列表")
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     public PublicResult<Object> delete(@PathVariable Integer id) throws Exception{
-        EntityWrapper ew=new EntityWrapper();
+        QueryWrapper ew=new QueryWrapper();
         ew.eq("areaId",id);
-        Boolean r=_treeService.deleteById(id);
+        Boolean r=_treeService.removeById(id);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }
     @ApiOperation(value = "批量删除机构",notes = "机构列表")
     @RequestMapping(value = "/batch",method = RequestMethod.POST)
     public PublicResult<Object> batchdelete(@RequestBody List<Integer> ids) throws Exception{
-        Boolean r=_treeService.deleteBatchIds(ids);
+        Boolean r=_treeService.removeByIds(ids);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }
 

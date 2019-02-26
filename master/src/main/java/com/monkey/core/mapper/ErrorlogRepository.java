@@ -1,7 +1,7 @@
 package com.monkey.core.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.monkey.core.entity.Errorlog;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
  * <p>

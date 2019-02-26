@@ -1,8 +1,8 @@
 package com.monkey.application.Controls;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.application.Controls.dtos.CreateUserInput;
 import com.monkey.core.dtos.UserDto;
 import com.monkey.core.entity.User;
@@ -55,13 +55,13 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
      */
     public void ModifyUserAndRoles(CreateUserInput input) {
         User u;
-        EntityWrapper ew = new EntityWrapper<>();
+        QueryWrapper ew = new QueryWrapper<>();
         ew.eq("account", input.account);
         if (input.id == null) {
             u = new User(input.account, input.password, input.userName, input.isActive, input.areaId);
-            this.insert(u);
+            this.save(u);
         } else {
-            u = this.selectOne(ew);
+            u = this.getOne(ew);
             if (u != null) {
                 u.setMobile(input.mobile);
                 u.setIsActive(input.isActive);
@@ -74,11 +74,11 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
             }
         }
         if (!input.roles.isEmpty()) {
-            ew = new EntityWrapper<>();
+            ew = new QueryWrapper<>();
             ew.eq("userId", u.getId());
-            _userRoleRepository.delete(ew);
+            _userRoleRepository.remove(ew);
             List<Userrole> urs = new ArrayList<>();
-            ew = new EntityWrapper();
+            ew = new QueryWrapper();
             ew.eq("isStatic", 1);
             //   List<Role> rs = _roleRepository.selectList(ew);
             List<Integer> temp = new ArrayList<>();
@@ -94,7 +94,7 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
             for (Integer r : temp) {
                 urs.add(new Userrole(u.getId(), r));
             }
-            _userRoleRepository.insertBatch(urs);
+            _userRoleRepository.saveBatch(urs);
         }
     }
 
@@ -109,13 +109,13 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
      */
     @Override
     public boolean register(User user, List<Integer> roles) {
-        boolean result = this.insert(user);
+        boolean result = this.save(user);
         if (result) {
             List<Userrole> ur = new ArrayList<>();
             for (Integer roleId : roles) {
                 ur.add(new Userrole(user.getId(), roleId));
             }
-            _userRoleRepository.insertBatch(ur);
+            _userRoleRepository.saveBatch(ur);
         }
         return result;
     }

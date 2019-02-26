@@ -4,20 +4,20 @@ package com.monkey.common.base;
 import java.util.ArrayList;
 import java.util.List;
 public interface InitConst {
-    public static class _defaultTenant {
+    class _defaultTenant {
         public static final String admin = "default";
     }
-    public static class _defaultUser {
+    class _defaultUser {
         public static final String admin = "admin";
         public static final String def = "user";
         public static final String defaultPassword = "1234567";
     }
 
-    public static class _defaultRole {
+    class _defaultRole {
         public static final String admin = "admin";
         public static final String def = "default";
     }
-    public static class _menu {
+    class _menu {
         public static List<MenuInfo> menuList = new ArrayList<MenuInfo>() {{
             add(new MenuInfo("首页", PermissionConst._dashboard.list, "/dashboard", 1, null));
             add(new MenuInfo("渠道", PermissionConst._channel.show, "", 1, new ArrayList<MenuInfo>() {{
@@ -50,12 +50,10 @@ public interface InitConst {
                 add(new MenuInfo("共享日志", PermissionConst._relation._share.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
                 }}));
             }}));
-            add(new MenuInfo("合同", PermissionConst._report.list, "", 1, new ArrayList<MenuInfo>() {{
-                add(new MenuInfo("合同列表", PermissionConst._devices._device.list, "/device/list", 1, new ArrayList<MenuInfo>() {{
-                    add(new MenuInfo("编辑设备", PermissionConst._devices._device.modify, "", 2, null));
+            add(new MenuInfo("合同", PermissionConst._contract.show, "", 1, new ArrayList<MenuInfo>() {{
+                add(new MenuInfo("合同列表", PermissionConst._contract._contractList.list, "/device/list", 1, new ArrayList<MenuInfo>() {{
                 }}));
-                add(new MenuInfo("转单日志", PermissionConst._devices._device.list, "/device/list", 1, new ArrayList<MenuInfo>() {{
-                    add(new MenuInfo("编辑设备", PermissionConst._devices._device.modify, "", 2, null));
+                add(new MenuInfo("转单日志", PermissionConst._contract._contractList.list, "/device/list", 1, new ArrayList<MenuInfo>() {{
                 }}));
             }}));
 
@@ -99,14 +97,10 @@ public interface InitConst {
                     add(new MenuInfo("获取详情", PermissionConst._system._role.first, "", 2, null));
                 }}));
             }}));
-
-
         }};
-
         public static class MenuInfo {
             public MenuInfo() {
             }
-
             public MenuInfo(String name, String code, String url, Integer type, List<MenuInfo> childs) {
                 Name = name;
                 Type = type;

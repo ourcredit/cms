@@ -51,7 +51,7 @@ public class FileController  {
                 files.add(f);
             }
             if(!files.isEmpty()){
-                _fileService.insertBatch(files);
+                _fileService.saveBatch(files);
             }
         }
         return new PublicResult<List>(PublicResultConstant.SUCCESS, files);

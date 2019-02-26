@@ -1,9 +1,9 @@
 package com.monkey.web.config;
 
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.monkey.application.Device.ICategoryService;
-import com.monkey.application.Device.IRegionService;
 import com.monkey.application.Device.ITreeService;
 import com.monkey.application.Menus.IMenuService;
 import com.monkey.application.Menus.IRoleMenuService;
@@ -12,13 +12,12 @@ import com.monkey.application.Controls.IUserRoleService;
 import com.monkey.application.Controls.IUserService;
 import com.monkey.common.base.InitConst;
 import com.monkey.core.entity.*;
-import org.apache.tools.ant.util.FileUtils;
+import com.monkey.core.mapper.UserroleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +41,6 @@ public class DataCreator implements CommandLineRunner {
     @Autowired
     ITreeService _treeService;
     @Autowired
-    IRegionService _regionService;
-    @Autowired
     ICategoryService _categoryService;
 
     /**
@@ -60,76 +57,72 @@ public class DataCreator implements CommandLineRunner {
     }
 
     public void createDefaultCateAndPro() {
-        List<Category> cates = new ArrayList<Category>() {{
-            add(new Category("纯棉"));
-            add(new Category("化纤"));
-            add(new Category("其他"));
-        }};
-        _categoryService.insertBatch(cates);
     }
     public void createUserRoles() {
-        EntityWrapper<User> ew = new EntityWrapper<>();
+
+        QueryWrapper ew = new QueryWrapper<User>();
         ew.eq("account", InitConst._defaultUser.admin);
-        User u = _userService.selectOne(ew);
+        User u = _userService.getOne(ew);
         if (u == null) {
-            Boolean b = _userService.insert(new User(InitConst._defaultUser.admin,
+            Boolean b = _userService.save(new User(InitConst._defaultUser.admin,
                     InitConst._defaultUser.defaultPassword,
                     InitConst._defaultUser.admin, 1));
             if (b) {
-                u = _userService.selectOne(ew);
+                u = _userService.getOne(ew);
             }
         }
-        EntityWrapper<Role> rw = new EntityWrapper<>();
+        QueryWrapper<Role> rw = new QueryWrapper<>();
         rw.eq("roleName", InitConst._defaultRole.admin);
-        Role r = _roleService.selectOne(rw);
+        Role r = _roleService.getOne(rw);
         if (r == null) {
-            Boolean b = _roleService.insert(new Role(InitConst._defaultRole.admin, InitConst._defaultRole.admin, 1, 0));
+            Boolean b = _roleService.save(new Role(InitConst._defaultRole.admin, InitConst._defaultRole.admin, 1, 0));
             if (b) {
-                r = _roleService.selectOne(rw);
+                r = _roleService.getOne(rw);
             }
         }
-        rw = new EntityWrapper<>();
+        rw = new QueryWrapper<>();
         rw.eq("roleName", InitConst._defaultRole.def);
-        Role de = _roleService.selectOne(rw);
+        Role de = _roleService.getOne(rw);
         if (de == null) {
-            Boolean b = _roleService.insert(new Role(InitConst._defaultRole.def, InitConst._defaultRole.def, 1, 1));
+            Boolean b = _roleService.save(new Role(InitConst._defaultRole.def, InitConst._defaultRole.def, 1, 1));
             if (b) {
-                de = _roleService.selectOne(rw);
+                de = _roleService.getOne(rw);
             }
         }
         List<Userrole> rels = new ArrayList<>();
         rels.add(new Userrole(u.getId(), r.getId()));
         rels.add(new Userrole(u.getId(), de.getId()));
-        _userRoleService.delete(new EntityWrapper<>());
-        _userRoleService.insertBatch(rels);
+        _userRoleService.remove(new QueryWrapper<>());
+        _userRoleService.saveBatch(rels);
     }
 
     public void createRoleMenus() {
         List<InitConst._menu.MenuInfo> list = InitConst._menu.menuList;
         insertMenu(list, null);
-        EntityWrapper e = new EntityWrapper<>();
-        Role r = _roleService.selectOne(e.eq("roleName", InitConst._defaultRole.admin));
+        QueryWrapper e = new QueryWrapper<>();
+        e.eq("roleName", InitConst._defaultRole.admin);
+        Role r = _roleService.getOne(e);
         if (r != null) {
-            List<Menu> lists = _menuService.selectList(new EntityWrapper<>());
+            List<Menu> lists = _menuService.list();
             List<Rolemenu> rms = new ArrayList<>();
             for (Menu m : lists) {
                 rms.add(new Rolemenu(r.getId(), m.getId()));
             }
-            _roleMenuService.insertBatch(rms);
+            _roleMenuService.saveBatch(rms);
         }
     }
 
     public void insertMenu(List<InitConst._menu.MenuInfo> list, Integer parentId) {
-        EntityWrapper e;
+        QueryWrapper e;
         for (InitConst._menu.MenuInfo item : list) {
-            e = new EntityWrapper<>();
+            e = new QueryWrapper<>();
             e.eq("name", item.Name);
-            Menu m = _menuService.selectOne(e);
+            Menu m = _menuService.getOne(e);
             if (m == null) {
                 m = new Menu(item.Name, item.Code, item.Url, item.Type, parentId);
-                Boolean r = _menuService.insert(m);
+                Boolean r = _menuService.save(m);
                 if (r) {
-                    m = _menuService.selectOne(e);
+                    m = _menuService.getOne(e);
                 }
             }
             if (item.Children != null && !item.Children.isEmpty()) {
@@ -143,7 +136,7 @@ public class DataCreator implements CommandLineRunner {
                     }
                 }
                 if (!b.isEmpty()) {
-                    _menuService.insertBatch(b);
+                    _menuService.saveBatch(b);
                 }
                 if (!a.isEmpty()) {
                     insertMenu(item.Children, m.getId());

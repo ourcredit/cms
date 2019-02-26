@@ -1,13 +1,10 @@
 package com.monkey.core.entity;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.enums.FieldFill;
-import com.baomidou.mybatisplus.enums.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -18,7 +15,8 @@ import java.io.Serializable;
  * @since 2018-08-02
  */
 @TableName("sale_tree")
-public class Tree extends Model<Tree> {
+@Data
+public class Tree implements Serializable {
 
     private static final long serialVersionUID = 1L;
     public Tree(){}
@@ -54,69 +52,4 @@ public class Tree extends Model<Tree> {
 
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    public Date getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public Integer getCreatorUserId() {
-        return creatorUserId;
-    }
-
-    public void setCreatorUserId(Integer creatorUserId) {
-        this.creatorUserId = creatorUserId;
-    }
-
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
-
-    @Override
-    public String toString() {
-        return "Tree{" +
-        "id=" + id +
-        ", name=" + name +
-        ", parentId=" + parentId +
-        ", creationTime=" + creationTime +
-        ", creatorUserId=" + creatorUserId +
-        "}";
-    }
-
-    public String getLevelCode() {
-        return levelCode;
-    }
-
-    public void setLevelCode(String levelCode) {
-        this.levelCode = levelCode;
-    }
 }

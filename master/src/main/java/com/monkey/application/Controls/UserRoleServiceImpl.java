@@ -1,9 +1,9 @@
 package com.monkey.application.Controls;
 
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.application.dtos.UserRoleInput;
 import com.monkey.common.util.ComUtil;
 import com.monkey.core.entity.Userrole;
@@ -28,21 +28,21 @@ public class UserRoleServiceImpl extends ServiceImpl<UserroleRepository, Userrol
     @Override
     @Cacheable(value = "UserToRoleServiceImpl:selectByUserId", key = "'user_role_'.concat(#root.args[0])")
     public List<Userrole> selectByUserId(Integer userId) {
-        EntityWrapper<Userrole> ew = new EntityWrapper<>();
-        ew.where("userId={0}", userId);
-        List<Userrole> userToRoleList = this.selectList(ew);
+        QueryWrapper<Userrole> ew = new QueryWrapper<>();
+        ew.eq("userId", userId);
+        List<Userrole> userToRoleList = this.list(ew);
         return ComUtil.isEmpty(userToRoleList)? null: userToRoleList;
     }
     @Override
     public Boolean  insertUserRoles(UserRoleInput input){
-        EntityWrapper<Userrole> ew = new EntityWrapper<>();
-        ew.where("id={0}", input.userId);
-            this.delete(ew);
+        QueryWrapper<Userrole> ew = new QueryWrapper<>();
+        ew.eq("id", input.userId);
+            this.remove(ew);
         List<Userrole> urs=new ArrayList<>();
         for (Integer r : input.roles){
             Userrole u=new Userrole(input.userId,r);
             urs.add(u);
         }
-          return  this.insertBatch(urs);
+          return  this.saveBatch(urs);
     }
 }

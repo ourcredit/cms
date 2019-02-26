@@ -1,12 +1,9 @@
 package com.monkey.core.entity;
 
 import java.util.Date;
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.FieldFill;
-import com.baomidou.mybatisplus.enums.IdType;
+
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -19,8 +16,8 @@ import java.io.Serializable;
  * @since 2018-08-27
  */
 @TableName("sale_category")
-public class Category extends Model<Category> {
-
+@Data
+public class Category implements  Serializable {
     private static final long serialVersionUID = 1L;
     public  Category(){}
     public  Category(String name){
@@ -35,6 +32,7 @@ public class Category extends Model<Category> {
      * 分类名
      */
     private String name;
+    private String parent;
     /**
      * 创建时间
      */
@@ -45,54 +43,4 @@ public class Category extends Model<Category> {
      */
     @TableField(fill = FieldFill.INSERT)
     private Integer creatorUserId;
-
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public Integer getCreatorUserId() {
-        return creatorUserId;
-    }
-
-    public void setCreatorUserId(Integer creatorUserId) {
-        this.creatorUserId = creatorUserId;
-    }
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
-
-    @Override
-    public String toString() {
-        return "Category{" +
-        "id=" + id +
-        ", name=" + name +
-        ", creationTime=" + creationTime +
-        ", creatorUserId=" + creatorUserId +
-        "}";
-    }
 }

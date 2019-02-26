@@ -1,9 +1,10 @@
 package com.monkey.web.controller;
 
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.monkey.application.Controls.IRoleService;
 import com.monkey.application.dtos.PagedAndFilterInputDto;
 import com.monkey.common.base.PermissionConst;
@@ -39,10 +40,10 @@ public class RoleController {
     @ApiOperation(value = "获取角色列表", notes = "角色列表")
     @RequestMapping(value = "", method = RequestMethod.POST)
     @RequiresPermissions(value = {PermissionConst._system._role.list})
-    public PublicResult<Page<Role>> roles(@RequestBody PagedAndFilterInputDto page) throws Exception {
-        EntityWrapper<Role> filter = new EntityWrapper<>();
+    public PublicResult<IPage<Role>> roles(@RequestBody PagedAndFilterInputDto page) throws Exception {
+        QueryWrapper<Role> filter = new QueryWrapper<>();
         filter=  ComUtil.genderFilter(filter,page.where,true);
-        Page<Role> res = _roleService.selectPage(new Page<>(page.index,page.size), filter);
+        IPage<Role> res = _roleService.page(new Page<>(page.index,page.size), filter);
         return new PublicResult<>(PublicResultConstant.SUCCESS, res);
     }
     @ApiOperation(value = "获取角色详情", notes = "角色列表")
@@ -65,7 +66,7 @@ public class RoleController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @RequiresPermissions(value = {PermissionConst._system._role.delete})
     public PublicResult<Object> delete(@PathVariable Integer id) throws Exception {
-        Boolean r = _roleService.deleteById(id);
+        Boolean r = _roleService.removeById(id);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }
     @Log(description="角色接口:/批量删除角色")
@@ -73,7 +74,7 @@ public class RoleController {
     @RequestMapping(value = "/batch", method = RequestMethod.POST)
     @RequiresPermissions(value = {PermissionConst._system._role.batch})
     public PublicResult<Object> batchdelete(@RequestBody List<Integer> ids) throws Exception {
-        Boolean r = _roleService.deleteBatchIds(ids);
+        Boolean r = _roleService.removeByIds(ids);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }
 }

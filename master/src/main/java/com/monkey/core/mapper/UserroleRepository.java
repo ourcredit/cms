@@ -1,6 +1,6 @@
 package com.monkey.core.mapper;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.monkey.core.entity.Userrole;
 
 /**

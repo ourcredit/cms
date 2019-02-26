@@ -1,6 +1,6 @@
 package com.monkey.application.files;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.monkey.core.entity.File;
 
 /**

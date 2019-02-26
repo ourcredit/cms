@@ -1,9 +1,9 @@
 package com.monkey.application.Device;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.core.entity.Tree;
 import com.monkey.core.mapper.TreeRepository;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.monkey.web.controller.dtos.TreeDtoInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class TreeServiceImpl extends ServiceImpl<TreeRepository, Tree> implement
     TreeRepository _treeRepository;
     @Override
     public void mutiInsertOrgs(List<TreeDtoInput> input) {
-        EntityWrapper<Tree> ew=new EntityWrapper<>();
+        QueryWrapper<Tree> ew=new QueryWrapper<>();
         _treeRepository.delete(ew);
         String uuid = UUID.randomUUID().toString().split("-")[0];
         insert(input,null,uuid);

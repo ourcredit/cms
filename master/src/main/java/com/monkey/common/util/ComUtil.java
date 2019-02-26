@@ -1,6 +1,6 @@
 package com.monkey.common.util;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import java.util.*;
 
@@ -135,7 +135,7 @@ public class ComUtil {
         return str1 != null ? str1.equalsIgnoreCase(str2) : str2 == null;
     }
 
-    public static EntityWrapper genderFilter(EntityWrapper e, Map<String, Object> m,boolean isSort) {
+    public static QueryWrapper genderFilter(QueryWrapper e, Map<String, Object> m, boolean isSort) {
         if (m != null && !m.isEmpty()) {
             Set<String> r = m.keySet();
             for (String key : r) {
@@ -176,7 +176,7 @@ public class ComUtil {
             }
         }
         if(isSort){
-            e.orderBy("creationTime",false);
+            e.orderByDesc("creationTime");
         }
         return e;
     }

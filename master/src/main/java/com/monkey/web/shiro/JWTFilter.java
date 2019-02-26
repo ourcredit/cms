@@ -1,6 +1,6 @@
 package com.monkey.web.shiro;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.monkey.application.Controls.IUserService;
 
 import com.monkey.common.util.JWTUtil;
@@ -81,9 +81,9 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             this.userService = SpringContextBean.getBean(IUserService.class);
         }
         String username =  JWTUtil.getUsername(token.getPrincipal().toString());
-        EntityWrapper ew =new EntityWrapper();
+        QueryWrapper ew =new QueryWrapper<>();
         ew.eq("userName",username);
-        User userBean= userService.selectOne(ew);
+        User userBean= userService.getOne(ew);
         request.setAttribute("currentUser", userBean);
     }
 

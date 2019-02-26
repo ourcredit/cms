@@ -1,8 +1,10 @@
 package com.monkey.web.controller;
 
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.monkey.application.Controls.IRoleService;
 import com.monkey.application.Controls.IUserService;
 import com.monkey.application.Controls.dtos.CreateUserInput;
@@ -43,10 +45,10 @@ public class UserController {
     @ApiOperation(value = "获取用户列表", notes = "用户列表")
     @RequestMapping(value = "", method = RequestMethod.POST)
     @RequiresPermissions(value = {PermissionConst._system._user.list})
-    public PublicResult<Page<User>> users(@RequestBody PagedAndFilterInputDto page) throws Exception {
-        EntityWrapper<User> filter = new EntityWrapper<User>();
+    public PublicResult<IPage<User>> users(@RequestBody PagedAndFilterInputDto page) throws Exception {
+        QueryWrapper<User> filter = new QueryWrapper<User>();
         filter = ComUtil.genderFilter(filter, page.where,true);
-        Page<User> res = _userService.selectPage(new Page<>(page.index, page.size), filter);
+        IPage<User> res = _userService.page(new Page<>(page.index, page.size), filter);
         return new PublicResult<>(PublicResultConstant.SUCCESS, res);
     }
 
@@ -84,10 +86,10 @@ public class UserController {
     @RequestMapping(method = RequestMethod.PUT)
     @RequiresPermissions(value = {PermissionConst._system._user.modify})
     public PublicResult<Object> modify(@RequestBody CreateUserInput model) throws Exception {
-        EntityWrapper e = new EntityWrapper();
+        QueryWrapper e = new QueryWrapper();
         e.eq("account", model.account);
         if (model.id == null || model.id == 0) {
-            Integer count = _userService.selectCount(e);
+            Integer count = _userService.count(e);
             if (count > 0) return new PublicResult<Object>(PublicResultConstant.FAILED, "该用户名已存在");
         }
         _userService.ModifyUserAndRoles(model);
@@ -99,7 +101,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @RequiresPermissions(value = {PermissionConst._system._user.delete})
     public PublicResult<Object> delete(@PathVariable Integer id) throws Exception {
-        Boolean res = _userService.deleteById(id);
+        Boolean res = _userService.removeById(id);
         return new PublicResult<>(PublicResultConstant.SUCCESS, res);
     }
 
@@ -108,7 +110,7 @@ public class UserController {
     @RequestMapping(value = "/batch", method = RequestMethod.POST)
     @RequiresPermissions(value = {PermissionConst._system._user.batch})
     public PublicResult<Object> batchdelete(@RequestBody List<Integer> ids) throws Exception {
-        Boolean res = _userService.deleteBatchIds(ids);
+        Boolean res = _userService.removeByIds(ids);
         return new PublicResult<>(PublicResultConstant.SUCCESS, res);
     }
 }

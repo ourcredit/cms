@@ -1,6 +1,6 @@
 package com.monkey.web.config;
 
-import com.baomidou.mybatisplus.mapper.MetaObjectHandler;
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.monkey.common.util.DateUtil;
 import com.monkey.core.entity.User;
 import org.apache.ibatis.reflection.MetaObject;
@@ -14,7 +14,7 @@ import java.util.Date;
  * 自定义填充处理器
  */
 @Component
-public class MyMetaObjectHandler extends MetaObjectHandler {
+public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         Object creationTime = getFieldValByName("creationTime",metaObject);
@@ -32,10 +32,7 @@ public class MyMetaObjectHandler extends MetaObjectHandler {
             if (null == creatorUserId&&user!=null) {
                 metaObject.setValue("creatorUserId", user.getId());
             }
-
         }
-
-
     }
     @Override
     public boolean openUpdateFill() {

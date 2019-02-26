@@ -11,7 +11,6 @@ public class BaseResult<T> {
 
     public BaseResult() {
     }
-
     public BaseResult(String result, String msg) {
         this.result = result;
         this.msg = msg;

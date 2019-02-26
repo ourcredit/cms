@@ -1,12 +1,7 @@
 package com.monkey.core.entity;
 
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableLogic;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.FieldFill;
-import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,7 +15,8 @@ import java.util.Date;
  * @since 2018-06-05
  */
 @TableName("sale_menu")
-public class Menu extends Model<Menu> {
+@Data
+public class Menu  implements  Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -73,87 +69,4 @@ public class Menu extends Model<Menu> {
      */
     @TableField(fill = FieldFill.INSERT)
     private Integer creatorUserId;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    public Date getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public Integer getCreatorUserId() {
-        return creatorUserId;
-    }
-
-    public void setCreatorUserId(Integer creatorUserId) {
-        this.creatorUserId = creatorUserId;
-    }
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
-
-    @Override
-    public String toString() {
-        return "Menu{" +
-        "id=" + id +
-        ", name=" + name +
-        ", url=" + url +
-        ", type=" + type +
-        ", code=" + code +
-        ", parentId=" + parentId +
-        ", creationTime=" + creationTime +
-        ", creatorUserId=" + creatorUserId +
-        "}";
-    }
 }

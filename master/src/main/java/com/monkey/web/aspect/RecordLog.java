@@ -148,7 +148,7 @@ public class RecordLog implements AspectApi {
             }
         }
         logger.info("执行方法信息:"+JSONObject.toJSON(operationLog));
-        operationLogService.insert(operationLog);
+        operationLogService.save(operationLog);
     }
 
 

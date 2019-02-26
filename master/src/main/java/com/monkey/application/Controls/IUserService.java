@@ -1,6 +1,6 @@
 package com.monkey.application.Controls;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.monkey.application.Controls.dtos.CreateUserInput;
 import com.monkey.core.dtos.UserDto;
 import com.monkey.core.entity.User;

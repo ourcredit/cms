@@ -1,5 +1,5 @@
 package com.monkey.web.shiro;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.monkey.application.Menus.IMenuService;
 import com.monkey.application.Controls.IUserRoleService;
 import com.monkey.application.Controls.IUserService;
@@ -17,8 +17,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -54,9 +52,9 @@ public class MyRealm extends AuthorizingRealm {
         }
 
         String username = JWTUtil.getUsername(principals.toString());
-        EntityWrapper ew=new EntityWrapper();
+        QueryWrapper ew=new QueryWrapper();
         ew.eq("userName",username);
-        User user = userService.selectOne(ew);
+        User user = userService.getOne(ew);
         List<Userrole> userToRole = userRoleService.selectByUserId(user.getId());
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
@@ -95,9 +93,9 @@ public class MyRealm extends AuthorizingRealm {
         if (username == null) {
             throw new UnauthorizedException("token invalid");
         }
-        EntityWrapper ew=new EntityWrapper();
+        QueryWrapper ew=new QueryWrapper();
         ew.eq("userName",username);
-        User userBean = userService.selectOne(ew);
+        User userBean = userService.getOne(ew);
         if (userBean == null) {
             throw new UnauthorizedException("User didn't existed!");
         }

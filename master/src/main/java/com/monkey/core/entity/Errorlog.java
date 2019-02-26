@@ -1,12 +1,8 @@
 package com.monkey.core.entity;
 
 import java.util.Date;
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.FieldFill;
-import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -19,7 +15,8 @@ import java.io.Serializable;
  * @since 2018-12-10
  */
 @TableName("sale_errorlog")
-public class Errorlog extends Model<Errorlog> {
+@Data
+public class Errorlog implements  Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -63,87 +60,4 @@ public class Errorlog extends Model<Errorlog> {
      */
     private String pointName;
 
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getDeviceNum() {
-        return deviceNum;
-    }
-
-    public void setDeviceNum(String deviceNum) {
-        this.deviceNum = deviceNum;
-    }
-
-    public String getDeviceName() {
-        return deviceName;
-    }
-
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
-    }
-
-    public Integer getLogType() {
-        return logType;
-    }
-
-    public void setLogType(Integer logType) {
-        this.logType = logType;
-    }
-
-    public String getMessage() {
-        return Message;
-    }
-
-    public void setMessage(String Message) {
-        this.Message = Message;
-    }
-
-    public Date getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public Integer getCreatorUserId() {
-        return creatorUserId;
-    }
-
-    public void setCreatorUserId(Integer creatorUserId) {
-        this.creatorUserId = creatorUserId;
-    }
-
-    public String getPointName() {
-        return pointName;
-    }
-
-    public void setPointName(String pointName) {
-        this.pointName = pointName;
-    }
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
-
-    @Override
-    public String toString() {
-        return "Errorlog{" +
-        "id=" + id +
-        ", deviceNum=" + deviceNum +
-        ", deviceName=" + deviceName +
-        ", logType=" + logType +
-        ", Message=" + Message +
-        ", creationTime=" + creationTime +
-        ", creatorUserId=" + creatorUserId +
-        ", pointName=" + pointName +
-        "}";
-    }
 }

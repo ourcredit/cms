@@ -18,11 +18,8 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.monkey.application.OperationLogs.IErrorlogService;
 import com.monkey.common.base.SocketConstant;
-import com.monkey.core.entity.*;
-import com.monkey.web.config.SpringContextBean;
 import com.monkey.web.controller.dtos.WebSocketMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

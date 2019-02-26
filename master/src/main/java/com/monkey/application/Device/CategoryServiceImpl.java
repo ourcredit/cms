@@ -1,7 +1,7 @@
 package com.monkey.application.Device;
 
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.core.entity.Category;
 import com.monkey.core.mapper.CategoryRepository;
 import org.springframework.stereotype.Service;

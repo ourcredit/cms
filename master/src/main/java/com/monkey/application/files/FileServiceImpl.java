@@ -1,7 +1,7 @@
 package com.monkey.application.files;
 
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.core.entity.File;
 import com.monkey.core.mapper.FileRepository;
 import org.springframework.stereotype.Service;

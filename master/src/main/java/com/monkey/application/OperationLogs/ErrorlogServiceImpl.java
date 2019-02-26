@@ -1,7 +1,7 @@
 package com.monkey.application.OperationLogs;
 
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.core.entity.Errorlog;
 import com.monkey.core.mapper.ErrorlogRepository;
 

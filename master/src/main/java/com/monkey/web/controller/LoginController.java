@@ -1,6 +1,6 @@
 package com.monkey.web.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.monkey.application.Controls.IUserService;
 import com.monkey.common.base.Constant;
 import com.monkey.common.base.PublicResult;
@@ -43,9 +43,9 @@ public class LoginController {
         if (ComUtil.isEmpty(input.userName) || ComUtil.isEmpty(input.passWord)) {
             return new PublicResult<>(PublicResultConstant.PARAM_ERROR, null);
         }
-        EntityWrapper<User> ew = new EntityWrapper<>();
+        QueryWrapper<User> ew = new QueryWrapper<>();
         ew.eq("account", input.userName);
-        User user = _userService.selectOne(ew);
+        User user = _userService.getOne(ew);
         if (ComUtil.isEmpty(user) || !BCrypt.checkpw(input.passWord, user.getPassword())) {
             return new PublicResult<>(PublicResultConstant.INVALID_USERNAME_PASSWORD, null);
         }
@@ -65,9 +65,9 @@ public class LoginController {
         if (error.hasErrors()) {
             return new PublicResult<>(error.getAllErrors().get(0).getDefaultMessage(), null);
         }
-        EntityWrapper<User> ew = new EntityWrapper<>();
-        ew.where("account={0}", input.userName);
-        List<User> userList = _userService.selectList(ew);
+        QueryWrapper<User> ew = new QueryWrapper<>();
+        ew.eq("account", input.userName);
+        List<User> userList = _userService.list(ew);
         if (!ComUtil.isEmpty(userList)) {
             return new PublicResult<>(PublicResultConstant.USERNAME_ALREADY_IN, null);
         }

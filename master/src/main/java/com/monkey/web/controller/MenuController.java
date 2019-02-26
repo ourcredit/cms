@@ -1,9 +1,10 @@
 package com.monkey.web.controller;
 
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.monkey.application.Menus.IMenuService;
 import com.monkey.application.dtos.PagedAndFilterInputDto;
 import com.monkey.common.base.PermissionConst;
@@ -40,17 +41,17 @@ public class MenuController {
     @ApiOperation(value = "获取菜单列表",notes = "菜单列表")
     @RequestMapping(value = "",method = RequestMethod.POST)
     @Pass
-    public PublicResult<Page<Menu>> menus(@RequestBody PagedAndFilterInputDto page) throws Exception{
-        EntityWrapper<Menu> filter = new EntityWrapper<>();
+    public PublicResult<IPage<Menu>> menus(@RequestBody PagedAndFilterInputDto page) throws Exception{
+        QueryWrapper<Menu> filter = new QueryWrapper<>();
          filter=  ComUtil.genderFilter(filter,page.where,true);
-        Page<Menu> res= _menuService.selectPage(new Page<>(page.index,page.size), filter);
+        IPage<Menu> res= _menuService.page(new Page<>(page.index,page.size), filter);
         return new PublicResult<>(PublicResultConstant.SUCCESS, res);
     }
     @ApiOperation(value = "获取菜单详情",notes = "菜单列表")
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     @RequiresPermissions(value = {PermissionConst._system._menu.first})
     public PublicResult<Menu> menu(@PathVariable Integer id) throws Exception{
-        Menu m=_menuService.selectById(id);
+        Menu m=_menuService.getById(id);
         return new PublicResult<>(PublicResultConstant.SUCCESS, m);
     }
     @ApiOperation(value = "获取当前用户有权限访问的菜单",notes = "菜单列表")
@@ -65,21 +66,21 @@ public class MenuController {
     @RequestMapping(method = RequestMethod.PUT)
     @RequiresPermissions(value = {PermissionConst._system._menu.modify})
     public PublicResult<Object> insert(@RequestBody Menu model) throws Exception{
-        Boolean r=_menuService.insertOrUpdate(model);
+        Boolean r=_menuService.saveOrUpdate(model);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }
     @ApiOperation(value = "删除菜单",notes = "菜单列表")
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     @RequiresPermissions(value = {PermissionConst._system._menu.delete})
     public PublicResult<Object> delete(@PathVariable Integer id) throws Exception{
-        Boolean r=_menuService.deleteById(id);
+        Boolean r=_menuService.removeById(id);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }
     @ApiOperation(value = "批量删除菜单",notes = "菜单列表")
     @RequestMapping(value = "/batch",method = RequestMethod.POST)
     @RequiresPermissions(value = {PermissionConst._system._menu.batch})
     public PublicResult<Object> batchdelete(@RequestBody List<Integer> ids) throws Exception{
-        Boolean r=_menuService.deleteBatchIds(ids);
+        Boolean r=_menuService.removeByIds(ids);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }
 }
