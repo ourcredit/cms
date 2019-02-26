@@ -20,41 +20,37 @@ public interface InitConst {
     public static class _menu {
         public static List<MenuInfo> menuList = new ArrayList<MenuInfo>() {{
             add(new MenuInfo("首页", PermissionConst._dashboard.list, "/dashboard", 1, null));
-            add(new MenuInfo("渠道", PermissionConst._orders.list, "", 1, new ArrayList<MenuInfo>() {{
-                add(new MenuInfo("渠道列表", PermissionConst._orders._order.list, "/order/list", 1, new ArrayList<MenuInfo>() {{
-                    add(new MenuInfo("查看订单", PermissionConst._orders._order.list, "", 2, null));
-                    add(new MenuInfo("退款", PermissionConst._orders._order.back, "", 2, null));
-                    add(new MenuInfo("直接退款", PermissionConst._orders._order.superBack, "", 2, null));
-                    add(new MenuInfo("统计", PermissionConst._orders._order.statical, "", 2, null));
+            add(new MenuInfo("渠道", PermissionConst._channel.show, "", 1, new ArrayList<MenuInfo>() {{
+                add(new MenuInfo("渠道列表", PermissionConst._channel._channelList.list, "/order/list", 1, new ArrayList<MenuInfo>() {{
+                    add(new MenuInfo("查看订单", PermissionConst._channel._channelList.list, "", 2, null));
+                    add(new MenuInfo("编辑", PermissionConst._channel._channelList.modify, "", 2, null));
+                    add(new MenuInfo("批量删除", PermissionConst._channel._channelList.batch, "", 2, null));
+                    add(new MenuInfo("删除", PermissionConst._channel._channelList.delete, "", 2, null));
                 }}));
             }}));
-            add(new MenuInfo("客户", PermissionConst._pointer.list, "", 1, new ArrayList<MenuInfo>() {{
-                add(new MenuInfo("客户列表", PermissionConst._pointer._point.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
-                    add(new MenuInfo("编辑点位", PermissionConst._pointer._point.modify, "", 2, null));
-                    add(new MenuInfo("删除点位", PermissionConst._pointer._point.delete, "", 2, null));
-                    add(new MenuInfo("批量删除点位", PermissionConst._pointer._point.batch, "", 2, null));
-                    add(new MenuInfo("获取详情", PermissionConst._pointer._point.first, "", 2, null));
+            add(new MenuInfo("客户", PermissionConst._relation.show, "", 1, new ArrayList<MenuInfo>() {{
+                add(new MenuInfo("客户列表", PermissionConst._relation._customer.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
+                    add(new MenuInfo("编辑客户", PermissionConst._relation._customer.modify, "", 2, null));
+                    add(new MenuInfo("删除客户", PermissionConst._relation._customer.delete, "", 2, null));
+                    add(new MenuInfo("批量删除客户", PermissionConst._relation._customer.batch, "", 2, null));
+                    add(new MenuInfo("获取详情", PermissionConst._relation._customer.first, "", 2, null));
                 }}));
-                add(new MenuInfo("共享列表", PermissionConst._pointer._point.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
-                    add(new MenuInfo("编辑点位", PermissionConst._pointer._point.modify, "", 2, null));
-                    add(new MenuInfo("删除点位", PermissionConst._pointer._point.delete, "", 2, null));
-                    add(new MenuInfo("批量删除点位", PermissionConst._pointer._point.batch, "", 2, null));
-                    add(new MenuInfo("获取详情", PermissionConst._pointer._point.first, "", 2, null));
+                add(new MenuInfo("共享列表", PermissionConst._relation._share.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
+                    add(new MenuInfo("编辑共享", PermissionConst._relation._share.modify, "", 2, null));
+                    add(new MenuInfo("删除共享", PermissionConst._relation._share.delete, "", 2, null));
+                    add(new MenuInfo("批量删除共享", PermissionConst._relation._share.batch, "", 2, null));
+                    add(new MenuInfo("获取详情", PermissionConst._relation._share.first, "", 2, null));
                 }}));
-                add(new MenuInfo("目标管理", PermissionConst._pointer._point.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
-                    add(new MenuInfo("编辑点位", PermissionConst._pointer._point.modify, "", 2, null));
-                    add(new MenuInfo("删除点位", PermissionConst._pointer._point.delete, "", 2, null));
-                    add(new MenuInfo("批量删除点位", PermissionConst._pointer._point.batch, "", 2, null));
-                    add(new MenuInfo("获取详情", PermissionConst._pointer._point.first, "", 2, null));
+                add(new MenuInfo("目标管理", PermissionConst._relation._force.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
+                    add(new MenuInfo("编辑目标", PermissionConst._relation._force.modify, "", 2, null));
+                    add(new MenuInfo("删除目标", PermissionConst._relation._force.delete, "", 2, null));
+                    add(new MenuInfo("批量删除目标", PermissionConst._relation._force.batch, "", 2, null));
+                    add(new MenuInfo("获取详情", PermissionConst._relation._force.first, "", 2, null));
                 }}));
-                add(new MenuInfo("共享日志", PermissionConst._pointer._point.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
-                    add(new MenuInfo("编辑点位", PermissionConst._pointer._point.modify, "", 2, null));
-                    add(new MenuInfo("删除点位", PermissionConst._pointer._point.delete, "", 2, null));
-                    add(new MenuInfo("批量删除点位", PermissionConst._pointer._point.batch, "", 2, null));
-                    add(new MenuInfo("获取详情", PermissionConst._pointer._point.first, "", 2, null));
+                add(new MenuInfo("共享日志", PermissionConst._relation._share.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
                 }}));
             }}));
-            add(new MenuInfo("合同", PermissionConst._devices.list, "", 1, new ArrayList<MenuInfo>() {{
+            add(new MenuInfo("合同", PermissionConst._report.list, "", 1, new ArrayList<MenuInfo>() {{
                 add(new MenuInfo("合同列表", PermissionConst._devices._device.list, "/device/list", 1, new ArrayList<MenuInfo>() {{
                     add(new MenuInfo("编辑设备", PermissionConst._devices._device.modify, "", 2, null));
                 }}));
@@ -63,18 +59,18 @@ public interface InitConst {
                 }}));
             }}));
 
-            add(new MenuInfo("报表", PermissionConst._products.list, "", 1, new ArrayList<MenuInfo>() {{
-                add(new MenuInfo("约谈报表", PermissionConst._products._product.list, "/product/list", 1, new ArrayList<MenuInfo>() {{
+            add(new MenuInfo("报表", PermissionConst._report.show, "", 1, new ArrayList<MenuInfo>() {{
+                add(new MenuInfo("约谈报表", PermissionConst._report._a.list, "/product/list", 1, new ArrayList<MenuInfo>() {{
                  }}));
-                add(new MenuInfo("渠道报表", PermissionConst._products._product.list, "/product/list", 1, new ArrayList<MenuInfo>() {{
+                add(new MenuInfo("渠道报表", PermissionConst._report._a.list, "/product/list", 1, new ArrayList<MenuInfo>() {{
                 }}));
-                add(new MenuInfo("单量报表", PermissionConst._products._product.list, "/product/list", 1, new ArrayList<MenuInfo>() {{
+                add(new MenuInfo("单量报表",PermissionConst._report._a.list, "/product/list", 1, new ArrayList<MenuInfo>() {{
                 }}));
-                add(new MenuInfo("业绩报表", PermissionConst._products._product.list, "/product/list", 1, new ArrayList<MenuInfo>() {{
+                add(new MenuInfo("业绩报表", PermissionConst._report._a.list, "/product/list", 1, new ArrayList<MenuInfo>() {{
                 }}));
-                add(new MenuInfo("客户统计列表", PermissionConst._products._product.list, "/product/list", 1, new ArrayList<MenuInfo>() {{
+                add(new MenuInfo("客户统计列表", PermissionConst._report._a.list, "/product/list", 1, new ArrayList<MenuInfo>() {{
                 }}));
-                add(new MenuInfo("成单统计列表", PermissionConst._products._product.list, "/product/list", 1, new ArrayList<MenuInfo>() {{
+                add(new MenuInfo("成单统计列表", PermissionConst._report._a.list, "/product/list", 1, new ArrayList<MenuInfo>() {{
                 }}));
             }}));
             add(new MenuInfo("系统管理", PermissionConst._system.list, "", 1, new ArrayList<MenuInfo>() {{

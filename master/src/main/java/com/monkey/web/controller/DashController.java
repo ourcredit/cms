@@ -43,7 +43,7 @@ public class DashController  {
 
     @ApiOperation(value = "获取首页统计", notes = "订单列表")
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-    @RequiresPermissions(value = {PermissionConst._orders._order.statical})
+  //  @RequiresPermissions(value = {PermissionConst._orders._order.statical})
 
     public PublicResult<Object> staticals() throws Exception {
         return new PublicResult<>(PublicResultConstant.ERROR, "获取统计失败");
@@ -51,7 +51,7 @@ public class DashController  {
 
     @ApiOperation(value = "获取首页统计", notes = "订单列表")
     @RequestMapping(value = "/total", method = RequestMethod.POST)
-    @RequiresPermissions(value = {PermissionConst._orders._order.statical})
+ //   @RequiresPermissions(value = {PermissionConst._orders._order.statical})
     public PublicResult<Object> todays(@RequestBody RequestDateDto input,@CurrentUser User u) throws Exception {
         return new PublicResult<>(PublicResultConstant.ERROR, "获取统计失败");
     }

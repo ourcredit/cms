@@ -6,14 +6,12 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.monkey.application.OperationLogs.IErrorlogService;
 import com.monkey.application.OperationLogs.IOperationLogService;
 import com.monkey.application.dtos.PagedAndFilterInputDto;
-import com.monkey.common.base.PermissionConst;
 import com.monkey.common.base.PublicResult;
 import com.monkey.common.base.PublicResultConstant;
 import com.monkey.common.util.ComUtil;
 import com.monkey.core.entity.Errorlog;
 import com.monkey.core.entity.Log;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +35,6 @@ public class LogController {
     // @Log(description="获取用户列表:/list")
     @ApiOperation(value = "获取日志列表",notes = "日志列表")
     @RequestMapping(value = "",method = RequestMethod.POST)
-    @RequiresPermissions(value = {PermissionConst._watch._actionlog.list})
     public PublicResult<Page<Log>> logs(@RequestBody PagedAndFilterInputDto page) throws Exception{
         EntityWrapper<Log> filter = new EntityWrapper<>();
       filter=  ComUtil.genderFilter(filter,page.where,true);
@@ -46,28 +43,24 @@ public class LogController {
     }
     @ApiOperation(value = "获取日志详情",notes = "日志列表")
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    @RequiresPermissions(value = {PermissionConst._watch._actionlog.first})
     public PublicResult<Object> log(@PathVariable String id) throws Exception{
         Log l=_logService.selectById(id);
         return new PublicResult<>(PublicResultConstant.SUCCESS, l);
     }
     @ApiOperation(value = "删除日志",notes = "日志列表")
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
-    @RequiresPermissions(value = {PermissionConst._watch._actionlog.delete})
     public PublicResult<Object> delete(@PathVariable String id) throws Exception{
         Boolean r=_logService.deleteById(id);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }
     @ApiOperation(value = "批量删除日志",notes = "日志列表")
     @RequestMapping(value = "/batch",method = RequestMethod.POST)
-    @RequiresPermissions(value = {PermissionConst._watch._actionlog.batch})
     public PublicResult<Object> batchdelete(@RequestBody List<String> ids) throws Exception{
         Boolean r=_logService.deleteBatchIds(ids);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }
     @ApiOperation(value = "获取日志信息", notes = "运维人员")
     @RequestMapping(value = "/elogs", method = RequestMethod.POST)
-    @RequiresPermissions(value = {PermissionConst._watch._runlog.list})
     public PublicResult<Page<Errorlog>> errorlogs(@RequestBody PagedAndFilterInputDto page) throws Exception {
         EntityWrapper<Errorlog> filter = new EntityWrapper<>();
         filter=  ComUtil.genderFilter(filter,page.where,true);
