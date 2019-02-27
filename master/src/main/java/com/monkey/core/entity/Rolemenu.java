@@ -1,5 +1,7 @@
 package com.monkey.core.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.time.LocalDateTime;
@@ -36,6 +38,7 @@ public class RoleMenu implements Serializable {
     /**
      * guid
      */
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
     @TableField("roleId")

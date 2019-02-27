@@ -1,8 +1,6 @@
 package com.monkey.web.config;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.monkey.application.Device.ICategoryService;
 import com.monkey.application.Device.ITreeService;
 import com.monkey.application.Menus.IMenuService;
@@ -12,7 +10,6 @@ import com.monkey.application.Controls.IUserRoleService;
 import com.monkey.application.Controls.IUserService;
 import com.monkey.common.base.InitConst;
 import com.monkey.core.entity.*;
-import com.monkey.core.mapper.UserroleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class DataCreator implements CommandLineRunner {

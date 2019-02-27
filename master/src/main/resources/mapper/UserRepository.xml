@@ -36,24 +36,25 @@
         </collection>
     </resultMap>
     <select id="selectUserRole" parameterType="int" resultMap="UserRoleMap">
-        SELECT
+     SELECT
 	a.*,
-	c.id as roleId,
+	c.id AS roleId,
 	c.roleName,
 	c.displayName
 FROM
-	sale_user a
-	LEFT JOIN sale_userrole b ON a.id = b.userId
-	LEFT JOIN sale_role c ON b.roleId = c.id
-	where a.id=#{id}
+	user a
+	LEFT JOIN userrole b ON a.id = b.userId
+	LEFT JOIN role c ON b.roleId = c.id
+WHERE
+	a.id = #{id}
      </select>
 
     <select id="selectRolePermision" resultType="java.lang.String">
         SELECT
         b.`code`
         FROM
-        sale_rolemenu a
-        INNER JOIN sale_menu b ON a.menuId = b.id
+        roleMenu a
+        INNER JOIN menu b ON a.menuId = b.id
         WHERE
         a.roleId IN
         <foreach item="item" index="index" collection="roles" open="(" separator="," close=")">

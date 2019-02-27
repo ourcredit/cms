@@ -42,170 +42,82 @@ export const otherRouters: any = {
 };
 export const appRouters: Array<any> = [
   {
-    path: "/order",
-    name: "order",
-    meta: { title: "订单系统" },
-    permission: "order:show",
+    path: "/channel",
+    name: "channel",
+    meta: { title: "渠道" },
+    permission: "channel:show",
     icon: "&#xeb1c;",
     component: () => System.import("../views/main.vue"),
     children: [
       {
         path: "list",
-        meta: { title: "订单列表" },
-        permission: "order:list",
-        name: "ol",
+        meta: { title: "渠道列表" },
+        permission: "channels:list",
+        name: "channelslist",
         component: () => System.import("../views/orders/index.vue")
-      },
-      {
-        path: "back",
-        meta: { title: "退款单" },
-        permission: "order:back",
-        name: "back",
-        component: () => System.import("../views/orders/payback.vue")
       }
+    
     ]
   },
   {
-    path: "/pointer",
-    name: "pointer",
-    meta: { title: "点位管理" },
-    permission: "pointer:show",
+    path: "/customer",
+    name: "customer",
+    meta: { title: "客户" },
+    permission: "relation:show",
     icon: "&#xeb33;",
     component: () => System.import("../views/main.vue"),
     children: [
       {
-        path: "point",
-        meta: { title: "点位管理" },
-        permission: "point:list",
-        name: "point",
+        path: "list",
+        meta: { title: "客户列表" },
+        permission: "customer:list",
+        name: "customerlist",
         component: () => System.import("../views/points/index.vue")
-      }
-      // , {
-      //   path: "pointshow",
-      //   meta: { title: "点位展示" },
-      //   permission: "point:list",
-      //   name: "pointshow",
-      //   component: () => System.import("../views/points/show.vue")
-      // }
+      },
+       {
+        path: "share",
+        meta: { title: "共享列表" },
+        permission: "share:list",
+        name: "sharelist",
+        component: () => System.import("../views/points/show.vue")
+      },
+      {
+       path: "force",
+       meta: { title: "目标管理" },
+       permission: "force:list",
+       name: "forcelist",
+       component: () => System.import("../views/points/show.vue")
+     },
+     {
+      path: "sharelog",
+      meta: { title: "共享日志" },
+      permission: "share:list",
+      name: "sharelog",
+      component: () => System.import("../views/points/show.vue")
+    }
     ]
   },
   {
-    path: "/device",
-    name: "device",
-    meta: { title: "设备管理" },
-    permission: "devices:show",
+    path: "/contract",
+    name: "contract",
+    meta: { title: "合同" },
+    permission: "contract:show",
     icon: "&#xeac8;",
     component: () => System.import("../views/main.vue"),
     children: [
       {
         path: "list",
-        meta: { title: "设备管理" },
-        permission: "device:list",
-        name: "dl",
+        meta: { title: "合同列表" },
+        permission: "contracts:list",
+        name: "contractslist",
         component: () => System.import("../views/devices/index.vue")
-      }
-    ]
-  },
-  {
-    path: "/product",
-    name: "product",
-    meta: { title: "货物管理" },
-    permission: "product:show",
-    icon: "&#xeafc;",
-    component: () => System.import("../views/main.vue"),
-    children: [
-      // {
-      //   path: "list",
-      //   meta: { title: "商品管理" },
-      //   permission: "product:list",
-      //   name: "pl",
-      //   component: () => System.import("../views/products/index.vue")
-      // },
-      {
-        path: "door",
-        meta: { title: "上门管理" },
-        permission: "door:list",
-        name: "pd",
-        component: () => System.import("../views/products/door.vue")
-      }
-    ]
-  },
-  {
-    path: "/operation",
-    name: "operation",
-    meta: { title: "运维管理" },
-    permission: "operation:show",
-    icon: "&#xeafc;",
-    component: () => System.import("../views/main.vue"),
-    children: [
-      {
-        path: "staff",
-        meta: { title: "运维人员管理" },
-        permission: "staff:list",
-        name: "opestaff",
-        component: () => System.import("../views/operation/staff.vue")
       },
       {
-        path: "pickup",
-        meta: { title: "上门取货" },
-        permission: "pickup:list",
-        name: "opepickup",
-        component: () => System.import("../views/operation/pickup.vue")
-      },
-      {
-        path: "allow",
-        meta: { title: "运维人员分配" },
-        permission: "allow:list",
-        name: "opeallow",
-        component: () => System.import("../views/operation/allow.vue")
-      }
-    ]
-  },
-  // {
-  //   path: "/pay",
-  //   name: "pay",
-  //   meta: { title: "支付配置" },
-  //   permission: "pay:setting",
-  //   icon: "&#xeb18;",
-  //   component: () => System.import("../views/main.vue"),
-  //   children: [
-  //     {
-  //       path: "settings",
-  //       meta: { title: "支付设置" },
-  //       permission: "pay:first",
-  //       name: "ap",
-  //       component: () => System.import("../views/payfor/index.vue")
-  //     }
-  //   ]
-  // },
-  {
-    path: "/watch",
-    name: "watch",
-    meta: { title: "监控系统" },
-    permission: "watch:show",
-    icon: "&#xeafa;",
-    component: () => System.import("../views/main.vue"),
-    children: [
-      {
-        path: "action",
-        meta: { title: "后台操作日志" },
-        permission: "actionlog:list",
-        name: "action",
-        component: () => System.import("../views/actions/action.vue")
-      },
-      {
-        path: "run",
-        meta: { title: "监控运行日志" },
-        permission: "runlog:list",
-        name: "run",
-        component: () => System.import("../views/actions/run.vue")
-      },
-      {
-        path: "error",
-        meta: { title: "故障日志" },
-        permission: "errorlog:list",
-        name: "error",
-        component: () => System.import("../views/actions/error.vue")
+        path: "conlog",
+        meta: { title: "转单日志" },
+        permission: "conLog:list",
+        name: "conLoglist",
+        component: () => System.import("../views/devices/index.vue")
       }
     ]
   },
@@ -218,17 +130,17 @@ export const appRouters: Array<any> = [
     component: () => System.import("../views/main.vue"),
     children: [
       {
-        path: "/report/serial",
+        path: "/report/a",
         meta: { title: "流水信息" },
-        permission: "serial:list",
-        name: "report.serial",
+        permission: "a:list",
+        name: "a.serial",
         component: () => System.import("../views/report/serial.vue")
       },
       {
-        path: "/report/de",
+        path: "/report/b",
         meta: { title: "设备故障记录" },
-        permission: "devicewarn:list",
-        name: "report.de",
+        permission: "b:list",
+        name: "b.de",
         component: () => System.import("../views/report/de.vue")
       },
       {
@@ -269,13 +181,20 @@ export const appRouters: Array<any> = [
         name: "role",
         component: () => System.import("../views/setting/role/role.vue")
       },
-      // {
-      //   path: "category",
-      //   permission: "category:list",
-      //   meta: { title: "商品分类管理" },
-      //   name: "category",
-      //   component: () => System.import("../views/setting/category/index.vue")
-      // }
+      {
+        path: "category",
+        permission: "category:list",
+        meta: { title: "分类管理" },
+        name: "category",
+        component: () => System.import("../views/setting/category/index.vue")
+      },
+      {
+        path: "org",
+        permission: "org:list",
+        meta: { title: "组织机构管理" },
+        name: "org",
+        component: () => System.import("../views/setting/category/index.vue")
+      }
     ]
   }
 ];

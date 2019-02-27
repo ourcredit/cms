@@ -10,7 +10,7 @@
         <div slot="top" class="logo-con">
           <a>
             <Icon type="cube" size="32"></Icon>
-            <h1>烘干机</h1>
+            <h1>CRM</h1>
           </a>
         </div>
       </shrinkable-menu>

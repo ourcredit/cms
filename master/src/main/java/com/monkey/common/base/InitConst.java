@@ -19,7 +19,7 @@ public interface InitConst {
     }
     class _menu {
         public static List<MenuInfo> menuList = new ArrayList<MenuInfo>() {{
-            add(new MenuInfo("首页", PermissionConst._dashboard.list, "/dashboard", 1, null));
+            add(new MenuInfo("首页", PermissionConst._dashboard.show, "/dashboard", 1, null));
             add(new MenuInfo("渠道", PermissionConst._channel.show, "", 1, new ArrayList<MenuInfo>() {{
                 add(new MenuInfo("渠道列表", PermissionConst._channel._channelList.list, "/order/list", 1, new ArrayList<MenuInfo>() {{
                     add(new MenuInfo("查看订单", PermissionConst._channel._channelList.list, "", 2, null));
@@ -47,13 +47,13 @@ public interface InitConst {
                     add(new MenuInfo("批量删除目标", PermissionConst._relation._force.batch, "", 2, null));
                     add(new MenuInfo("获取详情", PermissionConst._relation._force.first, "", 2, null));
                 }}));
-                add(new MenuInfo("共享日志", PermissionConst._relation._share.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
+                add(new MenuInfo("共享日志", PermissionConst._relation._shareLog.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
                 }}));
             }}));
             add(new MenuInfo("合同", PermissionConst._contract.show, "", 1, new ArrayList<MenuInfo>() {{
                 add(new MenuInfo("合同列表", PermissionConst._contract._contractList.list, "/device/list", 1, new ArrayList<MenuInfo>() {{
                 }}));
-                add(new MenuInfo("转单日志", PermissionConst._contract._contractList.list, "/device/list", 1, new ArrayList<MenuInfo>() {{
+                add(new MenuInfo("转单日志", PermissionConst._contract._shareLog.list, "/device/list", 1, new ArrayList<MenuInfo>() {{
                 }}));
             }}));
 
@@ -90,11 +90,11 @@ public interface InitConst {
                     add(new MenuInfo("批量删除角色", PermissionConst._system._role.batch, "", 2, null));
                     add(new MenuInfo("获取详情", PermissionConst._system._role.first, "", 2, null));
                 }}));
-                add(new MenuInfo("组织机构管理", PermissionConst._system._role.list, "/system/role", 1, new ArrayList<MenuInfo>() {{
-                    add(new MenuInfo("编辑角色", PermissionConst._system._role.modify, "", 2, null));
-                    add(new MenuInfo("删除角色", PermissionConst._system._role.delete, "", 2, null));
-                    add(new MenuInfo("批量删除角色", PermissionConst._system._role.batch, "", 2, null));
-                    add(new MenuInfo("获取详情", PermissionConst._system._role.first, "", 2, null));
+                add(new MenuInfo("组织机构管理", PermissionConst._system._org.list, "/system/role", 1, new ArrayList<MenuInfo>() {{
+                    add(new MenuInfo("编辑角色", PermissionConst._system._org.modify, "", 2, null));
+                    add(new MenuInfo("删除角色", PermissionConst._system._org.delete, "", 2, null));
+                    add(new MenuInfo("批量删除角色", PermissionConst._system._org.batch, "", 2, null));
+                    add(new MenuInfo("获取详情", PermissionConst._system._org.first, "", 2, null));
                 }}));
             }}));
         }};

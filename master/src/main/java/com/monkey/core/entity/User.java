@@ -12,6 +12,7 @@ import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * <p>
@@ -27,14 +28,14 @@ import lombok.experimental.Accessors;
 public class User implements Serializable {
     public User(String acc, String pwd, String name, Integer active) {
         account = acc;
-        password = pwd;
+        password = BCrypt.hashpw(pwd,BCrypt.gensalt());
         userName = name;
         isActive = active;
     }
 
     public User(String acc, String pwd, String name, Integer active, Integer aId) {
         account = acc;
-        password = pwd;
+        password = BCrypt.hashpw(pwd,BCrypt.gensalt());
         userName = name;
         isActive = active;
         areaId = aId;

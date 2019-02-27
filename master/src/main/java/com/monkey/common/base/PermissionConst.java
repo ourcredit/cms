@@ -3,7 +3,7 @@ package com.monkey.common.base;
 public interface PermissionConst {
 
     class _dashboard {
-        public static final String list = "dashboard:show";
+        public static final String show = "dashboard:show";
     }
 
     class _channel {
@@ -37,6 +37,14 @@ public interface PermissionConst {
             public static final String first = "share:first";
         }
 
+        public static class _shareLog {
+            public static final String list = "slog:list";
+            public static final String modify = "share:modify";
+            public static final String delete = "share:delete";
+            public static final String batch = "share:batch";
+            public static final String first = "slog:first";
+        }
+
         public static class _force {
             public static final String list = "force:list";
             public static final String modify = "force:modify";
@@ -45,35 +53,51 @@ public interface PermissionConst {
             public static final String first = "force:first";
         }
     }
-    class  _contract{
-        public  static  final  String show="report:show";
-        public  static  class  _contractList{
-            public static final String list = "contractList:list";
-            public static final String modify = "contractList:modify";
-            public static final String delete = "contractList:delete";
-            public static final String batch = "contractList:batch";
-            public static final String first = "contractList:first";
+
+    class _contract {
+        public static final String show = "contract:show";
+
+        public static class _contractList {
+            public static final String list = "contracts:list";
+            public static final String modify = "contracts:modify";
+            public static final String delete = "contracts:delete";
+            public static final String batch = "contracts:batch";
+            public static final String first = "contracts:first";
+        }
+        public static class _shareLog {
+            public static final String list = "conLog:list";
+            public static final String modify = "conLog:modify";
+            public static final String delete = "conLog:delete";
+            public static final String batch = "conLog:batch";
+            public static final String first = "conLog:first";
         }
     }
-    class  _report{
-        public  static  final  String show="report:show";
-        public  static  class  _a{
-            public  static  final  String list="a:show";
+
+    class _report {
+        public static final String show = "report:show";
+
+        public static class _a {
+            public static final String list = "a:show";
         }
-        public  static  class  _b{
-            public  static  final  String list="b:show";
+
+        public static class _b {
+            public static final String list = "b:show";
         }
-        public  static  class  _c{
-            public  static  final  String list="c:show";
+
+        public static class _c {
+            public static final String list = "c:show";
         }
-        public  static  class  _d{
-            public  static  final  String list="d:show";
+
+        public static class _d {
+            public static final String list = "d:show";
         }
-        public  static  class  _e{
-            public  static  final  String list="e:show";
+
+        public static class _e {
+            public static final String list = "e:show";
         }
-        public  static  class  _f{
-            public  static  final  String list="f:show";
+
+        public static class _f {
+            public static final String list = "f:show";
         }
     }
 
