@@ -2,20 +2,16 @@ package com.monkey.core.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-
 import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
-
 import java.io.Serializable;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * <p>
+ * 
  * </p>
  *
  * @author zhaohejing
@@ -24,16 +20,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Role implements Serializable {
-    public Role() {
-    }
-
-    public Role(String name, String dis, Integer act, Integer sta) {
-        roleName = name;
-        displayName = dis;
-        isActive = act;
-        isStatic = sta;
-    }
+public class Visit implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,18 +29,6 @@ public class Role implements Serializable {
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-
-    /**
-     * name
-     */
-    @TableField("roleName")
-    private String roleName;
-
-    /**
-     * 显示名
-     */
-    @TableField("displayName")
-    private String displayName;
 
     /**
      * 创建时间
@@ -68,24 +43,45 @@ public class Role implements Serializable {
     private Integer creatorUserId;
 
     /**
-     * 启用状态
+     * 拜访时间
      */
-    @TableField("isActive")
-    private Integer isActive;
+    @TableField("visitTime")
+    private LocalDateTime visitTime;
 
     /**
-     * 是否静态
+     * 拜访地点
      */
-    @TableField("isStatic")
-    private Integer isStatic;
+    @TableField("visitPlace")
+    private String visitPlace;
 
     /**
-     * 描述
+     * 拜访目的
      */
-    private String description;
+    @TableField("visitForce")
+    private String visitForce;
 
-    @TableField("isDeleted")
-    private Integer isDeleted;
+    /**
+     * 拜访方式
+     */
+    @TableField("visitType")
+    private String visitType;
+
+    /**
+     * 拜访结果
+     */
+    @TableField("visitResult")
+    private String visitResult;
+
+    /**
+     * 类型字段
+     */
+    private Integer type;
+
+    /**
+     * 对应类型的主id
+     */
+    @TableField("objectId")
+    private Integer objectId;
 
 
 }

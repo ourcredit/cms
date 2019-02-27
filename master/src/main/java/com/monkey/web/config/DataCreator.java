@@ -104,9 +104,9 @@ public class DataCreator implements CommandLineRunner {
         Role r = _roleService.getOne(e);
         if (r != null) {
             List<Menu> lists = _menuService.list();
-            List<Rolemenu> rms = new ArrayList<>();
+            List<RoleMenu> rms = new ArrayList<>();
             for (Menu m : lists) {
-                rms.add(new Rolemenu(r.getId(), m.getId()));
+                rms.add(new RoleMenu(r.getId(), m.getId()));
             }
             _roleMenuService.saveBatch(rms);
         }

@@ -20,9 +20,12 @@ import com.monkey.web.annotation.Log;
 import com.monkey.web.controller.dtos.UserOutPut;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -72,7 +75,7 @@ public class UserController {
         c.setMobile(u.getMobile());
         c.setUserName(u.getUserName());
         c.setAccount(u.getAccount());
-        c.setCreationTime(u.getCreationTime());
+        c.setCreationTime(LocalDateTime.now());
         List all = _roleService.getAllPermissions();
         Boolean canBack = false;
 

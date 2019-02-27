@@ -1,47 +1,47 @@
 package com.monkey.core.entity;
 
-
-import lombok.Data;
-import com.baomidou.mybatisplus.annotation.*;
+import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
-import java.util.Date;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
  * 
  * </p>
  *
- * @author zhaohejing123
- * @since 2018-06-05
+ * @author zhaohejing
+ * @since 2019-02-27
  */
-@TableName("sale_userrole")
 @Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class Userrole implements Serializable {
-
+    public Userrole(){}
+    public Userrole(Integer uId,Integer rId){
+        userId=uId;
+        roleId=rId;
+    }
     private static final long serialVersionUID = 1L;
-    public  Userrole(){
-    }
-    public  Userrole(Integer userId,Integer roleId){
-    this.userId=userId;
-    this.roleId=roleId;
-    }
 
     /**
      * key
      */
-    @TableId(value = "id", type = IdType.UUID)
     private String id;
+
+    @TableField("userId")
     private Integer userId;
+
+    @TableField("roleId")
     private Integer roleId;
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Date creationTime;
-    /**
-     * 创建人id
-     */
-    @TableField(fill = FieldFill.INSERT)
+
+    @TableField("creationTime")
+    private LocalDateTime creationTime;
+
+    @TableField("creatorUserId")
     private Integer creatorUserId;
+
 
 }

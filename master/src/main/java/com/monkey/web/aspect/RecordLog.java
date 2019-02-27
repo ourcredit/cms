@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.monkey.application.OperationLogs.IOperationLogService;
 import com.monkey.common.util.ComUtil;
+import com.monkey.common.util.DateTimeUtil;
 import com.monkey.common.util.JWTUtil;
 import com.monkey.web.annotation.Log;
 import com.monkey.web.config.SpringContextBean;
@@ -16,6 +17,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 
@@ -73,7 +75,8 @@ public class RecordLog implements AspectApi {
         }
         operationLog.setIp(getIpAddress(request));
         operationLog.setClassName(joinPoint.getTarget().getClass().getName() );
-        operationLog.setCreationTime(new Date(startTime));
+        operationLog.setCreationTime(DateTimeUtil.getDateTimeOfTimestamp(startTime));
+
         operationLog.setLogDescription(log.description());
         if(isException){
             StringBuilder sb = new StringBuilder();

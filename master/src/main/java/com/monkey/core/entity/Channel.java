@@ -1,42 +1,109 @@
 package com.monkey.core.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
-import lombok.Data;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
-import java.util.Date;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
-@TableName("sale_channel")
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author zhaohejing
+ * @since 2019-02-27
+ */
 @Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class Channel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
-     * 主键id
+     * key
      */
     @TableId(value = "id", type = IdType.AUTO)
-    private String id;//key
+    private Integer id;
+
+    /**
+     * 渠道名
+     */
+    @TableField("channelName")
+    private String channelName;
+
+    /**
+     * 手机
+     */
+    private String mobile;
+
+    /**
+     * 级别
+     */
+    private String level;
+
+    /**
+     * 类型
+     */
+    private String type;
+
+    /**
+     * 工作单位
+     */
+    @TableField("workUnit")
+    private String workUnit;
+
+    /**
+     * 岗位
+     */
+    private String post;
+
+    /**
+     * 业务类型
+     */
+    private String business;
+
+    /**
+     * 地址
+     */
+    private String address;
+
+    /**
+     * 来源
+     */
+    private String from;
+
+    /**
+     * 编码
+     */
     private String code;
-    private String channelName;//渠道名
-    private String mobile;//手机
-    private String level;//渠道级别
-    private String type;//渠道类型
-    private String workUnit;//工作单位
-    private String post;//岗位
-    private String business;//业务
-    private String address;//地址
-    private String from;//来源
+
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
-    private Date creationTime;
+    @TableField("creationTime")
+    private LocalDateTime creationTime;
+
     /**
      * 创建人id
      */
-    @TableField(fill = FieldFill.INSERT)
+    @TableField("creatorUserId")
     private Integer creatorUserId;
+
     /**
-     * 创建人id
+     * 创建人姓名
      */
-    @TableField(fill = FieldFill.INSERT)
-    private Integer creatorName;
+    @TableField("creatorName")
+    private String creatorName;
+
+    /**
+     * 备注
+     */
+    private String remark;
+
+
 }

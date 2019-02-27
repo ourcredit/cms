@@ -2,20 +2,16 @@ package com.monkey.core.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-
 import java.time.LocalDateTime;
-
 import com.baomidou.mybatisplus.annotation.TableField;
-
 import java.io.Serializable;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * <p>
+ * 
  * </p>
  *
  * @author zhaohejing
@@ -24,17 +20,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Menu implements Serializable {
-    public Menu() {
-    }
-
-    public Menu(String n, String c, String u, Integer t, Integer parent) {
-        name = n;
-        code = c;
-        url = u;
-        type = t;
-        parentId = parent;
-    }
+public class Follow implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,39 +31,45 @@ public class Menu implements Serializable {
     private Integer id;
 
     /**
-     * 显示名
+     * 创建时间
      */
-    private String name;
+    @TableField("creationTime")
+    private LocalDateTime creationTime;
 
     /**
-     * url
+     * 创建人id
      */
-    private String url;
+    @TableField("creatorUserId")
+    private Integer creatorUserId;
 
     /**
-     * 1 菜单 2按钮
+     * 下次跟进时间
+     */
+    @TableField("nextfollowTime")
+    private LocalDateTime nextfollowTime;
+
+    /**
+     * 跟进内容
+     */
+    @TableField("visitContent")
+    private String visitContent;
+
+    /**
+     * 选定跟进时间
+     */
+    @TableField("followTime")
+    private LocalDateTime followTime;
+
+    /**
+     * 类型字段
      */
     private Integer type;
 
     /**
-     * 权限码
+     * 对应类型的主id
      */
-    private String code;
-
-    /**
-     * 父级id
-     */
-    @TableField("parentId")
-    private Integer parentId;
-
-    @TableField("creationTime")
-    private LocalDateTime creationTime;
-
-    @TableField("creatorUserId")
-    private Integer creatorUserId;
-
-    @TableField("isDeleted")
-    private Integer isDeleted;
+    @TableField("objectId")
+    private Integer objectId;
 
 
 }

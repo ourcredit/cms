@@ -18,7 +18,6 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.monkey.application.OperationLogs.IErrorlogService;
 import com.monkey.common.base.SocketConstant;
 import com.monkey.web.controller.dtos.WebSocketMessage;
 import org.slf4j.Logger;
@@ -30,8 +29,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class WebSocketServer {
     protected static final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
-    @Autowired
-    IErrorlogService _errorlogService;
     private static Map<String, Integer> clientsState = new ConcurrentHashMap<>();
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static Integer onlineCount = 0;

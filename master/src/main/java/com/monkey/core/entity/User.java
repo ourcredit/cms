@@ -1,82 +1,110 @@
 package com.monkey.core.entity;
 
-import java.util.Date;
-import com.baomidou.mybatisplus.annotation.*;
-import lombok.Data;
-import org.mindrot.jbcrypt.BCrypt;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
 /**
  * <p>
- * 
+ * <p>
  * </p>
  *
  * @author zhaohejing
- * @since 2018-07-26
+ * @since 2019-02-27
  */
-@TableName("sale_user")
 @Data
-public class User  implements  Serializable {
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class User implements Serializable {
+    public User(String acc, String pwd, String name, Integer active) {
+        account = acc;
+        password = pwd;
+        userName = name;
+        isActive = active;
+    }
+
+    public User(String acc, String pwd, String name, Integer active, Integer aId) {
+        account = acc;
+        password = pwd;
+        userName = name;
+        isActive = active;
+        areaId = aId;
+    }
+
+    public User() {
+    }
 
     private static final long serialVersionUID = 1L;
-    public  User(){}
-    public  User(String account,String password,String userName,Integer isActive,Integer areaId){
-        this.account=account;
-        this.password=BCrypt.hashpw(password,BCrypt.gensalt());
-        this.userName=userName;
-        this.isActive=isActive;
-        this.areaId=areaId;
-    }
-    public  User(String account,String password,String userName,Integer isActive){
-        this.account=account;
-        this.password=BCrypt.hashpw(password,BCrypt.gensalt());
-        this.userName=userName;
-        this.isActive=isActive;
-    }
+
     /**
      * 自增主键
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+
     /**
      * 账户
      */
     private String account;
+
     /**
      * 密码
      */
     private String password;
-    private  Integer areaId;
+
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
-    private Date creationTime;
+    @TableField("creationTime")
+    private LocalDateTime creationTime;
+
     /**
      * 创建人id
      */
-    @TableField(fill = FieldFill.INSERT)
+    @TableField("creatorUserId")
     private Integer creatorUserId;
+
     /**
      * 姓名
      */
+    @TableField("userName")
     private String userName;
+
     /**
      * 手机
      */
     private String mobile;
+
     /**
      * 1启用  0禁用
      */
+    @TableField("isActive")
     private Integer isActive;
+
     /**
-     * 软删除  
+     * 软删除
      */
+    @TableField("isDeleted")
     private Integer isDeleted;
+
     /**
      * 最后登陆时间
      */
-    private Date lastLoginTime;
+    @TableField("lastLoginTime")
+    private LocalDateTime lastLoginTime;
 
+    /**
+     * 区域id
+     */
+    @TableField("areaId")
+    private Integer areaId;
 }

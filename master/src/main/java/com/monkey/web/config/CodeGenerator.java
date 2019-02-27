@@ -9,10 +9,12 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 // 演示例子，执行 main 方法控制台输入模块表名回车自动生成对应项目目录中
 public class CodeGenerator {
 
@@ -21,30 +23,15 @@ public class CodeGenerator {
      * 读取控制台内容
      * </p>
      */
-    public static String scanner(String tip) {
-        Scanner scanner = new Scanner(System.in);
-        StringBuilder help = new StringBuilder();
-        help.append("请输入" + tip + "：");
-        System.out.println(help.toString());
-        if (scanner.hasNext()) {
-            String ipt = scanner.next();
-            if (StringUtils.isNotEmpty(ipt)) {
-                return ipt;
-            }
-        }
-        throw new MybatisPlusException("请输入正确的" + tip + "！");
-    }
-
-    public static void main(String[] args) {
+    private static void Build(String table) {
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
-
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/src/main/java");
+        gc.setOutputDir("E:/develop/");
         gc.setAuthor("zhaohejing");
-        gc.setOpen(false);
+        gc.setOpen(true);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -58,7 +45,7 @@ public class CodeGenerator {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName(scanner("模块名"));
+        //   pc.setModuleName("entity");
         pc.setParent("com.monkey.core.entity");
         mpg.setPackageInfo(pc);
 
@@ -82,8 +69,8 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return projectPath + "/src/main/resources/mapper/" + pc.getModuleName()
-                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                return "E:/develop/" + pc.getModuleName()
+                        + "/" + tableInfo.getEntityName() + "Repository" + StringPool.DOT_XML;
             }
         });
 
@@ -106,17 +93,43 @@ public class CodeGenerator {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-      //  strategy.setSuperEntityClass("com.baomidou.ant.common.BaseEntity");
+        //  strategy.setSuperEntityClass("com.baomidou.ant.common.BaseEntity");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-      //  strategy.setSuperControllerClass("com.baomidou.ant.common.BaseController");
-        strategy.setInclude(scanner("表名"));
-      //  strategy.setSuperEntityColumns("id");
+        strategy.setSuperControllerClass("com.monkey.web.controller.BaseController");
+        strategy.setInclude(table);
+        //  strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
+    }
+
+    public static void main(String[] args) {
+
+        List<String> list = new ArrayList<String>() {
+            {
+                add("customer");
+                add("category");
+                add("channel");
+                add("file");
+                add("follow");
+                add("log");
+                add("menu");
+                add("role");
+                add("roleMenu");
+                add("tree");
+                add("user");
+                add("userrole");
+                add("visit");
+            }
+        };
+        for (String x : list
+                ) {
+            Build(x);
+        }
+
     }
 
 }

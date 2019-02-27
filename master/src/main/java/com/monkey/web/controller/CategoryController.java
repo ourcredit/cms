@@ -30,14 +30,14 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("api/category")
-public class CategoryController {
+public class CategoryController extends  BaseController {
     @Autowired
     ICategoryService _categoryService;
     @ApiOperation(value = "获取分类全部",notes = "分类列表")
     @RequestMapping(value = "/all",method = RequestMethod.POST)
     @RequiresPermissions(value = {PermissionConst._system._category.list})
     public PublicResult<List<Category>> categorys() throws Exception{
-        QueryWrapper<Category> filter = new QueryWrapper<>();
+       filter = new QueryWrapper<>();
         List<Category> res= _categoryService.list( filter);
         return new PublicResult<>(PublicResultConstant.SUCCESS, res);
     }
@@ -57,7 +57,6 @@ public class CategoryController {
         Category m=_categoryService.getById(id);
         return new PublicResult<>(PublicResultConstant.SUCCESS, m);
     }
-
     @Log(description="分类接口:/添加或编辑分类")
     @ApiOperation(value = "添加或编辑分类",notes = "分类列表")
     @RequestMapping(method = RequestMethod.PUT)

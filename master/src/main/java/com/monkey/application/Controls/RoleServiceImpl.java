@@ -7,7 +7,7 @@ import com.monkey.application.Menus.IRoleMenuService;
 import com.monkey.core.dtos.RoleDto;
 import com.monkey.core.entity.Menu;
 import com.monkey.core.entity.Role;
-import com.monkey.core.entity.Rolemenu;
+import com.monkey.core.entity.RoleMenu;
 import com.monkey.core.mapper.MenuRepository;
 import com.monkey.core.mapper.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,9 +70,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleRepository, Role> implement
             ew = new QueryWrapper();
             ew.in("code", model.getPermissions());
             List<Menu> lists = _menuRepository.selectList(ew);
-            List<Rolemenu> rms=new ArrayList<>();
+            List<RoleMenu> rms=new ArrayList<>();
             for (Menu x:lists){
-                rms.add(new Rolemenu(role.getId(),x.getId()));
+                rms.add(new RoleMenu(role.getId(),x.getId()));
             }
             _roleMenuService.saveBatch(rms);
         }

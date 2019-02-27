@@ -38,17 +38,9 @@ public class MybatisPlusConfig {
     public PerformanceInterceptor performanceInterceptor() {
         return new PerformanceInterceptor();
     }
-    @Bean
-    public MetaObjectHandler metaObjectHandler() {
-        return new MyMetaObjectHandler();
-    }
 
-    /**
-     * 注入sql注入器
-     */
     @Bean
     public ISqlInjector sqlInjector() {
         return new LogicSqlInjector();
     }
-
 }

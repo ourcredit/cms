@@ -4,7 +4,7 @@ package com.monkey.application.Menus;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.monkey.application.dtos.RoleMenuInput;
-import com.monkey.core.entity.Rolemenu;
+import com.monkey.core.entity.RoleMenu;
 
 import java.util.List;
 
@@ -16,13 +16,13 @@ import java.util.List;
  * @author liugh123
  * @since 2018-05-03
  */
-public interface IRoleMenuService extends IService<Rolemenu> {
+public interface IRoleMenuService extends IService<RoleMenu> {
     /**
      * 根据角色ID查询
      * @param roleId    角色ID
      * @return  结果集
      */
-    List<Rolemenu> selectByRoleId(Integer roleId);
+    List<RoleMenu> selectByRoleId(Integer roleId);
     /**
      * 添加角色 菜单关系
      * @param input    dto

@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -49,7 +50,7 @@ public class LoginController {
         if (ComUtil.isEmpty(user) || !BCrypt.checkpw(input.passWord, user.getPassword())) {
             return new PublicResult<>(PublicResultConstant.INVALID_USERNAME_PASSWORD, null);
         }
-        user.setLastLoginTime(new Date());
+        user.setLastLoginTime(LocalDateTime.now());
         _userService.updateById(user);
         NgUserModel u = new NgUserModel(JWTUtil.sign(user.getUserName(), user.getId(), user.getPassword()), null);
         return new PublicResult<>(PublicResultConstant.SUCCESS, u);
