@@ -211,6 +211,8 @@
         </dependency>
     </dependencies>
 
+
+
     <build>
         <plugins>
             <!-- Srping Boot 打包工具 -->
@@ -229,35 +231,52 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok-maven-plugin</artifactId>
-                <version>1.18.6.0</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>delombok</id>
-                        <phase>generate-sources</phase>
+                        <id>help-goal</id>
                         <goals>
-                            <goal>delombok</goal>
+                            <goal>helpmojo</goal>
                         </goals>
-                        <configuration>
-                            <formatPreferences>
-                                <javaLangAsFQN>skip</javaLangAsFQN>
-                            </formatPreferences>
-                            <verbose>true</verbose>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>test-delombok</id>
-                        <phase>generate-test-sources</phase>
-                        <goals>
-                            <goal>testDelombok</goal>
-                        </goals>
-                        <configuration>
-                            <verbose>true</verbose>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <extractors>
+                        <extractor>java-annotations</extractor>
+                    </extractors>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <links>
+                        <link>http://maven.apache.org/ref/3.6.0/maven-plugin-api/apidocs/</link>
+                        <link>http://maven.apache.org/ref/3.6.0/maven-core/apidocs/</link>
+                    </links>
+                    <linksource>true</linksource>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <configuration>
+                    <targetJdk>1.8</targetJdk>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+
+
 </project>
