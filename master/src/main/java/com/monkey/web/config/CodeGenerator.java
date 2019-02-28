@@ -29,7 +29,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir("E:/develop/");
+        gc.setOutputDir("D:/develop/");
         gc.setAuthor("zhaohejing");
         gc.setOpen(true);
         mpg.setGlobalConfig(gc);
@@ -69,7 +69,7 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-                return "E:/develop/" + pc.getModuleName()
+                return "D:/develop/" + pc.getModuleName()
                         + "/" + tableInfo.getEntityName() + "Repository" + StringPool.DOT_XML;
             }
         });
@@ -94,7 +94,7 @@ public class CodeGenerator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         //  strategy.setSuperEntityClass("com.baomidou.ant.common.BaseEntity");
-        strategy.setEntityLombokModel(true);
+        strategy.setEntityLombokModel(false);
         strategy.setRestControllerStyle(true);
         strategy.setSuperControllerClass("com.monkey.web.controller.BaseController");
         strategy.setInclude(table);
