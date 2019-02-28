@@ -3,20 +3,41 @@
     <Card dis-hover>
       <div class="page-body">
         <Form ref="queryForm" :label-width="80" label-position="left" inline>
-          <Row :gutter="8">
-            <Col span="8">
-            <FormItem label="名称:">
+          <Row :gutter="16">
+            <Col span="5">
+            <FormItem label="用户名:" style="width:100%">
               <Input v-model="filters.account"></Input>
             </FormItem>
             </Col>
-            <Col span="8">
+            <Col span="5">
+            <FormItem label="姓名" style="width:100%">
+              <Input v-model="filters.userName"></Input>
+            </FormItem>
+            </Col>
+            <Col span="5">
+            <FormItem label="状态:">
+              <Select clearable v-model="filters.isActive" style="width:160px">
+                <Option v-for="item in actives" :value="item.key" :key="item.key">{{ item.name }}</Option>
+              </Select>
+            </FormItem>
+            </Col>
+            <Col span="5">
+            <FormItem label="创建时间" style="width:100%">
+              <DatePicker v-model="filters.creationTime" type="datetimerange" format="yyyy-MM-dd" style="width:100%"
+                placement="bottom-end" placeholder="选择时间"></DatePicker>
+            </FormItem>
+            </Col>
+            <Col span="4">
             <Button @click="Create" icon="android-add" type="primary" size="large">新增</Button>
             <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn">查找</Button>
             </Col>
           </Row>
         </Form>
         <div class="margin-top-10">
-          <SaleTable ref="table" :filters="filters" :type="'category'" :columns="columns"></SaleTable>
+          <Table :loading="loading" :columns="columns" no-data-text="暂无数据" border :data="list">
+          </Table>
+          <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange"
+            @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage"></Page>
         </div>
       </div>
     </Card>
@@ -31,43 +52,52 @@
     Prop,
     Watch
   } from "vue-property-decorator";
-  import AbpBase from "../../../lib/abpbase";
-  import PageRequest from "../../../store/entities/page-request";
+  import AbpBase from "../../lib/abpbase";
+  import PageRequest from "../../store/entities/page-request";
   import Modify from "./modify.vue";
-  import Category from "@/store/entities/category";
-  import SaleTable from "@/components/saletable.vue";
+  import User from "@/store/entities/user";
   @Component({
     components: {
-      Modify,
-      SaleTable
+      Modify
     }
   })
   export default class Users extends AbpBase {
-    filters: any = {
-      name: ""
+    filters: Object = {
+      account: "",
+      userName: "",
+      creationTime: null
     };
     ModalShow: boolean = false;
     get list() {
-      return this.$store.state.category.list;
+      return this.$store.state.user.list;
     }
-
+    actives: Array < any > = [{
+      key: '',
+      name: "全部"
+    }, {
+      key: 1,
+      name: "启用"
+    }, {
+      key: 0,
+      name: "禁用"
+    }]
     get loading() {
-      return this.$store.state.category.loading;
+      return this.$store.state.user.loading;
     }
     Create() {
-      var u = new Category();
-      this.$store.commit("category/edit", u);
+      var u = new User();
+      this.$store.commit("user/edit", u);
       this.ModalShow = true;
     }
     Modify() {
       this.ModalShow = true;
     }
     pageChange(page: number) {
-      this.$store.commit("category/setCurrentPage", page);
+      this.$store.commit("user/setCurrentPage", page);
       this.getpage();
     }
     pagesizeChange(pagesize: number) {
-      this.$store.commit("category/setPageSize", pagesize);
+      this.$store.commit("user/setPageSize", pagesize);
       this.getpage();
     }
     async getpage() {
@@ -76,30 +106,32 @@
       pagerequest.index = this.currentPage;
       pagerequest.where = this.filters;
       await this.$store.dispatch({
-        type: "category/getAll",
+        type: "user/getAll",
         data: pagerequest
       });
     }
     get pageSize() {
-      return this.$store.state.category.pageSize;
+      return this.$store.state.user.pageSize;
     }
     get totalCount() {
-      return this.$store.state.category.totalCount;
+      return this.$store.state.user.totalCount;
     }
     get currentPage() {
-      return this.$store.state.category.currentPage;
+      return this.$store.state.user.currentPage;
     }
     columns = [{
-        title: "作用域",
-        key: "code"
+        title: "用户名",
+        key: "account"
       },
       {
-        title: "分类名",
-        key: "name"
+        title: "姓名",
+        key: "userName"
       },
       {
-        title: "上级编码",
-        key: "parent"
+        title: "状态",
+        render: (h: any, params: any) => {
+          return h("span", params.row.isActive ? "启用" : "禁用");
+        }
       },
       {
         title: "创建时间",
@@ -109,6 +141,12 @@
             "span",
             new Date(params.row.creationTime).toLocaleDateString()
           );
+        }
+      },
+      {
+        title: "最近登陆时间",
+        render: (h: any, params: any) => {
+          return h("span", new Date(params.row.lastLoginTime).toLocaleString());
         }
       },
       {
@@ -129,8 +167,8 @@
                 on: {
                   click: () => {
                     this.$store.dispatch({
-                      type: "category/get",
-                      data: params.row.id
+                      type: "user/get",
+                      data: params.row
                     });
                     this.Modify();
                   }
@@ -153,8 +191,8 @@
                       cancelText: "否",
                       onOk: async () => {
                         await this.$store.dispatch({
-                          type: "category/batch",
-                          data: [params.row.id]
+                          type: "user/delete",
+                          data: params.row
                         });
                         await this.getpage();
                       }
@@ -168,6 +206,15 @@
         }
       }
     ];
-    async created() {}
+    async created() {
+      this.getpage();
+      await this.$store.dispatch({
+        type: "user/getRoles"
+      });
+      await this.$store.dispatch({
+        type: "device/initTree",
+        data: {}
+      });
+    }
   }
 </script>

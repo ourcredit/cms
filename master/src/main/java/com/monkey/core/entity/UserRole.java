@@ -2,11 +2,9 @@ package com.monkey.core.entity;
 
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.*;
 
-import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
 
 
 /**
@@ -17,7 +15,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
  * @author zhaohejing
  * @since 2019-02-27
  */
-
+@TableName("userrole")
 public class UserRole implements Serializable {
     public UserRole(){}
     public UserRole(Integer uId, Integer rId){
@@ -38,10 +36,10 @@ public class UserRole implements Serializable {
     @TableField("roleId")
     private Integer roleId;
 
-    @TableField("creationTime")
+    @TableField(value = "creationTime",fill = FieldFill.INSERT)
     private LocalDateTime creationTime;
 
-    @TableField("creatorUserId")
+     @TableField(value = "creatorUserId",fill = FieldFill.INSERT)
     private Integer creatorUserId;
 
     public String getId() {

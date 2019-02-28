@@ -7,6 +7,7 @@ import PageResult from "@/store/entities/page-result";
 import ListMutations from "@/store/modules/base/list-mutations";
 interface ICategoryState extends IListState<Category> {
   editCategory: Category;
+  cateList: Array<any>;
 }
 class CategoryMutations extends ListMutations<Category> { }
 class CategoryModule extends ListModule<ICategoryState, any, Category> {
@@ -15,6 +16,7 @@ class CategoryModule extends ListModule<ICategoryState, any, Category> {
     currentPage: 1,
     pageSize: 10,
     list: new Array<Category>(),
+    cateList: new Array<any>(),
     loading: false,
     editCategory: new Category(),
   };
@@ -30,15 +32,15 @@ class CategoryModule extends ListModule<ICategoryState, any, Category> {
       context.state.totalCount = page.total;
       context.state.list = page.records;
     },
-    async all(
+    async init(
       context: ActionContext<ICategoryState, any>,
       payload: any
     ): Promise<any> {
       context.state.loading = true;
       let reponse: any = await Ajax.post("/api/category/all");
       context.state.loading = false;
-      let page: Array<any> = reponse.data as Array<Category>;
-      context.state.list = page;
+      let page: Array<any> = reponse.data as Array<any>;
+      context.state.cateList = page;
     },
     async modify(
       context: ActionContext<ICategoryState, any>,

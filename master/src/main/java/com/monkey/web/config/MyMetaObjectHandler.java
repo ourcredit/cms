@@ -21,7 +21,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         Object creationTime = getFieldValByName("creationTime",metaObject);
       //  Object tenantId = getFieldValByName("tenantId",metaObject);
         if (null == creationTime) {
-            metaObject.setValue("creationTime", LocalDateTime.now());
+            this.setFieldValByName("creationTime",  LocalDateTime.now(), metaObject);//版本号3.0.6以及之前的版本
         }
         Object creatorUserId = metaObject.getValue("creatorUserId");
        //获取当前登录用户
@@ -30,7 +30,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
             HttpServletRequest req = s.getRequest();
             User user = (User) req.getAttribute("currentUser");
             if (null == creatorUserId &&user!=null) {
-                metaObject.setValue("creatorUserId", user.getId());
+                this.setFieldValByName("creatorUserId",  user.getId(), metaObject);//版本号3.0.6以及之前的版本
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.monkey.application.Device;
+package com.monkey.application.Category;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.monkey.core.entity.Tree;

@@ -1,5 +1,6 @@
 package com.monkey.core.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
@@ -51,13 +52,13 @@ public class Tree implements Serializable {
     /**
      * 创建时间
      */
-    @TableField("creationTime")
+    @TableField(value = "creationTime",fill = FieldFill.INSERT)
     private LocalDateTime creationTime;
 
     /**
      * 创建人id
      */
-    @TableField("creatorUserId")
+     @TableField(value = "creatorUserId",fill = FieldFill.INSERT)
     private Integer creatorUserId;
 
     /**

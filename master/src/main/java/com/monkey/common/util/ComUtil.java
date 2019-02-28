@@ -3,6 +3,7 @@ package com.monkey.common.util;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * @author liugh

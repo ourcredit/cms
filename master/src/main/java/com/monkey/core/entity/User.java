@@ -1,5 +1,6 @@
 package com.monkey.core.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
@@ -67,7 +68,7 @@ public class User implements Serializable {
     /**
      * 创建人id
      */
-    @TableField("creatorUserId")
+     @TableField(value = "creatorUserId",fill = FieldFill.INSERT)
     private Integer creatorUserId;
 
     /**

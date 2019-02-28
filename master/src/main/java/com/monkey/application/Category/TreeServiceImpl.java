@@ -1,4 +1,4 @@
-package com.monkey.application.Device;
+package com.monkey.application.Category;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

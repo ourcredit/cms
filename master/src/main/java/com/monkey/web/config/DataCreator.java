@@ -1,8 +1,8 @@
 package com.monkey.web.config;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.monkey.application.Device.ICategoryService;
-import com.monkey.application.Device.ITreeService;
+import com.monkey.application.Category.ICategoryService;
+import com.monkey.application.Category.ITreeService;
 import com.monkey.application.Menus.IMenuService;
 import com.monkey.application.Menus.IRoleMenuService;
 import com.monkey.application.Controls.IRoleService;

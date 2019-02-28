@@ -2,6 +2,7 @@ package com.monkey.core.entity;
 
 import java.time.LocalDateTime;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
@@ -35,15 +36,15 @@ public class Category implements Serializable {
     /**
      * 创建时间
      */
-    @TableField("creationTime")
+    @TableField(value = "creationTime",fill = FieldFill.INSERT)
     private LocalDateTime creationTime;
 
     /**
      * 创建人id
      */
-    @TableField("creatorUserId")
+     @TableField(value = "creatorUserId",fill = FieldFill.INSERT)
     private Integer creatorUserId;
-
+    private String code;
     /**
      * 上级id
      */
@@ -95,5 +96,10 @@ public class Category implements Serializable {
                 ", parent=" + parent +
                 "}";
     }
-
+    public String getCode() {
+        return code;
+    }
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

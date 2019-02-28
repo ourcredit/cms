@@ -1,12 +1,8 @@
 package com.monkey.core.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.time.LocalDateTime;
-
-import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
 
@@ -45,13 +41,13 @@ public class RoleMenu implements Serializable {
     /**
      * 创建时间
      */
-    @TableField("creationTime")
+    @TableField(value = "creationTime",fill = FieldFill.INSERT)
     private LocalDateTime creationTime;
 
     /**
      * 创建人id
      */
-    @TableField("creatorUserId")
+     @TableField(value = "creatorUserId",fill = FieldFill.INSERT)
     private Integer creatorUserId;
 
     public String getId() {

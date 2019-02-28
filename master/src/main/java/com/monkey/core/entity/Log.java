@@ -2,6 +2,7 @@ package com.monkey.core.entity;
 
 import java.time.LocalDateTime;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
@@ -72,13 +73,13 @@ public class Log implements Serializable {
     /**
      * 创建时间
      */
-    @TableField("creationTime")
+    @TableField(value = "creationTime",fill = FieldFill.INSERT)
     private LocalDateTime creationTime;
 
     /**
      * 创建人id
      */
-    @TableField("creatorUserId")
+     @TableField(value = "creatorUserId",fill = FieldFill.INSERT)
     private Integer creatorUserId;
 
     public void setId(String id) {

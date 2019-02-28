@@ -54,7 +54,13 @@ export const appRouters: Array<any> = [
         meta: { title: "渠道列表" },
         permission: "channels:list",
         name: "channelslist",
-        component: () => System.import("../views/orders/index.vue")
+        component: () => System.import("../views/channel/index.vue")
+      } ,{
+        path: "first",
+        meta: { title: "渠道详情" },
+        permission: "channels:first",
+        name: "channelsfirst",
+        component: () => System.import("../views/channel/details.vue")
       }
     
     ]
@@ -72,28 +78,28 @@ export const appRouters: Array<any> = [
         meta: { title: "客户列表" },
         permission: "customer:list",
         name: "customerlist",
-        component: () => System.import("../views/points/index.vue")
+        component: () => System.import("../views/customer/index.vue")
       },
        {
         path: "share",
         meta: { title: "共享列表" },
         permission: "share:list",
         name: "sharelist",
-        component: () => System.import("../views/points/show.vue")
+        component: () => System.import("../views/customer/index.vue")
       },
       {
        path: "force",
        meta: { title: "目标管理" },
        permission: "force:list",
        name: "forcelist",
-       component: () => System.import("../views/points/show.vue")
+       component: () => System.import("../views/customer/index.vue")
      },
      {
       path: "sharelog",
       meta: { title: "共享日志" },
       permission: "share:list",
       name: "sharelog",
-      component: () => System.import("../views/points/show.vue")
+      component: () => System.import("../views/customer/index.vue")
     }
     ]
   },

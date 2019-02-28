@@ -1,10 +1,7 @@
 package com.monkey.core.mapper;
 
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.monkey.core.entity.Category;
-
-import java.util.List;
+import com.monkey.core.entity.Customer;
 
 /**
  * <p>
@@ -12,7 +9,8 @@ import java.util.List;
  * </p>
  *
  * @author zhaohejing
- * @since 2018-08-27
+ * @since 2019-02-28
  */
-public interface CategoryRepository extends BaseMapper<Category> {
+public interface CustomerRepository extends BaseMapper<Customer> {
+
 }
