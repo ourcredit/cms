@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.application.dtos.UserRoleInput;
 import com.monkey.common.util.ComUtil;
 import com.monkey.core.entity.UserRole;
-import com.monkey.core.mapper.UserroleRepository;
+import com.monkey.core.mapper.UserRoleRepository;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ import java.util.List;
  * @since 2018-05-03
  */
 @Service
-public class UserRoleServiceImpl extends ServiceImpl<UserroleRepository, UserRole> implements IUserRoleService {
+public class UserRoleServiceImpl extends ServiceImpl<UserRoleRepository, UserRole> implements IUserRoleService {
 
     @Override
     @Cacheable(value = "UserToRoleServiceImpl:selectByUserId", key = "'user_role_'.concat(#root.args[0])")
