@@ -10,9 +10,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -22,9 +19,7 @@ import lombok.experimental.Accessors;
  * @author zhaohejing
  * @since 2019-02-27
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+
 @TableName("roleMenu")
 public class RoleMenu implements Serializable {
 
@@ -59,5 +54,51 @@ public class RoleMenu implements Serializable {
     @TableField("creatorUserId")
     private Integer creatorUserId;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+    public Integer getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(Integer menuId) {
+        this.menuId = menuId;
+    }
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+    public Integer getCreatorUserId() {
+        return creatorUserId;
+    }
+
+    public void setCreatorUserId(Integer creatorUserId) {
+        this.creatorUserId = creatorUserId;
+    }
+
+    @Override
+    public String toString() {
+        return "RoleMenu{" +
+                "id=" + id +
+                ", roleId=" + roleId +
+                ", menuId=" + menuId +
+                ", creationTime=" + creationTime +
+                ", creatorUserId=" + creatorUserId +
+                "}";
+    }
 
 }

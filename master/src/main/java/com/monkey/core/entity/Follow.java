@@ -5,9 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
 
 /**
  * <p>
@@ -17,9 +15,7 @@ import lombok.experimental.Accessors;
  * @author zhaohejing
  * @since 2019-02-27
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+
 public class Follow implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,5 +67,75 @@ public class Follow implements Serializable {
     @TableField("objectId")
     private Integer objectId;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+    public Integer getCreatorUserId() {
+        return creatorUserId;
+    }
+
+    public void setCreatorUserId(Integer creatorUserId) {
+        this.creatorUserId = creatorUserId;
+    }
+    public LocalDateTime getNextfollowTime() {
+        return nextfollowTime;
+    }
+
+    public void setNextfollowTime(LocalDateTime nextfollowTime) {
+        this.nextfollowTime = nextfollowTime;
+    }
+    public String getVisitContent() {
+        return visitContent;
+    }
+
+    public void setVisitContent(String visitContent) {
+        this.visitContent = visitContent;
+    }
+    public LocalDateTime getFollowTime() {
+        return followTime;
+    }
+
+    public void setFollowTime(LocalDateTime followTime) {
+        this.followTime = followTime;
+    }
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+    public Integer getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(Integer objectId) {
+        this.objectId = objectId;
+    }
+
+    @Override
+    public String toString() {
+        return "Follow{" +
+                "id=" + id +
+                ", creationTime=" + creationTime +
+                ", creatorUserId=" + creatorUserId +
+                ", nextfollowTime=" + nextfollowTime +
+                ", visitContent=" + visitContent +
+                ", followTime=" + followTime +
+                ", type=" + type +
+                ", objectId=" + objectId +
+                "}";
+    }
 
 }

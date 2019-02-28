@@ -7,9 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
 
 /**
  * <p>
@@ -19,12 +17,10 @@ import lombok.experimental.Accessors;
  * @author zhaohejing
  * @since 2019-02-27
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
-public class Userrole implements Serializable {
-    public Userrole(){}
-    public Userrole(Integer uId,Integer rId){
+
+public class UserRole implements Serializable {
+    public UserRole(){}
+    public UserRole(Integer uId, Integer rId){
         userId=uId;
         roleId=rId;
     }
@@ -48,5 +44,51 @@ public class Userrole implements Serializable {
     @TableField("creatorUserId")
     private Integer creatorUserId;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+    public Integer getCreatorUserId() {
+        return creatorUserId;
+    }
+
+    public void setCreatorUserId(Integer creatorUserId) {
+        this.creatorUserId = creatorUserId;
+    }
+
+    @Override
+    public String toString() {
+        return "Userrole{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", roleId=" + roleId +
+                ", creationTime=" + creationTime +
+                ", creatorUserId=" + creatorUserId +
+                "}";
+    }
 
 }

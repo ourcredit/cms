@@ -7,9 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+
 
 /**
  * <p>
@@ -19,9 +17,7 @@ import lombok.experimental.Accessors;
  * @author zhaohejing
  * @since 2019-02-27
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+
 public class File implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,4 +67,74 @@ public class File implements Serializable {
     private Integer creatorUserId;
 
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
+    }
+    public String getExt() {
+        return ext;
+    }
+
+    public void setExt(String ext) {
+        this.ext = ext;
+    }
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+    public Integer getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Integer tenantId) {
+        this.tenantId = tenantId;
+    }
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+    public Integer getCreatorUserId() {
+        return creatorUserId;
+    }
+
+    public void setCreatorUserId(Integer creatorUserId) {
+        this.creatorUserId = creatorUserId;
+    }
+
+    @Override
+    public String toString() {
+        return "File{" +
+                "id=" + id +
+                ", name=" + name +
+                ", size=" + size +
+                ", ext=" + ext +
+                ", path=" + path +
+                ", tenantId=" + tenantId +
+                ", creationTime=" + creationTime +
+                ", creatorUserId=" + creatorUserId +
+                "}";
+    }
 }

@@ -6,12 +6,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.application.Controls.dtos.CreateUserInput;
 import com.monkey.core.dtos.UserDto;
 import com.monkey.core.entity.User;
-import com.monkey.core.entity.Userrole;
-import com.monkey.core.mapper.RoleRepository;
+import com.monkey.core.entity.UserRole;
 import com.monkey.core.mapper.UserRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -77,7 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
             ew = new QueryWrapper<>();
             ew.eq("userId", u.getId());
             _userRoleRepository.remove(ew);
-            List<Userrole> urs = new ArrayList<>();
+            List<UserRole> urs = new ArrayList<>();
             ew = new QueryWrapper();
             ew.eq("isStatic", 1);
             //   List<Role> rs = _roleRepository.selectList(ew);
@@ -88,11 +86,11 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
 //            }
             for (Integer r : input.roles) {
                 if (!temp.contains(r)) {
-                    urs.add(new Userrole(u.getId(), r));
+                    urs.add(new UserRole(u.getId(), r));
                 }
             }
             for (Integer r : temp) {
-                urs.add(new Userrole(u.getId(), r));
+                urs.add(new UserRole(u.getId(), r));
             }
             _userRoleRepository.saveBatch(urs);
         }
@@ -111,9 +109,9 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
     public boolean register(User user, List<Integer> roles) {
         boolean result = this.save(user);
         if (result) {
-            List<Userrole> ur = new ArrayList<>();
+            List<UserRole> ur = new ArrayList<>();
             for (Integer roleId : roles) {
-                ur.add(new Userrole(user.getId(), roleId));
+                ur.add(new UserRole(user.getId(), roleId));
             }
             _userRoleRepository.saveBatch(ur);
         }

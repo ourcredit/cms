@@ -7,7 +7,7 @@ import com.monkey.common.util.ComUtil;
 import com.monkey.common.util.JWTUtil;
 import com.monkey.core.entity.Menu;
 import com.monkey.core.entity.User;
-import com.monkey.core.entity.Userrole;
+import com.monkey.core.entity.UserRole;
 import com.monkey.web.config.SpringContextBean;
 import com.monkey.web.exception.UnauthorizedException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -55,12 +55,12 @@ public class MyRealm extends AuthorizingRealm {
         QueryWrapper ew=new QueryWrapper();
         ew.eq("userName",username);
         User user = userService.getOne(ew);
-        List<Userrole> userToRole = userRoleService.selectByUserId(user.getId());
+        List<UserRole> userToRole = userRoleService.selectByUserId(user.getId());
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         ArrayList<String> peers = new ArrayList<>();
         List<Integer> roles=new ArrayList<>();
-        for (Userrole r :userToRole){
+        for (UserRole r :userToRole){
             roles.add(r.getRoleId());
         }
         List<Menu> menuList = menuService.findMenuByRoleId(roles);

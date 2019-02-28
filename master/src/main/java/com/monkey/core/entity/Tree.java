@@ -9,9 +9,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -21,9 +18,7 @@ import lombok.experimental.Accessors;
  * @author zhaohejing
  * @since 2019-02-27
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+
 public class Tree implements Serializable {
     public Tree() {
     }
@@ -72,4 +67,58 @@ public class Tree implements Serializable {
     private String levelCode;
 
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+    public Integer getCreatorUserId() {
+        return creatorUserId;
+    }
+
+    public void setCreatorUserId(Integer creatorUserId) {
+        this.creatorUserId = creatorUserId;
+    }
+    public String getLevelCode() {
+        return levelCode;
+    }
+
+    public void setLevelCode(String levelCode) {
+        this.levelCode = levelCode;
+    }
+
+    @Override
+    public String toString() {
+        return "Tree{" +
+                "id=" + id +
+                ", name=" + name +
+                ", parentId=" + parentId +
+                ", creationTime=" + creationTime +
+                ", creatorUserId=" + creatorUserId +
+                ", levelCode=" + levelCode +
+                "}";
+    }
 }

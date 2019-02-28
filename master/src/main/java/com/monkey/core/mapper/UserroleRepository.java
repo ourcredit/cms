@@ -1,7 +1,7 @@
 package com.monkey.core.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.monkey.core.entity.Userrole;
+import com.monkey.core.entity.UserRole;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.monkey.core.entity.Userrole;
  * @author zhaohejing123
  * @since 2018-06-05
  */
-public interface UserroleRepository extends BaseMapper<Userrole> {
+public interface UserroleRepository extends BaseMapper<UserRole> {
 
 }

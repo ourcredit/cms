@@ -85,9 +85,9 @@ public class DataCreator implements CommandLineRunner {
                 de = _roleService.getOne(rw);
             }
         }
-        List<Userrole> rels = new ArrayList<>();
-        rels.add(new Userrole(u.getId(), r.getId()));
-        rels.add(new Userrole(u.getId(), de.getId()));
+        List<UserRole> rels = new ArrayList<>();
+        rels.add(new UserRole(u.getId(), r.getId()));
+        rels.add(new UserRole(u.getId(), de.getId()));
         _userRoleService.remove(new QueryWrapper<>());
         _userRoleService.saveBatch(rels);
     }
