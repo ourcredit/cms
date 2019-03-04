@@ -1,10 +1,8 @@
 package com.monkey.core.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
 
@@ -16,7 +14,7 @@ import java.io.Serializable;
  * @author zhaohejing
  * @since 2019-02-27
  */
-
+@TableName("visit")
 public class Visit implements Serializable {
 
     private static final long serialVersionUID = 1L;

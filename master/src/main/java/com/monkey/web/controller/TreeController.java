@@ -38,8 +38,8 @@ public class TreeController {
     public PublicResult<List<Tree>> Trees( @CurrentUser User current) throws Exception{
         QueryWrapper<Tree> filter = new QueryWrapper<>();
         Tree t;List<Tree> res;
-        if(current.getAreaId()!=null){
-             t=_treeService.getById(current.getAreaId());
+        if(current.getOrgId()!=null){
+             t=_treeService.getById(current.getOrgId());
             if(t!=null){
                 filter.like("levelCode",t.getLevelCode());
             }

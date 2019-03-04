@@ -2,12 +2,9 @@ package com.monkey.core.entity;
 
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.*;
 
-import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -17,7 +14,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
  * @author zhaohejing
  * @since 2019-02-27
  */
-
+@TableName("category")
 public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;

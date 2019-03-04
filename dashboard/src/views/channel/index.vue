@@ -15,9 +15,9 @@
             </FormItem>
             </Col>
             <Col span="5">
-            <FormItem label="状态:">
-              <Select clearable v-model="filters.isActive" style="width:160px">
-                <Option v-for="item in actives" :value="item.key" :key="item.key">{{ item.name }}</Option>
+            <FormItem label="渠道类型:">
+              <Select clearable v-model="filters.type" style="width:160px">
+                <Option v-for="item in ChannelType" :value="item.name" :key="item.name">{{ item.name }}</Option>
               </Select>
             </FormItem>
             </Col>
@@ -28,20 +28,33 @@
             </FormItem>
             </Col>
             <Col span="4">
-            <Button @click="Create" icon="android-add" type="primary" size="large">新增</Button>
-            <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn">查找</Button>
+            <Button icon="ios-search" type="primary" size="large" @click="init" class="toolbar-btn">查找</Button>
             </Col>
           </Row>
         </Form>
+      </div>
+    </Card>
+    <Card dis-hover>
+      <div class="page-body">
+        <Row :gutter="16">
+          <Col span="20">
+          <Tag color="success" type="border">本月约饭量 300</Tag>
+          <Tag color="success" type="border">累计约饭量 3000</Tag>
+          <Tag color="success" type="border">本月约谈量 200</Tag>
+          <Tag color="success" type="border">累计约谈量 2000</Tag>
+          </Col>
+          <Col span="3">
+          <Button @click="Create" icon="android-add" type="primary" size="large">新增</Button>
+          </Col>
+        </Row>
         <div class="margin-top-10">
-          <Table :loading="loading" :columns="columns" no-data-text="暂无数据" border :data="list">
-          </Table>
-          <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange"
-            @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage"></Page>
+          <SaleTable ref="table" :filters="filters" :type="'channel'" :columns="columns"></SaleTable>
         </div>
       </div>
     </Card>
-    <Modify v-model="ModalShow" @save-success="getpage"></Modify>
+    <Modify  v-model="ModalShow" @save-success="init"></Modify>
+    <Visit v-model="VisitShow" @save-success="init"></Visit>
+    <Lunch v-model="LunchShow" @save-success="init"></Lunch>
   </div>
 </template>
 <script lang="ts">
@@ -55,10 +68,16 @@
   import AbpBase from "../../lib/abpbase";
   import PageRequest from "../../store/entities/page-request";
   import Modify from "./modify.vue";
+  import Visit from "./visit.vue";
+  import Lunch from "./lunch.vue";
   import User from "@/store/entities/user";
+  import SaleTable from "@/components/saletable.vue";
   @Component({
     components: {
-      Modify
+      Modify,
+      SaleTable,
+      Visit,
+      Lunch
     }
   })
   export default class Users extends AbpBase {
@@ -67,87 +86,143 @@
       userName: "",
       creationTime: null
     };
+
+    get ChannelType() {
+      var t = this.$store.state.category.cateList;
+      var res = new Array < any > ();
+      t.forEach(a => {
+        if (a.code == "渠道类型") {
+          a.dic.forEach(b => {
+            res.push({
+              key: b.key,
+              name: b.name
+            });
+          });
+        }
+      });
+      return res;
+    }
+    get ChannelLevel() {
+      var t = this.$store.state.category.cateList;
+      var res = new Array < any > ();
+      t.forEach(a => {
+        if (a.code == "渠道等级") {
+          a.dic.forEach(b => {
+            res.push({
+              key: b.key,
+              name: b.name
+            });
+          });
+        }
+      });
+      return res;
+    }
+    get ChannelBusiness() {
+      var t = this.$store.state.category.cateList;
+      var res = new Array < any > ();
+      t.forEach(a => {
+        if (a.code == "主营业务") {
+          a.dic.forEach(b => {
+            res.push({
+              key: b.key,
+              name: b.name
+            });
+          });
+        }
+      });
+      return res;
+    }
+
     ModalShow: boolean = false;
+    VisitShow: boolean = false;
+    LunchShow: boolean = false;
     get list() {
       return this.$store.state.user.list;
     }
-    actives: Array < any > = [{
-      key: '',
-      name: "全部"
-    }, {
-      key: 1,
-      name: "启用"
-    }, {
-      key: 0,
-      name: "禁用"
-    }]
     get loading() {
-      return this.$store.state.user.loading;
+      return this.$store.state.channel.loading;
     }
     Create() {
       var u = new User();
-      this.$store.commit("user/edit", u);
+      this.$store.commit("channel/edit", u);
       this.ModalShow = true;
     }
     Modify() {
       this.ModalShow = true;
     }
-    pageChange(page: number) {
-      this.$store.commit("user/setCurrentPage", page);
-      this.getpage();
+     VisitModify() {
+      this.VisitShow = true;
     }
-    pagesizeChange(pagesize: number) {
-      this.$store.commit("user/setPageSize", pagesize);
-      this.getpage();
+     LunchModify() {
+      this.LunchShow = true;
     }
-    async getpage() {
-      let pagerequest = new PageRequest();
-      pagerequest.size = this.pageSize;
-      pagerequest.index = this.currentPage;
-      pagerequest.where = this.filters;
-      await this.$store.dispatch({
-        type: "user/getAll",
-        data: pagerequest
-      });
-    }
-    get pageSize() {
-      return this.$store.state.user.pageSize;
-    }
-    get totalCount() {
-      return this.$store.state.user.totalCount;
-    }
-    get currentPage() {
-      return this.$store.state.user.currentPage;
+    init() {
+      var t: any = this.$refs.table;
+      t.getpage();
     }
     columns = [{
-        title: "用户名",
-        key: "account"
+        title: "渠道编号",
+        key: "code"
       },
       {
-        title: "姓名",
-        key: "userName"
+        title: "录入日期",
+        key: "creationTime"
       },
       {
-        title: "状态",
-        render: (h: any, params: any) => {
-          return h("span", params.row.isActive ? "启用" : "禁用");
-        }
+        title: "业务部门",
+        key: "post"
       },
       {
-        title: "创建时间",
-        key: "creationTime",
+        title: "贷款顾问",
+        key: "creatorName"
+      },
+      {
+        title: "渠道姓名",
+        key: "channelName"
+      },
+      {
+        title: "渠道等级",
+        key: "level"
+      },
+      {
+        title: "渠道类型",
+        key: "type"
+      },
+      {
+        title: "渠道单位",
+        key: "workUnit"
+      },
+      {
+        title: "主营业务",
+        key: "business"
+      },
+      {
+        title: "拜访日期",
+        key: "visitTime",
         render: (h: any, params: any) => {
           return h(
             "span",
-            new Date(params.row.creationTime).toLocaleDateString()
+            new Date(params.row.visitTime).toLocaleDateString()
           );
         }
       },
       {
-        title: "最近登陆时间",
+        title: "拜访量",
+        key: "visitCount"
+      },
+      {
+        title: "约饭日期",
+        key: "lunchTime",
         render: (h: any, params: any) => {
-          return h("span", new Date(params.row.lastLoginTime).toLocaleString());
+          return h(
+            "span",
+            new Date(params.row.lunchTime).toLocaleDateString()
+          );
         }
+      },
+      {
+        title: "约饭量",
+        key: "lunchCount"
       },
       {
         title: "操作",
@@ -167,54 +242,63 @@
                 on: {
                   click: () => {
                     this.$store.dispatch({
-                      type: "user/get",
+                      type: "channel/get",
+                      data: params.row
+                    });
+                    this.VisitModify();
+                  }
+                }
+              },
+              "拜访"
+            ),
+            h(
+              "Button", {
+                props: {
+                  type: "primary",
+                  size: "small"
+                },
+                style: {
+                  marginRight: "5px"
+                },
+                on: {
+                  click: () => {
+                    this.$store.dispatch({
+                      type: "channel/get",
+                      data: params.row
+                    });
+                    this.LunchModify();
+                  }
+                }
+              },
+              "约饭"
+            ),
+            h(
+              "Button", {
+                props: {
+                  type: "primary",
+                  size: "small"
+                },
+                style: {
+                  marginRight: "5px"
+                },
+                on: {
+                  click: () => {
+                    this.$store.dispatch({
+                      type: "channel/get",
                       data: params.row
                     });
                     this.Modify();
                   }
                 }
               },
-              "编辑"
-            ),
-            h(
-              "Button", {
-                props: {
-                  type: "error",
-                  size: "small"
-                },
-                on: {
-                  click: async () => {
-                    this.$Modal.confirm({
-                      title: "删除提示",
-                      content: "确认要删除么",
-                      okText: "是",
-                      cancelText: "否",
-                      onOk: async () => {
-                        await this.$store.dispatch({
-                          type: "user/delete",
-                          data: params.row
-                        });
-                        await this.getpage();
-                      }
-                    });
-                  }
-                }
-              },
-              "删除"
+              "新增客户"
             )
           ]);
         }
       }
     ];
     async created() {
-      this.getpage();
-      await this.$store.dispatch({
-        type: "user/getRoles"
-      });
-      await this.$store.dispatch({
-        type: "device/initTree",
-        data: {}
-      });
+      this.init();
     }
   }
 </script>

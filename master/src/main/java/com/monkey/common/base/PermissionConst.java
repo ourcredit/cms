@@ -15,6 +15,9 @@ public interface PermissionConst {
             public static final String delete = "channels:delete";
             public static final String batch = "channels:batch";
             public static final String first = "channels:first";
+            public static final String visit = "channels:visit";
+            public static final String lunch = "channels:lunch";
+            public static final String createCustomer = "channels:createCustomer";
         }
     }
 

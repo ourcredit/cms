@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2019-02-28
  */
 @Service
-public class ChannelServiceImpl extends ServiceImpl<ChannelRepository, Channel> implements IChannelService {
+public class ChannelService extends ServiceImpl<ChannelRepository, Channel> implements IChannelService {
 
 }

@@ -1,12 +1,8 @@
 package com.monkey.core.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 
 import java.time.LocalDateTime;
-
-import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
 
@@ -30,12 +26,12 @@ public class User implements Serializable {
         isActive = active;
     }
 
-    public User(String acc, String pwd, String name, Integer active, Integer aId) {
+    public User(String acc, String pwd, String name, Integer active, Integer oid) {
         account = acc;
         password = BCrypt.hashpw(pwd,BCrypt.gensalt());
         userName = name;
         isActive = active;
-        areaId = aId;
+        orgId=oid;
     }
 
     public User() {
@@ -77,6 +73,10 @@ public class User implements Serializable {
     @TableField("userName")
     private String userName;
 
+@TableField("orgId")
+    private Integer orgId;
+    @TableField("orgName")
+    private  String orgName;
     /**
      * 手机
      */
@@ -99,13 +99,6 @@ public class User implements Serializable {
      */
     @TableField("lastLoginTime")
     private LocalDateTime lastLoginTime;
-
-    /**
-     * 区域id
-     */
-    @TableField("areaId")
-    private Integer areaId;
-
     public Integer getId() {
         return id;
     }
@@ -176,13 +169,7 @@ public class User implements Serializable {
     public void setLastLoginTime(LocalDateTime lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
-    public Integer getAreaId() {
-        return areaId;
-    }
 
-    public void setAreaId(Integer areaId) {
-        this.areaId = areaId;
-    }
 
     @Override
     public String toString() {
@@ -197,7 +184,23 @@ public class User implements Serializable {
                 ", isActive=" + isActive +
                 ", isDeleted=" + isDeleted +
                 ", lastLoginTime=" + lastLoginTime +
-                ", areaId=" + areaId +
+                ", orgId=" + orgId +
                 "}";
+    }
+
+    public Integer getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Integer orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }

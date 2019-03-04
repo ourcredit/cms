@@ -10,6 +10,6 @@ public class CreateUserInput {
     public String userName;
     public String mobile;
     public Integer isActive;
-    public Integer areaId;
+    public Integer orgId;
     public List<Integer> roles;
 }

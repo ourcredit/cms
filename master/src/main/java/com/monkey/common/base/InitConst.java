@@ -22,10 +22,13 @@ public interface InitConst {
             add(new MenuInfo("首页", PermissionConst._dashboard.show, "/dashboard", 1, null));
             add(new MenuInfo("渠道", PermissionConst._channel.show, "", 1, new ArrayList<MenuInfo>() {{
                 add(new MenuInfo("渠道列表", PermissionConst._channel._channelList.list, "/order/list", 1, new ArrayList<MenuInfo>() {{
-                    add(new MenuInfo("查看订单", PermissionConst._channel._channelList.list, "", 2, null));
+                    add(new MenuInfo("获取详情", PermissionConst._channel._channelList.first, "", 2, null));
                     add(new MenuInfo("编辑", PermissionConst._channel._channelList.modify, "", 2, null));
                     add(new MenuInfo("批量删除", PermissionConst._channel._channelList.batch, "", 2, null));
                     add(new MenuInfo("删除", PermissionConst._channel._channelList.delete, "", 2, null));
+                    add(new MenuInfo("约谈", PermissionConst._channel._channelList.visit, "", 2, null));
+                    add(new MenuInfo("约饭", PermissionConst._channel._channelList.lunch, "", 2, null));
+                    add(new MenuInfo("创建客户", PermissionConst._channel._channelList.createCustomer, "", 2, null));
                 }}));
             }}));
             add(new MenuInfo("客户", PermissionConst._relation.show, "", 1, new ArrayList<MenuInfo>() {{

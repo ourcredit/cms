@@ -56,7 +56,7 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
         QueryWrapper ew = new QueryWrapper<>();
         ew.eq("account", input.account);
         if (input.id == null) {
-            u = new User(input.account, input.password, input.userName, input.isActive, input.areaId);
+            u = new User(input.account, input.password, input.userName, input.isActive, input.orgId);
             this.save(u);
         } else {
             u = this.getOne(ew);
@@ -64,7 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
                 u.setMobile(input.mobile);
                 u.setIsActive(input.isActive);
                 u.setUserName(input.userName);
-                u.setAreaId(input.areaId);
+                u.setOrgId(input.orgId);
                 if (input.password != null && !input.password.isEmpty()) {
                     u.setPassword(BCrypt.hashpw(input.password, BCrypt.gensalt()));
                 }

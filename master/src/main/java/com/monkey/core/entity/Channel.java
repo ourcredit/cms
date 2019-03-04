@@ -1,10 +1,8 @@
 package com.monkey.core.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
 
@@ -16,7 +14,7 @@ import java.io.Serializable;
  * @author zhaohejing
  * @since 2019-02-27
  */
-
+@TableName("channel")
 public class Channel implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,11 +66,8 @@ public class Channel implements Serializable {
      * 地址
      */
     private String address;
-
-    /**
-     * 来源
-     */
-    private String from;
+    //来源
+    private String source;
 
     /**
      * 编码
@@ -96,7 +91,18 @@ public class Channel implements Serializable {
      */
     @TableField("creatorName")
     private String creatorName;
+    @TableField("orgName")
+    private  String orgName;
 
+
+    @TableField("visitTime")
+    private  LocalDateTime visitTime;
+    @TableField("visitCount")
+    private  String visitCount;
+    @TableField("lunchTime")
+    private  LocalDateTime lunchTime;
+    @TableField("lunchCount")
+    private  String lunchCount;
     /**
      * 备注
      */
@@ -165,13 +171,7 @@ public class Channel implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
-    public String getFrom() {
-        return from;
-    }
 
-    public void setFrom(String from) {
-        this.from = from;
-    }
     public String getCode() {
         return code;
     }
@@ -220,7 +220,7 @@ public class Channel implements Serializable {
                 ", post=" + post +
                 ", business=" + business +
                 ", address=" + address +
-                ", from=" + from +
+                ", source=" + getSource() +
                 ", code=" + code +
                 ", creationTime=" + creationTime +
                 ", creatorUserId=" + creatorUserId +
@@ -229,4 +229,54 @@ public class Channel implements Serializable {
                 "}";
     }
 
+    /**
+     * 来源
+     */
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public LocalDateTime getVisitTime() {
+        return visitTime;
+    }
+
+    public void setVisitTime(LocalDateTime visitTime) {
+        this.visitTime = visitTime;
+    }
+
+    public String getVisitCount() {
+        return visitCount;
+    }
+
+    public void setVisitCount(String visitCount) {
+        this.visitCount = visitCount;
+    }
+
+    public LocalDateTime getLunchTime() {
+        return lunchTime;
+    }
+
+    public void setLunchTime(LocalDateTime lunchTime) {
+        this.lunchTime = lunchTime;
+    }
+
+    public String getLunchCount() {
+        return lunchCount;
+    }
+
+    public void setLunchCount(String lunchCount) {
+        this.lunchCount = lunchCount;
+    }
 }
