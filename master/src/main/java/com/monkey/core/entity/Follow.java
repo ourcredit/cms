@@ -50,7 +50,7 @@ public class Follow implements Serializable {
      */
     @TableField("visitContent")
     private String visitContent;
-
+    private  Integer time;
     /**
      * 选定跟进时间
      */
@@ -139,4 +139,11 @@ public class Follow implements Serializable {
                 "}";
     }
 
+    public Integer getTime() {
+        return time;
+    }
+
+    public void setTime(Integer time) {
+        this.time = time;
+    }
 }

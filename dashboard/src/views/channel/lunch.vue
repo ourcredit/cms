@@ -1,10 +1,10 @@
 <template>
     <div>
         <Modal title="约饭" :value="value" @on-ok="save" @on-visible-change="visibleChange">
-            <Form ref="channelForm" label-position="top" :rules="channelRule" :model="channel">
+            <Form ref="channelForm" label-position="top" :rules="lunchlRule" :model="lunch">
                 <Row :gutter="16">
-                    <FormItem label="约饭时长" prop="lunchTime">
-                        <DatePicker v-model="lunch.lunchTime" type="date" placeholder="约饭时间" width="100%"></DatePicker>
+                     <FormItem label="约饭时长" prop="time">
+                         <Input placeholder="约饭时长" v-model="lunch.time" :maxlength="32" />
                     </FormItem>
                 </Row>
                 <Row :gutter="16">
@@ -47,7 +47,9 @@
             default: false
         })
         value: boolean;
-        lunch: any = {};
+        lunch: any = {
+            type:2
+        };
         get channel() {
             var u = this.$store.state.channel.channel;
             return u;
@@ -63,8 +65,9 @@
             (this.$refs.channelForm as any).validate(async (valid: boolean) => {
                 if (valid) {
                     _.lunch.objectId = _.channel.id;
+                      _.lunch.type = 2;
                     await this.$store.dispatch({
-                        type: "channel/lunch",
+                        type: "channel/visit",
                         data: this.lunch
                     });
                     (this.$refs.channelForm as any).resetFields();
@@ -82,15 +85,15 @@
                 this.$emit("input", value);
             }
         }
-        channelRule = {
-            visitTime: [{
+        lunchlRule = {
+            lunchTime: [{
                 required: true,
-                message: "拜访时间必填",
+                message: "约饭时间必填",
                 trigger: "blur"
             }],
-            visitResult: [{
+            lunchResult: [{
                 required: true,
-                message: "拜访结果必填",
+                message: "约饭结果必填",
                 trigger: "blur"
             }]
         };

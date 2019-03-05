@@ -34,13 +34,23 @@ export const otherRouters: any = {
       permission: "dashboard:show",
       component: () => System.import("../views/home/dashboard.vue")
     },
-    // {
-    // path: "/allowproduct",
-    // meta: { title: "分配商品" },
-    // name: "allowproduct",
-    // permission: "device:allow",
-    // component: () => System.import("../views/devices/allow.vue")
-    // }
+    {
+      path: "/channel/modify",
+      meta: {
+        title: "渠道编辑"
+      },
+      permission: "channels:modify",
+      name: "channelsmodify",
+      component: () => System.import("../views/channel/modify.vue")
+    }, {
+      path: "/channel/first",
+      meta: {
+        title: "渠道详情"
+      },
+      permission: "channels:first",
+      name: "channelsfirst",
+      component: () => System.import("../views/channel/details.vue")
+    }
   ]
 };
 export const appRouters: Array < any > = [{
@@ -60,22 +70,6 @@ export const appRouters: Array < any > = [{
       permission: "channels:list",
       name: "channelslist",
       component: () => System.import("../views/channel/index.vue")
-    }, {
-      path: "first",
-      meta: {
-        title: "渠道详情"
-      },
-      permission: "channels:first",
-      name: "channelsfirst",
-      component: () => System.import("../views/channel/details.vue")
-    }, {
-      path: "modify",
-      meta: {
-        title: "渠道编辑"
-      },
-      permission: "channels:modify",
-      name: "channelsmodify",
-      component: () => System.import("../views/channel/modify.vue")
     }]
   },
   {

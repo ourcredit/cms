@@ -54,7 +54,7 @@ public class Visit implements Serializable {
      */
     @TableField("visitForce")
     private String visitForce;
-
+    private  Integer time;
     /**
      * 拜访方式
      */
@@ -165,4 +165,11 @@ public class Visit implements Serializable {
                 "}";
     }
 
+    public Integer getTime() {
+        return time;
+    }
+
+    public void setTime(Integer time) {
+        this.time = time;
+    }
 }

@@ -93,16 +93,14 @@ public class Channel implements Serializable {
     private String creatorName;
     @TableField("orgName")
     private  String orgName;
-
-
     @TableField("visitTime")
     private  LocalDateTime visitTime;
     @TableField("visitCount")
-    private  String visitCount;
+    private  Integer visitCount;
     @TableField("lunchTime")
     private  LocalDateTime lunchTime;
     @TableField("lunchCount")
-    private  String lunchCount;
+    private  Integer lunchCount;
     /**
      * 备注
      */
@@ -256,11 +254,11 @@ public class Channel implements Serializable {
         this.visitTime = visitTime;
     }
 
-    public String getVisitCount() {
+    public Integer getVisitCount() {
         return visitCount;
     }
 
-    public void setVisitCount(String visitCount) {
+    public void setVisitCount(Integer visitCount) {
         this.visitCount = visitCount;
     }
 
@@ -272,11 +270,11 @@ public class Channel implements Serializable {
         this.lunchTime = lunchTime;
     }
 
-    public String getLunchCount() {
+    public Integer getLunchCount() {
         return lunchCount;
     }
 
-    public void setLunchCount(String lunchCount) {
+    public void setLunchCount(Integer lunchCount) {
         this.lunchCount = lunchCount;
     }
 }

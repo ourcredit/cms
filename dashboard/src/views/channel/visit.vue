@@ -4,7 +4,7 @@
             <Form ref="channelForm" label-position="top" :rules="visitRule" :model="visit">
                 <Row :gutter="16">
                     <FormItem label="拜访时长" prop="visitTime">
-                        <DatePicker editable="false" v-model="visit.visitTime" type="date" placeholder="拜访时间" width="100%"></DatePicker>
+                         <Input placeholder="拜访时长" v-model="visit.time" :maxlength="32" />
                     </FormItem>
                 </Row>
                 <Row :gutter="16">
@@ -47,7 +47,8 @@
             default: false
         })
         value: boolean;
-        visit: any = {};
+        visit: any = {
+        };
         get channel() {
             var u = this.$store.state.channel.channel;
             return u;
@@ -63,6 +64,7 @@
             (this.$refs.channelForm as any).validate(async (valid: boolean) => {
                 if (valid) {
                     _.visit.objectId = _.channel.id;
+                    _.visit.type = 1;
                     await this.$store.dispatch({
                         type: "channel/visit",
                         data: _.visit

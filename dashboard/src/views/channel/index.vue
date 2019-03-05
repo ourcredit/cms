@@ -52,7 +52,7 @@
         </div>
       </div>
     </Card>
-    <Modify  v-model="ModalShow" @save-success="init"></Modify>
+    <Modify v-model="ModalShow" @save-success="init"></Modify>
     <Visit v-model="VisitShow" @save-success="init"></Visit>
     <Lunch v-model="LunchShow" @save-success="init"></Lunch>
   </div>
@@ -132,7 +132,6 @@
       });
       return res;
     }
-
     ModalShow: boolean = false;
     VisitShow: boolean = false;
     LunchShow: boolean = false;
@@ -150,19 +149,49 @@
     Modify() {
       this.ModalShow = true;
     }
-     VisitModify() {
+    VisitModify() {
       this.VisitShow = true;
     }
-     LunchModify() {
+    LunchModify() {
       this.LunchShow = true;
+    }
+    Details() {
+      this.$router.push({
+        name: "channelsfirst"
+      })
     }
     init() {
       var t: any = this.$refs.table;
+      if(t){
       t.getpage();
+      }
     }
     columns = [{
         title: "渠道编号",
-        key: "code"
+        key: "code",
+        render: (h: any, params: any) => {
+          return h(
+            "Button", {
+              props: {
+                type: "primary",
+                size: "small"
+              },
+              style: {
+                marginRight: "5px"
+              },
+              on: {
+                click: () => {
+                  this.$store.dispatch({
+                    type: "channel/get",
+                    data: params.row
+                  });
+                  this.Details();
+                }
+              }
+            },
+            params.row.code
+          );
+        }
       },
       {
         title: "录入日期",

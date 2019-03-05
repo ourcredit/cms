@@ -17,6 +17,7 @@ import serial from "@/store/modules/serial";
 import region from "@/store/modules/region";
 import error from "@/store/modules/error";
 import channel from "@/store/modules/channel";
+import visit from "@/store/modules/visit";
 const store: any = new Vuex.Store({
   state: {
     //
@@ -41,7 +42,8 @@ const store: any = new Vuex.Store({
     serial,
     region,
     error,
-    channel
+    channel,
+    visit
   }
 });
 

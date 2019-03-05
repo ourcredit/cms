@@ -42,8 +42,7 @@ public class ChannelController extends BaseController {
     IChannelService _channelService;
     @Autowired
     IVisitService _visitService;
-    @Autowired
-    IFollowService _followService;
+
 
     @ApiOperation(value = "获取列表", notes = "渠道列表")
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -54,6 +53,13 @@ public class ChannelController extends BaseController {
         return new PublicResult<>(PublicResultConstant.SUCCESS, res);
     }
 
+    @ApiOperation(value = "获取约谈列表", notes = "渠道列表")
+    @RequestMapping(value = "/visits", method = RequestMethod.POST)
+    public PublicResult<IPage<Visit>> pageVisits(@RequestBody PagedAndFilterInputDto page) throws Exception {
+        BuildWhere(page.where);
+        IPage<Visit> res = _visitService.page(new Page<>(page.index, page.size), filter);
+        return new PublicResult<>(PublicResultConstant.SUCCESS, res);
+    }
     @ApiOperation(value = "获取渠道详情", notes = "渠道列表")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @RequiresPermissions(value = {PermissionConst._channel._channelList.first})
@@ -100,33 +106,22 @@ public class ChannelController extends BaseController {
     @RequestMapping(value = "/visit", method = RequestMethod.POST)
     @RequiresPermissions(value = {PermissionConst._channel._channelList.visit})
     public PublicResult<Object> visit(@RequestBody Visit model) throws Exception {
-        if(model.getObjectId()==null)return  new PublicResult<Object>(PublicResultConstant.FAILED,"渠道不存在");
-
+        if(model.getObjectId()==null)return  new PublicResult<>(PublicResultConstant.FAILED,"渠道不存在");
         Boolean r = _visitService.save(model);
         if(r){
             Channel  c=_channelService.getById(model.getObjectId());
             if(c!=null){
-                c.setVisitTime(LocalDateTime.now());
-                c.setVisitCount(c.getVisitCount()+1);
+                if(model.getType()==1){
+                    c.setVisitTime(LocalDateTime.now());
+                    c.setVisitCount(c.getVisitCount()+1);
+                }else {
+                    c.setLunchTime(LocalDateTime.now());
+                    c.setLunchCount(c.getLunchCount()+1);
+                }
+                _channelService.saveOrUpdate(c);
             }
         }
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }
 
-    @Log(description = "渠道接口:/约饭")
-    @ApiOperation(value = "约饭", notes = "渠道列表")
-    @RequestMapping(value = "/lunch", method = RequestMethod.POST)
-    @RequiresPermissions(value = {PermissionConst._channel._channelList.lunch})
-    public PublicResult<Object> lunch(@RequestBody Follow model) throws Exception {
-        if(model.getObjectId()==null)return  new PublicResult<Object>(PublicResultConstant.FAILED,"渠道不存在");
-        Boolean r = _followService.save(model);
-        if(r){
-            Channel  c=_channelService.getById(model.getObjectId());
-            if(c!=null){
-                c.setLunchTime(LocalDateTime.now());
-                c.setLunchCount(c.getLunchCount()+1);
-            }
-        }
-        return new PublicResult<>(PublicResultConstant.SUCCESS, r);
-    }
 }
