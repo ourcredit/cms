@@ -1,21 +1,28 @@
 <template>
     <div>
-        <Modal title="拜访" :value="value" @on-ok="save" @on-visible-change="visibleChange">
+        <Modal :title="show" :value="value" @on-ok="save" @on-visible-change="visibleChange">
             <Form ref="channelForm" label-position="top" :rules="visitRule" :model="visit">
                 <Row :gutter="16">
-                    <FormItem label="拜访时长" prop="visitTime">
-                         <Input placeholder="拜访时长" v-model="visit.time" :maxlength="32" />
+                    <FormItem :label="show+'时长'" prop="visitTime">
+                        <InputNumber placeholder="时长" :step="1" v-model="visit.time" :max="999" :min="1"></InputNumber>
                     </FormItem>
                 </Row>
                 <Row :gutter="16">
-                    <FormItem label="拜访地点" prop="visitPlace">
+                    <FormItem :label="show+'地点'" prop="visitPlace">
                         <Input v-model="visit.visitPlace" :maxlength="32" />
                     </FormItem>
                 </Row>
                 <Row :gutter="16">
-                    <FormItem label="拜访结果" prop="visitResult">
+                    <FormItem label="拜访类型" prop="type">
+                        <Select v-model="type">
+                            <Option v-for="item in visitType" :value="item.key" :key="item.key">{{ item.name }}</Option>
+                        </Select>
+                    </FormItem>
+                </Row>
+                <Row :gutter="16">
+                    <FormItem :label="show+'结果'" prop="visitResult">
                         <Input v-model="visit.visitResult" type="textarea" :maxlength="32" :minlength="2" :autosize="{minRows: 2,maxRows: 5}"
-                            placeholder="拜访结果"></Input>
+                            placeholder="结果"></Input>
                     </FormItem>
                 </Row>
             </Form>
@@ -47,11 +54,26 @@
             default: false
         })
         value: boolean;
-        visit: any = {
-        };
+        @Prop({
+            type: Number,
+            default: false
+        })
+        type: Number;
+
+        visit: any = {};
+        visitType: Array < any >= [{
+            key: 1,
+            name: "拜访"
+        }, {
+            key: 2,
+            name: "约饭"
+        }];
         get channel() {
             var u = this.$store.state.channel.channel;
             return u;
+        }
+        get show() {
+            return this.type == 1 ? '拜访' : '约饭';
         }
         save() {
             if (this.channel == null || this.channel.id == null) {

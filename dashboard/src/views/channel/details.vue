@@ -66,6 +66,7 @@
         </Form>
         <Row>
             <div class="margin-top-10">
+                <Button @click="add" type="primary">新增拜访</Button>
                 <SaleTable ref="table" :filters="filters" :type="'visit'" :columns="columns"></SaleTable>
             </div>
         </Row>
@@ -77,6 +78,7 @@
             <Button @click="save" type="primary">保存</Button>
             </Col>
         </Row>
+        <Visit :type="1" v-model="ModalShow" @save-success="init"></Visit>
     </div>
 </template>
 <script lang="ts">
@@ -90,16 +92,19 @@
     import SaleTable from "@/components/saletable.vue";
     import Util from "../../lib/util";
     import AbpBase from "../../lib/abpbase";
+    import Visit from "./visit.vue";
     import {
         debug
     } from "util";
     @Component({
         components: {
             SaleTable,
+            Visit
         }
     })
     export default class channelDetail extends AbpBase {
         filters: any = {}
+        ModalShow: boolean = false;
         get ChannelLevel() {
             var t = this.$store.state.category.cateList;
             var res = new Array < any > ();
@@ -115,6 +120,7 @@
             });
             return res;
         }
+
         get ChannelType() {
             var t = this.$store.state.category.cateList;
             var res = new Array < any > ();
@@ -150,6 +156,9 @@
 
             return u;
         }
+        add() {
+            this.ModalShow = true;
+        }
         save() {
             (this.$refs.channelForm as any).validate(async (valid: boolean) => {
                 if (valid) {
@@ -167,7 +176,11 @@
             });
         }
         mounted() {
-            console.log(this.channel);
+           if (this.channel == null || this.channel.id == null) {
+                this.$router.push({
+                    name: "channelslist"
+                })
+            }
         }
         init() {
             var t: any = this.$refs.table;
@@ -177,12 +190,7 @@
         }
         async created() {
             console.log(this.channel);
-            if (this.channel == null || this.channel.id == null) {
-                this.$router.push({
-                    name: "channelslist"
-                })
-            }
-            this.filters.objectId=this.channel.id;
+            this.filters.objectId = this.channel.id;
             this.init();
         }
         cancel() {
@@ -230,10 +238,10 @@
             {
                 title: "拜访形式",
                 key: "type",
-                 render: (h: any, params: any) => {
+                render: (h: any, params: any) => {
                     return h(
                         "span",
-                        params.row.type==1?'约饭':'约谈'
+                        params.row.type == 1 ? '约饭' : '约谈'
                     );
                 }
             },

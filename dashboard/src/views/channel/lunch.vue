@@ -4,7 +4,7 @@
             <Form ref="channelForm" label-position="top" :rules="lunchlRule" :model="lunch">
                 <Row :gutter="16">
                      <FormItem label="约饭时长" prop="time">
-                         <Input placeholder="约饭时长" v-model="lunch.time" :maxlength="32" />
+                           <InputNumber  placeholder="约饭时长" :step="1"  v-model="lunch.time" :max="999" :min="1" ></InputNumber>
                     </FormItem>
                 </Row>
                 <Row :gutter="16">

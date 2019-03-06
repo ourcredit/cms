@@ -53,8 +53,7 @@
       </div>
     </Card>
     <Modify v-model="ModalShow" @save-success="init"></Modify>
-    <Visit v-model="VisitShow" @save-success="init"></Visit>
-    <Lunch v-model="LunchShow" @save-success="init"></Lunch>
+    <Visit :type="type" v-model="VisitShow" @save-success="init"></Visit>
   </div>
 </template>
 <script lang="ts">
@@ -76,8 +75,7 @@
     components: {
       Modify,
       SaleTable,
-      Visit,
-      Lunch
+      Visit
     }
   })
   export default class Users extends AbpBase {
@@ -134,7 +132,7 @@
     }
     ModalShow: boolean = false;
     VisitShow: boolean = false;
-    LunchShow: boolean = false;
+    type:Number=1;
     get list() {
       return this.$store.state.user.list;
     }
@@ -150,10 +148,12 @@
       this.ModalShow = true;
     }
     VisitModify() {
+      this.type=1;
       this.VisitShow = true;
     }
     LunchModify() {
-      this.LunchShow = true;
+       this.type=2;
+      this.VisitShow = true;
     }
     Details() {
       this.$router.push({

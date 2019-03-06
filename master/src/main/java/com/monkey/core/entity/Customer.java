@@ -58,10 +58,7 @@ public class Customer implements Serializable {
      */
     private String level;
 
-    /**
-     * 客户来源
-     */
-    private String from;
+    private String resource;
 
     /**
      * 渠道
@@ -106,12 +103,18 @@ public class Customer implements Serializable {
      */
     @TableField("creatorName")
     private String creatorName;
-
+    /**
+     * 渠道电话
+     */
+    @TableField("channelMobile")
+    private String channelMobile;
     /**
      * 备注
      */
     private String remark;
 
+    private  String term;
+    private  String department;
     /**
      * 扩展属性
      */
@@ -168,16 +171,7 @@ public class Customer implements Serializable {
     public void setLevel(String level) {
         this.level = level;
     }
-    public String getFrom() {
-        return from;
-    }
 
-    public void setFrom(String from) {
-        this.from = from;
-    }
-    public String getChannel() {
-        return channel;
-    }
 
     public void setChannel(String channel) {
         this.channel = channel;
@@ -256,7 +250,7 @@ public class Customer implements Serializable {
                 ", gender=" + gender +
                 ", maritalStatus=" + maritalStatus +
                 ", level=" + level +
-                ", from=" + from +
+                ", resource=" + getResource() +
                 ", channel=" + channel +
                 ", business=" + business +
                 ", mobile2=" + mobile2 +
@@ -268,5 +262,40 @@ public class Customer implements Serializable {
                 ", remark=" + remark +
                 ", extendField=" + extendField +
                 "}";
+    }
+
+    /**
+     * 客户来源
+     */
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource;
+    }
+
+    public String getChannelMobile() {
+        return channelMobile;
+    }
+
+    public void setChannelMobile(String channelMobile) {
+        this.channelMobile = channelMobile;
+    }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }

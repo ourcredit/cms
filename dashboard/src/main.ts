@@ -27,10 +27,10 @@ new Vue({
     await this.$store.dispatch({
       type: "session/init"
     });
+    this.$store.commit("app/initCachepage");
     await this.$store.dispatch({
       type: "category/init"
     });
-    this.$store.commit("app/initCachepage");
     this.$store.commit("app/updateMenulist");
   },
   created(): void {
