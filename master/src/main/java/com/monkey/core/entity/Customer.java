@@ -45,13 +45,13 @@ public class Customer implements Serializable {
     /**
      * 性别
      */
-    private Integer gender;
+    private String gender;
 
     /**
      * 婚否
      */
     @TableField("maritalStatus")
-    private Integer maritalStatus;
+    private String maritalStatus;
 
     /**
      * 客户级别
@@ -150,18 +150,18 @@ public class Customer implements Serializable {
     public void setIdCard(String idCard) {
         this.idCard = idCard;
     }
-    public Integer getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
-    public Integer getMaritalStatus() {
+    public String getMaritalStatus() {
         return maritalStatus;
     }
 
-    public void setMaritalStatus(Integer maritalStatus) {
+    public void setMaritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
     public String getLevel() {

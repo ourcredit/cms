@@ -358,7 +358,21 @@
             var u = this.$store.state.customer.editCustomer;
             return u;
         }
-        extend: any = {};
+        extend: any = {
+            price: 1,
+            year: 1,
+            backType: "等额本金",
+            useTime: 30,
+            percent: 3.45,
+            monthBack: 1,
+            org: "",
+            jingli:"",
+            mobile:"",
+            dianzixuqiu:"",
+            productType:"",
+            dianzijine:0,
+            remark:""
+        };
         save() {
             (this.$refs.customerForm as any).validate(async (valid: boolean) => {
                 if (valid) {
@@ -380,7 +394,7 @@
         }
         cancel() {
             (this.$refs.customerForm as any).resetFields();
-            (this.$refs.extendField as any).resetFields();
+            this.extend = {};
             this.$emit("input", false);
         }
         visibleChange(value: boolean) {
