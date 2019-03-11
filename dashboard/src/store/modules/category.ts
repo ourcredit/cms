@@ -5,9 +5,13 @@ import Ajax from "@/lib/ajax";
 import Category from "@/store/entities/category";
 import PageResult from "@/store/entities/page-result";
 import ListMutations from "@/store/modules/base/list-mutations";
+import util from "@/lib/util";
 interface ICategoryState extends IListState<Category> {
   editCategory: Category;
   cateList: Array<any>;
+  tree: Array<any>;
+  currentOrg: String;
+  current: any;
 }
 class CategoryMutations extends ListMutations<Category> { }
 class CategoryModule extends ListModule<ICategoryState, any, Category> {
@@ -19,6 +23,9 @@ class CategoryModule extends ListModule<ICategoryState, any, Category> {
     cateList: new Array<any>(),
     loading: false,
     editCategory: new Category(),
+    tree: new Array<any>(),
+    currentOrg: "",
+    current: {}
   };
   actions = {
     async getAll(
@@ -41,6 +48,16 @@ class CategoryModule extends ListModule<ICategoryState, any, Category> {
       context.state.loading = false;
       let page: Array<any> = reponse.data as Array<any>;
       context.state.cateList = page;
+    },
+    async initTree(
+      context: ActionContext<ICategoryState, any>,
+      payload: any
+    ): Promise<any> {
+      context.state.loading = true;
+      let reponse: any = await Ajax.post("/api/tree");
+      context.state.loading = false;
+      let list: Array<any> = reponse.data as Array<any>;
+      context.state.tree = util.genderMenu(list, "parentId", null);
     },
     async modify(
       context: ActionContext<ICategoryState, any>,
@@ -68,7 +85,20 @@ class CategoryModule extends ListModule<ICategoryState, any, Category> {
     ): Promise<any> {
       let reponse: any = await Ajax.get("/api/category/" + payload.data);
       context.state.editCategory = reponse.data as Category;
-    }
+    },
+    async modifyOrg(
+      context: ActionContext<ICategoryState, any>,
+      payload: any
+    ): Promise<any> {
+      context.state.loading = true;
+      await Ajax.put("/api/tree", payload.data);
+    },
+    async delOrg(
+      context: ActionContext<ICategoryState, any>,
+      payload: any
+    ): Promise<any> {
+      await Ajax.delete("/api/tree/" + payload.data);
+    },
   };
   mutations = {
     setCurrentPage(state: ICategoryState, page: number): void {
@@ -79,6 +109,12 @@ class CategoryModule extends ListModule<ICategoryState, any, Category> {
     },
     edit(state: ICategoryState, de: Category): void {
       state.editCategory = de;
+    },
+    setTree(state: ICategoryState, treeId: String): void {
+      state.currentOrg = treeId;
+    },
+    setCurrent(state: ICategoryState, model: any) {
+      state.current = { id: model.id, name: model.title, parentId: model.parentId };
     }
   };
 }

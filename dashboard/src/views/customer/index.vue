@@ -40,15 +40,15 @@
           <Col span="2">
           <Button @click="Create" icon="android-add" type="primary" size="large">新增客户</Button>
           </Col>
-            <Col span="2">
-          <Button @click="Create"  type="primary" size="large">转共享</Button>
+          <Col span="2">
+          <Button @click="Create" type="primary" size="large">转共享</Button>
           </Col>
-            <Col span="2">
+          <Col span="2">
           <Button @click="Create" type="primary" size="large">转单</Button>
           </Col>
         </Row>
         <div class="margin-top-10">
-          <SaleTable ref="table" :filters="filters" :type="'channel'" :columns="columns"></SaleTable>
+          <SaleTable ref="table" :filters="filters" :type="'customer'" :columns="columns"></SaleTable>
         </div>
       </div>
     </Card>
@@ -128,12 +128,12 @@
     }
     ModalShow: boolean = false;
     get list() {
-      return this.$store.state.user.list;
+      return this.$store.state.customer.list;
     }
     get loading() {
-      return this.$store.state.channel.loading;
+      return this.$store.state.customer.loading;
     }
-    
+
     Create() {
       var u = new Customer();
       this.$store.commit("customer/edit", u);
@@ -144,16 +144,20 @@
     }
     Details() {
       this.$router.push({
-        name: "channelsfirst"
+        name: "customermodify"
       })
     }
     init() {
       var t: any = this.$refs.table;
-      if(t){
-      t.getpage();
+      if (t) {
+        t.getpage();
       }
     }
     columns = [{
+        type: 'selection',
+        width: 60,
+        align: 'center'
+      }, {
         title: "客户编号",
         key: "code",
         render: (h: any, params: any) => {
@@ -169,8 +173,8 @@
               on: {
                 click: () => {
                   this.$store.dispatch({
-                    type: "channel/get",
-                    data: params.row
+                    type: "customer/get",
+                    data: params.row.id
                   });
                   this.Details();
                 }
@@ -184,7 +188,7 @@
         title: "业务部门",
         key: "post"
       },
-       {
+      {
         title: "业务团队",
         key: "post"
       },
@@ -194,7 +198,7 @@
       },
       {
         title: "客户姓名",
-        key: "channelName"
+        key: "customerName"
       },
       {
         title: "客户等级",
@@ -202,31 +206,51 @@
       },
       {
         title: "客户来源",
-        key: "type"
+        key: "resource"
       },
       {
         title: "渠道",
-        key: "workUnit"
+        key: "channelName"
       },
       {
         title: "业务类型",
         key: "business"
       },
-       {
+      {
         title: "贷款金额",
-        key: "business"
+        key: "business",
+        render: (h: any, params: any) => {
+          let t = params.row.extendField;
+          if (t) {
+            var val = JSON.parse(t);
+            return h(
+              "span",
+              val.price
+            );
+          }
+        }
       },
-       {
+      {
         title: "垫资金额",
-        key: "business"
+        key: "business",
+        render: (h: any, params: any) => {
+          let t = params.row.extendField;
+          if (t) {
+            var val = JSON.parse(t);
+            return h(
+              "span",
+              val.dianzijine
+            );
+          }
+        }
       },
       {
         title: "录入日期",
-        key: "visitTime",
+        key: "creationTime",
         render: (h: any, params: any) => {
           return h(
             "span",
-            new Date(params.row.visitTime).toLocaleDateString()
+            new Date(params.row.creationTime).toLocaleDateString()
           );
         }
       },
@@ -240,7 +264,7 @@
           );
         }
       },
-       {
+      {
         title: "下次跟进",
         key: "lunchTime",
         render: (h: any, params: any) => {
@@ -254,7 +278,7 @@
         title: "关注",
         key: "lunchCount"
       },
-         {
+      {
         title: "约谈未签约",
         key: "lunchCount"
       },
@@ -322,10 +346,10 @@
                     this.Modify();
                   }
                 }
-              }, 
+              },
               "新需求"
             ),
-              h(
+            h(
               "Button", {
                 props: {
                   type: "primary",

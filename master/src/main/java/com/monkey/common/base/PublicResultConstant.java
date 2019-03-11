@@ -80,7 +80,8 @@ public enum PublicResultConstant {
     /**
      * 没有权限
      */
-    NORESULTS("11000007", "暂无数据")
+    NORESULTS("11000007", "暂无数据"),
+    TOMUCHCOUNT("11000000", "超过组织机构最大层级")
     ;
 
 

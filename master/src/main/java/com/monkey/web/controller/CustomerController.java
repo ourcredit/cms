@@ -1,6 +1,7 @@
 package com.monkey.web.controller;
 
 
+import com.alipay.api.domain.Account;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,6 +14,8 @@ import com.monkey.common.base.PublicResultConstant;
 import com.monkey.common.util.ComUtil;
 import com.monkey.core.entity.Customer;
 import com.monkey.core.entity.Customer;
+import com.monkey.core.entity.User;
+import com.monkey.web.annotation.CurrentUser;
 import com.monkey.web.annotation.Log;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.monkey.web.controller.BaseController;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 /**
@@ -56,7 +60,12 @@ public class CustomerController extends BaseController {
     @ApiOperation(value = "添加或编辑客户",notes = "客户列表")
     @RequestMapping(method = RequestMethod.PUT)
     @RequiresPermissions(value = {PermissionConst._relation._customer.modify})
-    public PublicResult<Object> insert(@RequestBody Customer model) throws Exception{
+    public PublicResult<Object> insert(@RequestBody Customer model, @CurrentUser User user) throws Exception{
+        if(model.getId()==null){
+            model.setCreatorName(user.getUserName());
+            model.setDepartment(user.getOrgName());
+            model.setTerm(user.getOrgName());
+        }
         Boolean r=_customerService.saveOrUpdate(model);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);
     }

@@ -356,6 +356,9 @@
         }
         get customer() {
             var u = this.$store.state.customer.editCustomer;
+            if(u.extendField){
+                this.extend=JSON.parse(u.extendField);
+            }
             return u;
         }
         extend: any = {

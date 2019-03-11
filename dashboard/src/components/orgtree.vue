@@ -35,12 +35,12 @@ export default class OrgTree extends AbpBase {
   }
   async init() {
     await this.$store.dispatch({
-      type: "device/initTree",
+      type: "category/initTree",
       data: {}
     });
   }
   add() {
-    this.$store.commit("device/setCurrent", { parentId: this.parent.id });
+    this.$store.commit("category/setCurrent", { parentId: this.parent.id });
     this.modifyShow = true;
   }
   modify() {
@@ -56,7 +56,7 @@ export default class OrgTree extends AbpBase {
       cancelText: "否",
       onOk: async () => {
         await this.$store.dispatch({
-          type: "device/delOrg",
+          type: "category/delOrg",
           data: this.org.id
         });
         await this.init();
@@ -66,23 +66,23 @@ export default class OrgTree extends AbpBase {
   select(opt) {
     var temp = opt[0];
     if (temp) {
-      this.$store.commit("device/setTree", temp);
-      this.$store.commit("device/setCurrent", temp);
+      this.$store.commit("category/setTree", temp);
+      this.$store.commit("category/setCurrent", temp);
     } else {
-      this.$store.commit("device/setTree", null);
+      this.$store.commit("category/setTree", null);
     }
     this.$emit("complete");
   }
 
   get tree() {
-    return this.$store.state.device.tree;
+    return this.$store.state.category.tree;
   }
   get org() {
-    var t = this.$store.state.device.current;
+    var t = this.$store.state.category.current;
     return t;
   }
   get parent() {
-    var t = this.$store.state.device.currentOrg;
+    var t = this.$store.state.category.currentOrg;
     return t;
   }
 }

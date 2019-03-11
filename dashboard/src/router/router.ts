@@ -34,15 +34,7 @@ export const otherRouters: any = {
       permission: "dashboard:show",
       component: () => System.import("../views/home/dashboard.vue")
     },
-    {
-      path: "/channel/modify",
-      meta: {
-        title: "渠道编辑"
-      },
-      permission: "channels:modify",
-      name: "channelsmodify",
-      component: () => System.import("../views/channel/modify.vue")
-    }, {
+   {
       path: "/channel/first",
       meta: {
         title: "渠道详情"
@@ -50,6 +42,15 @@ export const otherRouters: any = {
       permission: "channels:first",
       name: "channelsfirst",
       component: () => System.import("../views/channel/details.vue")
+    },
+      {
+      path: "/customer/modify",
+      meta: {
+        title: "客户编辑"
+      },
+      permission: "customer:modify",
+      name: "customermodify",
+      component: () => System.import("../views/customer/details.vue")
     }
   ]
 };
@@ -238,7 +239,7 @@ export const appRouters: Array < any > = [{
           title: "组织机构管理"
         },
         name: "org",
-        component: () => System.import("../views/setting/category/index.vue")
+        component: () => System.import("../views/setting/org/index.vue")
       }
     ]
   }

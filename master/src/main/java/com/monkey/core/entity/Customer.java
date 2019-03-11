@@ -60,10 +60,10 @@ public class Customer implements Serializable {
 
     private String resource;
 
-    /**
-     * 渠道
-     */
-    private String channel;
+    private Integer channel;
+
+    @TableField("channelName")
+    private String channelName;
 
     /**
      * 业务类型
@@ -172,10 +172,6 @@ public class Customer implements Serializable {
         this.level = level;
     }
 
-
-    public void setChannel(String channel) {
-        this.channel = channel;
-    }
     public String getBusiness() {
         return business;
     }
@@ -251,7 +247,7 @@ public class Customer implements Serializable {
                 ", maritalStatus=" + maritalStatus +
                 ", level=" + level +
                 ", resource=" + getResource() +
-                ", channel=" + channel +
+                ", channel=" + getChannel() +
                 ", business=" + business +
                 ", mobile2=" + mobile2 +
                 ", telphone=" + telphone +
@@ -297,5 +293,24 @@ public class Customer implements Serializable {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    /**
+     * 渠道
+     */
+    public Integer getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Integer channel) {
+        this.channel = channel;
+    }
+
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
     }
 }

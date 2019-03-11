@@ -30,21 +30,21 @@ export default class CreateTree extends AbpBase {
   })
   value: boolean;
   get tree() {
-    return this.$store.state.device.tree;
+    return this.$store.state.category.tree;
   }
   get org() {
-    var t = this.$store.state.device.current;
+    var t = this.$store.state.category.current;
     return t;
   }
   get parent() {
-    var t = this.$store.state.device.currentOrg;
+    var t = this.$store.state.category.currentOrg;
     return t;
   }
   save() {
     (this.$refs.deviceForm as any).validate(async (valid: boolean) => {
       if (valid) {
         await this.$store.dispatch({
-          type: "device/modifyOrg",
+          type: "category/modifyOrg",
           data: this.org
         });
         (this.$refs.deviceForm as any).resetFields();

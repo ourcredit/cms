@@ -64,6 +64,7 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
                 u.setMobile(input.mobile);
                 u.setIsActive(input.isActive);
                 u.setUserName(input.userName);
+                u.setOrgName(input.orgName);
                 u.setOrgId(input.orgId);
                 if (input.password != null && !input.password.isEmpty()) {
                     u.setPassword(BCrypt.hashpw(input.password, BCrypt.gensalt()));
@@ -78,12 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
             List<UserRole> urs = new ArrayList<>();
             ew = new QueryWrapper();
             ew.eq("isStatic", 1);
-            //   List<Role> rs = _roleRepository.selectList(ew);
             List<Integer> temp = new ArrayList<>();
-
-//            for (Role r : rs) {
-//                temp.add(r.getId());
-//            }
             for (Integer r : input.roles) {
                 if (!temp.contains(r)) {
                     urs.add(new UserRole(u.getId(), r));

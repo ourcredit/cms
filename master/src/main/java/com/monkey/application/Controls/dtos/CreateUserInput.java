@@ -11,5 +11,6 @@ public class CreateUserInput {
     public String mobile;
     public Integer isActive;
     public Integer orgId;
+    public String orgName;
     public List<Integer> roles;
 }
