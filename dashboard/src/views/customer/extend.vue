@@ -1,7 +1,7 @@
 <template>
     <div>
         <Modal width="70%" :value="value" @on-ok="save" @on-visible-change="visibleChange">
-            <Card>
+            <Card hidden>
                 <p slot="title">
                     <Icon type="ios-film-outline"></Icon>
                     客户基本信息
@@ -29,7 +29,7 @@
                         <Col span="6">
                         <FormItem label="渠道" prop="type">
                             <Select v-model="customer.channel" filterable>
-                                <Option v-for="item in ChannelList" :value="item.key" :key="item.name">{{ item.name
+                                <Option v-for="item in customerType" :value="item.name" :key="item.name">{{ item.name
                                     }}</Option>
                             </Select>
                         </FormItem>
@@ -354,25 +354,10 @@
             });
             return res;
         }
-        get ChannelList() {
-            var t = this.$store.state.category.cateList;
-            var res = new Array < any > ();
-            t.forEach(a => {
-                if (a.code == "渠道列表") {
-                    a.dic.forEach(b => {
-                        res.push({
-                            key: b.key,
-                            name: b.name
-                        });
-                    });
-                }
-            });
-            return res;
-        }
         get customer() {
             var u = this.$store.state.customer.editCustomer;
-            if (u.extendField) {
-                this.extend = JSON.parse(u.extendField);
+            if(u.extendField){
+                this.extend=JSON.parse(u.extendField);
             }
             return u;
         }
@@ -384,12 +369,12 @@
             percent: 3.45,
             monthBack: 1,
             org: "",
-            jingli: "",
-            mobile: "",
-            dianzixuqiu: "",
-            productType: "",
-            dianzijine: 0,
-            remark: ""
+            jingli:"",
+            mobile:"",
+            dianzixuqiu:"",
+            productType:"",
+            dianzijine:0,
+            remark:""
         };
         save() {
             (this.$refs.customerForm as any).validate(async (valid: boolean) => {

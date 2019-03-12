@@ -51,12 +51,24 @@ class CustomerModule extends ListModule<ICustomerState, any, Customer> {
     ): Promise<any> {
       await Ajax.post("/api/customer/batch", payload.data);
     },
+    async share(
+      context: ActionContext<ICustomerState, any>,
+      payload: any
+    ): Promise<any> {
+      await Ajax.post("/api/customer/share", payload.data);
+    },
     async get(
       context: ActionContext<ICustomerState, any>,
       payload: any
     ): Promise<any> {
       let reponse: any = await Ajax.get("/api/customer/" + payload.data);
       context.state.editCustomer = reponse.data as Customer;
+    },
+    async foucs(
+      context: ActionContext<ICustomerState, any>,
+      payload: any
+    ): Promise<any> {
+       await Ajax.get("/api/customer/foucs/" + payload.data);
     }
   };
   mutations = {

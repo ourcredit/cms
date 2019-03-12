@@ -98,7 +98,7 @@ export const appRouters: Array < any > = [{
         },
         permission: "share:list",
         name: "sharelist",
-        component: () => System.import("../views/customer/index.vue")
+        component: () => System.import("../views/customer/sharelist.vue")
       },
       {
         path: "force",
@@ -116,7 +116,7 @@ export const appRouters: Array < any > = [{
         },
         permission: "share:list",
         name: "sharelog",
-        component: () => System.import("../views/customer/index.vue")
+        component: () => System.import("../views/customer/sharelog.vue")
       }
     ]
   },

@@ -30,6 +30,7 @@ public interface PermissionConst {
             public static final String delete = "customer:delete";
             public static final String batch = "customer:batch";
             public static final String first = "customer:first";
+            public static final String share = "customer:share";
         }
 
         public static class _share {

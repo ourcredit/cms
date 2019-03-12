@@ -85,6 +85,13 @@ class ChannelModule extends ListModule < IChannelState, any, Channel > {
         ): Promise < any > {
             let reponse: any = await Ajax.post("/api/channel/lunch" , payload.data);
             context.state.channel = reponse.data as Channel;
+        },
+        async follow(
+            context: ActionContext < IChannelState, any > ,
+            payload: any
+        ): Promise < any > {
+            let reponse: any = await Ajax.post("/api/channel/follow" , payload.data);
+            context.state.channel = reponse.data as Channel;
         }
     };
     mutations = {

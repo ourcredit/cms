@@ -8,6 +8,7 @@ import com.monkey.application.Category.ICategoryService;
 import com.monkey.application.Channel.IChannelService;
 import com.monkey.application.Channel.IFollowService;
 import com.monkey.application.Channel.IVisitService;
+import com.monkey.application.Customer.ICustomerService;
 import com.monkey.application.dtos.PagedAndFilterInputDto;
 import com.monkey.common.base.PermissionConst;
 import com.monkey.common.base.PublicResult;
@@ -16,14 +17,20 @@ import com.monkey.common.util.ComUtil;
 import com.monkey.core.entity.*;
 import com.monkey.web.annotation.CurrentUser;
 import com.monkey.web.annotation.Log;
+import com.monkey.web.controller.dtos.ChannelDto;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import com.monkey.web.controller.BaseController;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,7 +49,10 @@ public class ChannelController extends BaseController {
     IChannelService _channelService;
     @Autowired
     IVisitService _visitService;
-
+    @Autowired
+    IFollowService _followService;
+    @Autowired
+    ICustomerService _customerService;
 
     @ApiOperation(value = "获取列表", notes = "渠道列表")
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -60,6 +70,7 @@ public class ChannelController extends BaseController {
         IPage<Visit> res = _visitService.page(new Page<>(page.index, page.size), filter);
         return new PublicResult<>(PublicResultConstant.SUCCESS, res);
     }
+
     @ApiOperation(value = "获取渠道详情", notes = "渠道列表")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @RequiresPermissions(value = {PermissionConst._channel._channelList.first})
@@ -106,19 +117,50 @@ public class ChannelController extends BaseController {
     @RequestMapping(value = "/visit", method = RequestMethod.POST)
     @RequiresPermissions(value = {PermissionConst._channel._channelList.visit})
     public PublicResult<Object> visit(@RequestBody Visit model) throws Exception {
-        if(model.getObjectId()==null)return  new PublicResult<>(PublicResultConstant.FAILED,"渠道不存在");
+        if (model.getObjectId() == null) return new PublicResult<>(PublicResultConstant.FAILED, "对象不存在");
         Boolean r = _visitService.save(model);
-        if(r){
-            Channel  c=_channelService.getById(model.getObjectId());
-            if(c!=null){
-                if(model.getType()==1){
-                    c.setVisitTime(LocalDateTime.now());
-                    c.setVisitCount(c.getVisitCount()+1);
-                }else {
-                    c.setLunchTime(LocalDateTime.now());
-                    c.setLunchCount(c.getLunchCount()+1);
-                }
+        if (r) {
+            if (model.getType() == 1) {
+                Channel c = _channelService.getById(model.getObjectId());
+                c.setVisitTime(LocalDateTime.now());
+                c.setVisitCount(c.getVisitCount() + 1);
                 _channelService.saveOrUpdate(c);
+            } else if (model.getType() == 2) {
+                Channel c = _channelService.getById(model.getObjectId());
+                c.setLunchTime(LocalDateTime.now());
+                c.setLunchCount(c.getLunchCount() + 1);
+                _channelService.saveOrUpdate(c);
+            } else {
+                Customer cus = _customerService.getById(model.getObjectId());
+                if (cus != null) {
+                    cus.setVisitTime(new Date());
+                    _customerService.saveOrUpdate(cus);
+                }
+            }
+        }
+        return new PublicResult<>(PublicResultConstant.SUCCESS, r);
+    }
+
+    @Log(description = "渠道接口:/跟进")
+    @ApiOperation(value = "跟进", notes = "渠道列表")
+    @RequestMapping(value = "/follow", method = RequestMethod.POST)
+    @RequiresPermissions(value = {PermissionConst._channel._channelList.visit})
+    public PublicResult<Object> follow(@RequestBody Follow model) throws Exception {
+        if (model.getObjectId() == null) return new PublicResult<>(PublicResultConstant.FAILED, "对象不存在");
+        Boolean r = _followService.save(model);
+        if (r) {
+            Customer cus = _customerService.getById(model.getObjectId());
+            if (cus != null) {
+                filter = new QueryWrapper();
+                filter.eq("objectId", model.getObjectId());
+                filter.orderByDesc("nextfollowTime");
+                List<Follow> fl = _followService.list(filter);
+                Follow curr=fl.get(0);
+                if (fl != null) {
+                    Date dt = curr.getFollowTime().compareTo(curr.getNextfollowTime()) >= 0 ? curr.getFollowTime() : curr.getNextfollowTime();
+                    cus.setFollowTime(dt);
+                    _customerService.saveOrUpdate(cus);
+                }
             }
         }
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);

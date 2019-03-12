@@ -5,15 +5,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.application.Category.dtos.CategoryList;
 import com.monkey.application.Category.dtos.CategoryModel;
+import com.monkey.application.Channel.IChannelService;
 import com.monkey.common.util.CollectionHelper;
 import com.monkey.common.util.Interfaces.IMatch;
 import com.monkey.core.entity.Category;
+import com.monkey.core.entity.Channel;
 import com.monkey.core.mapper.CategoryRepository;
+import com.monkey.web.controller.dtos.ChannelDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -25,6 +27,9 @@ import java.util.List;
  */
 @Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryRepository, Category> implements ICategoryService {
+
+    @Autowired
+    IChannelService _channelService;
 
     public List<CategoryList> BuildCategoryCache() {
         List<Category> cates = baseMapper.selectList(new QueryWrapper<>());
@@ -52,10 +57,24 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryRepository, Categor
                         mo.dic.add(cm);
                     }
                 });
-                 if(!CollectionHelper.any(res, temp -> mo.code==temp.code)) {
-                     res.add(mo);
+                if (!CollectionHelper.any(res, temp -> mo.code == temp.code)) {
+                    res.add(mo);
                 }
             }
+
+            List<Channel> r = _channelService.list();
+            CategoryList temp = new CategoryList();
+            temp.code = "渠道列表";
+            temp.dic = new ArrayList<>();
+            if (!r.isEmpty()) {
+                r.forEach(f -> {
+                    CategoryModel cm = new CategoryModel();
+                    cm.key = f.getId() + "";
+                    cm.name = f.getChannelName();
+                    temp.dic.add(cm);
+                });
+            }
+            res.add(temp);
             return res;
         }
         return new ArrayList<>();

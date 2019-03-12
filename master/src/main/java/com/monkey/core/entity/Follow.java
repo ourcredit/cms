@@ -1,11 +1,13 @@
 package com.monkey.core.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
 
 
 /**
@@ -43,7 +45,7 @@ public class Follow implements Serializable {
      * 下次跟进时间
      */
     @TableField("nextfollowTime")
-    private LocalDateTime nextfollowTime;
+    private Date nextfollowTime;
 
     /**
      * 跟进内容
@@ -55,7 +57,7 @@ public class Follow implements Serializable {
      * 选定跟进时间
      */
     @TableField("followTime")
-    private LocalDateTime followTime;
+    private Date followTime;
 
     /**
      * 类型字段
@@ -89,11 +91,11 @@ public class Follow implements Serializable {
     public void setCreatorUserId(Integer creatorUserId) {
         this.creatorUserId = creatorUserId;
     }
-    public LocalDateTime getNextfollowTime() {
+    public Date getNextfollowTime() {
         return nextfollowTime;
     }
 
-    public void setNextfollowTime(LocalDateTime nextfollowTime) {
+    public void setNextfollowTime(Date nextfollowTime) {
         this.nextfollowTime = nextfollowTime;
     }
     public String getVisitContent() {
@@ -103,11 +105,11 @@ public class Follow implements Serializable {
     public void setVisitContent(String visitContent) {
         this.visitContent = visitContent;
     }
-    public LocalDateTime getFollowTime() {
+    public Date getFollowTime() {
         return followTime;
     }
 
-    public void setFollowTime(LocalDateTime followTime) {
+    public void setFollowTime(Date followTime) {
         this.followTime = followTime;
     }
     public Integer getType() {

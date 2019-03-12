@@ -32,7 +32,7 @@
                             <Col span="6">
                             <FormItem label="渠道" prop="type">
                                 <Select v-model="customer.channel" filterable>
-                                    <Option v-for="item in customerType" :value="item.name" :key="item.name">{{
+                                    <Option v-for="item in ChannelList" :value="item.name" :key="item.name">{{
                                         item.name
                                         }}</Option>
                                 </Select>
@@ -280,6 +280,21 @@
             var res = new Array < any > ();
             t.forEach(a => {
                 if (a.code == "客户来源") {
+                    a.dic.forEach(b => {
+                        res.push({
+                            key: b.key,
+                            name: b.name
+                        });
+                    });
+                }
+            });
+            return res;
+        }
+         get ChannelList() {
+            var t = this.$store.state.category.cateList;
+            var res = new Array < any > ();
+            t.forEach(a => {
+                if (a.code == "渠道列表") {
                     a.dic.forEach(b => {
                         res.push({
                             key: b.key,

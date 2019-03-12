@@ -36,17 +36,6 @@
     </Card>
     <Card dis-hover>
       <div class="page-body">
-        <Row :gutter="16">
-          <Col span="2">
-          <Button @click="Create" icon="android-add" type="primary" >新增客户</Button>
-          </Col>
-          <Col span="2">
-          <Button @click="batchShare" type="primary" >转共享</Button>
-          </Col>
-          <Col span="2">
-          <Button @click="ModelShow('giveto',true)" type="primary" >转单</Button>
-          </Col>
-        </Row>
         <div class="margin-top-10">
           <SaleTable ref="table" :filters="filters" :type="'customer'" :columns="columns"></SaleTable>
         </div>
@@ -56,7 +45,6 @@
     <Extend v-model="ExtendShow" @save-success="init"></Extend>
     <Visit v-model="VisitShow" @save-success="init"></Visit>
     <Follow v-model="FollowShow" @save-success="init"></Follow>
-    <GiveTo v-model="GiveToShow" @save-success="init"></GiveTo>
   </div>
 </template>
 <script lang="ts">
@@ -75,19 +63,18 @@
   import Visit from "./visit.vue";
   import Follow from "./follow.vue";
   import Extend from "./extend.vue";
-  import GiveTo from "./giveto.vue";
   @Component({
     components: {
       Modify,
       SaleTable,
       Visit,
       Follow,
-      Extend,
-      GiveTo
+      Extend
     }
   })
   export default class Users extends AbpBase {
     filters: Object = {
+      isShare:1,
       account: "",
       userName: "",
       creationTime: null
@@ -157,7 +144,6 @@
     VisitShow: boolean = false;
     FollowShow: boolean = false;
     ExtendShow: boolean = false;
-    GiveToShow: boolean = false;
     get list() {
       return this.$store.state.customer.list;
     }
@@ -174,15 +160,12 @@
       this.ModalShow = true;
     }
     ModelShow(type: String, state: boolean) {
-      debugger;
       if (type == "visit") {
         this.VisitShow = state;
       } else if (type == "follow") {
         this.FollowShow = state;
       } else if (type == "extend") {
         this.ExtendShow = state;
-      }else if(type=="giveto"){
-        this.GiveToShow=state;
       }
     }
     Details() {
@@ -318,17 +301,6 @@
         }
       },
       {
-        title: "关注",
-        key: "focus",
-        render: (h: any, params: any) => {
-          return h(
-            "span",
-            params.row.focus == 1 ? '是' : "否"
-          );
-        }
-
-      },
-      {
         title: "约谈未签约",
         key: "focus",
         render: (h: any, params: any) => {
@@ -338,97 +310,14 @@
           );
         }
       },
-      {
-        title: "操作",
-        key: "Actions",
-        width: 150,
+       {
+        title: "共享类型",
+        key: "focus",
         render: (h: any, params: any) => {
-          return h("div", [
-            h(
-              "Button", {
-                props: {
-                  type: "primary",
-                  size: "small"
-                },
-                style: {
-                  marginRight: "5px"
-                },
-                on: {
-                  click: () => {
-                    this.$store.dispatch({
-                      type: "customer/get",
-                      data: params.row.id
-                    });
-                    this.ModelShow("visit", true);
-                  }
-                }
-              },
-              "约谈"
-            ),
-            h(
-              "Button", {
-                props: {
-                  type: "primary",
-                  size: "small"
-                },
-                style: {
-                  marginRight: "5px"
-                },
-                on: {
-                  click: () => {
-                    this.$store.dispatch({
-                      type: "customer/get",
-                      data: params.row.id
-                    });
-                    this.ModelShow("follow", true);
-                  }
-                }
-              },
-              "跟进"
-            ),
-            h(
-              "Button", {
-                props: {
-                  type: "primary",
-                  size: "small"
-                },
-                style: {
-                  marginRight: "5px"
-                },
-                on: {
-                  click: () => {
-                    this.$store.dispatch({
-                      type: "customer/get",
-                      data: params.row.id
-                    });
-                    this.ModelShow("extend", true);
-                  }
-                }
-              },
-              "新需求"
-            ),
-            h(
-              "Button", {
-                props: {
-                  type: "primary",
-                  size: "small"
-                },
-                style: {
-                  marginRight: "5px"
-                },
-                on: {
-                  click: () => {
-                    this.$store.dispatch({
-                      type: "customer/foucs",
-                      data: params.row.id
-                    });
-                    this.init();
-                  }
-                }
-              },
-              "关注"
-            )
-          ]);
+          return h(
+            "span",
+            params.row.focus == 1 ? '共享' : "接收"
+          );
         }
       }
     ];

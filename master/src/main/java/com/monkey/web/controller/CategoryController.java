@@ -42,7 +42,6 @@ public class CategoryController extends BaseController {
         List<CategoryList> res = _categoryService.BuildCategoryCache();
         return new PublicResult<>(PublicResultConstant.SUCCESS, res);
     }
-
     @ApiOperation(value = "获取分类列表", notes = "商品列表")
     @RequestMapping(value = "", method = RequestMethod.POST)
     @RequiresPermissions(value = {PermissionConst._system._category.list})

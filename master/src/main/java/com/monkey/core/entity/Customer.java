@@ -1,9 +1,11 @@
 package com.monkey.core.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 
 /**
@@ -29,7 +31,7 @@ public class Customer implements Serializable {
      * 客户编码
      */
     private String code;
-
+    private  Integer focus;
     /**
      * 客户姓名
      */
@@ -115,11 +117,18 @@ public class Customer implements Serializable {
 
     private  String term;
     private  String department;
+    @TableField("isShare")
+    private Integer isShare;
     /**
      * 扩展属性
      */
     @TableField("extendField")
     private String extendField;
+
+    @TableField("visitTime")
+    private Date visitTime;
+    @TableField("followTime")
+    private Date followTime;
 
 
     public Integer getId() {
@@ -312,5 +321,37 @@ public class Customer implements Serializable {
 
     public void setChannelName(String channelName) {
         this.channelName = channelName;
+    }
+
+    public Integer getFocus() {
+        return focus;
+    }
+
+    public void setFocus(Integer focus) {
+        this.focus = focus;
+    }
+
+    public Date getFollowTime() {
+        return followTime;
+    }
+
+    public void setFollowTime(Date followTime) {
+        this.followTime = followTime;
+    }
+
+    public Date getVisitTime() {
+        return visitTime;
+    }
+
+    public void setVisitTime(Date visitTime) {
+        this.visitTime = visitTime;
+    }
+
+    public Integer getIsShare() {
+        return isShare;
+    }
+
+    public void setIsShare(Integer isShare) {
+        this.isShare = isShare;
     }
 }
