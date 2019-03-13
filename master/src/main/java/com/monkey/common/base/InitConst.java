@@ -37,18 +37,22 @@ public interface InitConst {
                     add(new MenuInfo("删除客户", PermissionConst._relation._customer.delete, "", 2, null));
                     add(new MenuInfo("批量删除客户", PermissionConst._relation._customer.batch, "", 2, null));
                     add(new MenuInfo("获取详情", PermissionConst._relation._customer.first, "", 2, null));
+                    add(new MenuInfo("共享", PermissionConst._relation._customer.share, "", 2, null));
+                    add(new MenuInfo("转单", PermissionConst._relation._customer.giveto, "", 2, null));
                 }}));
                 add(new MenuInfo("共享列表", PermissionConst._relation._share.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
                     add(new MenuInfo("编辑共享", PermissionConst._relation._share.modify, "", 2, null));
                     add(new MenuInfo("删除共享", PermissionConst._relation._share.delete, "", 2, null));
                     add(new MenuInfo("批量删除共享", PermissionConst._relation._share.batch, "", 2, null));
                     add(new MenuInfo("获取详情", PermissionConst._relation._share.first, "", 2, null));
+
                 }}));
                 add(new MenuInfo("目标管理", PermissionConst._relation._force.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
                     add(new MenuInfo("编辑目标", PermissionConst._relation._force.modify, "", 2, null));
                     add(new MenuInfo("删除目标", PermissionConst._relation._force.delete, "", 2, null));
                     add(new MenuInfo("批量删除目标", PermissionConst._relation._force.batch, "", 2, null));
                     add(new MenuInfo("获取详情", PermissionConst._relation._force.first, "", 2, null));
+                    add(new MenuInfo("设置目标", PermissionConst._relation._force.set, "", 2, null));
                 }}));
                 add(new MenuInfo("共享日志", PermissionConst._relation._shareLog.list, "/pointer/point", 1, new ArrayList<MenuInfo>() {{
                 }}));

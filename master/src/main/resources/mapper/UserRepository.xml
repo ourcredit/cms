@@ -10,7 +10,6 @@
         <result column="creationTime" property="creationTime"/>
         <result column="creatorUserId" property="creatorUserId"/>
         <result column="userName" property="userName"/>
-        <result column="areaId" property="areaId"/>
         <result column="mobile" property="mobile"/>
         <result column="isActive" property="isActive"/>
         <result column="isDeleted" property="isDeleted"/>

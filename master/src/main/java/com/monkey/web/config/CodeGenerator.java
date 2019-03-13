@@ -123,6 +123,7 @@ public class CodeGenerator {
                 add("user");
                 add("userrole");
                 add("visit");
+                add("saleForce");
             }
         };
         for (String x : list

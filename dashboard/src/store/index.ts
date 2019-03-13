@@ -19,6 +19,7 @@ import error from "@/store/modules/error";
 import channel from "@/store/modules/channel";
 import visit from "@/store/modules/visit";
 import customer from "@/store/modules/customer";
+import force from "@/store/modules/force";
 const store: any = new Vuex.Store({
   state: {
     //
@@ -45,7 +46,8 @@ const store: any = new Vuex.Store({
     error,
     channel,
     visit,
-    customer
+    customer,
+    force
   }
 });
 

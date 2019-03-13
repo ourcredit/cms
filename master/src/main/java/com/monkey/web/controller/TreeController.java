@@ -75,20 +75,22 @@ public class TreeController  extends  BaseController{
     @RequestMapping(method = RequestMethod.PUT)
     public PublicResult<Object> insert(@RequestBody Tree model) throws Exception {
         QueryWrapper ew = new QueryWrapper();
-        String code = UUID.randomUUID().toString().split("-")[0];
-        if (model.getLevelCode() == null || model.getLevelCode().isEmpty()) {
-            if (model.getParentId() != null) {
-                ew.eq("id", model.getParentId());
-                Tree parent = _treeService.getOne(ew);
-                if (parent != null) {
-                    code = parent.getLevelCode() + "." + code;
+        if(model.getId()==null){
+            String code = UUID.randomUUID().toString().split("-")[0];
+            if (model.getLevelCode() == null || model.getLevelCode().isEmpty()) {
+                if (model.getParentId() != null) {
+                    ew.eq("id", model.getParentId());
+                    Tree parent = _treeService.getOne(ew);
+                    if (parent != null) {
+                        code = parent.getLevelCode() + "." + code;
+                    }
                 }
+                model.setLevelCode(code);
             }
-            model.setLevelCode(code);
-        }
-        String [] count=model.getLevelCode().split("\\.");
-        if(count.length>5){
-            return new PublicResult<>(PublicResultConstant.TOMUCHCOUNT, null);
+            String [] count=model.getLevelCode().split("\\.");
+            if(count.length>5){
+                return new PublicResult<>(PublicResultConstant.TOMUCHCOUNT, null);
+            }
         }
         Boolean r = _treeService.saveOrUpdate(model);
         return new PublicResult<>(PublicResultConstant.SUCCESS, r);

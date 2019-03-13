@@ -107,7 +107,7 @@ export const appRouters: Array < any > = [{
         },
         permission: "force:list",
         name: "forcelist",
-        component: () => System.import("../views/customer/index.vue")
+        component: () => System.import("../views/customer/forcelist.vue")
       },
       {
         path: "sharelog",
@@ -136,7 +136,7 @@ export const appRouters: Array < any > = [{
         },
         permission: "contracts:list",
         name: "contractslist",
-        component: () => System.import("../views/customer/index.vue")
+        component: () => System.import("../views/contract/index.vue")
       },
       {
         path: "conlog",
@@ -145,7 +145,7 @@ export const appRouters: Array < any > = [{
         },
         permission: "conLog:list",
         name: "conLoglist",
-        component: () => System.import("../views/customer/index.vue")
+        component: () => System.import("../views/contract/sharelog.vue")
       }
     ]
   },

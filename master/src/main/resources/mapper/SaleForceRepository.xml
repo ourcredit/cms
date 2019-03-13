@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.monkey.core.mapper.SaleForceRepository">
+
+
+    <select id="pageForce" resultType="com.monkey.application.Customer.dtos.UserForceDto">
+      SELECT
+        a.id,
+	a.userName,
+	a.mobile,
+	a.orgName,
+	b.`showMonth`,
+	b.`showForce`,
+	b.comeTrue
+FROM
+	`user` a
+	LEFT JOIN saleForce b ON a.id = b.userId
+	<where>
+        1=1
+        <if test="name != null and name !=''">
+            and a.userName LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="month != null  and month !=''">
+            and b.showMonth= #{month}
+        </if>
+        <if test="mobile != null  and mobile !=''">
+            and a.mobile LIKE CONCAT('%',#{name},'%')
+        </if>
+    </where>
+    </select>
+
+</mapper>

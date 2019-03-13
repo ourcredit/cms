@@ -81,6 +81,11 @@ public class User implements Serializable {
      * 手机
      */
     private String mobile;
+    @TableField("teamId")
+    private Integer teamId;
+    @TableField("teamName")
+
+    private String teamName;
 
     /**
      * 1启用  0禁用
@@ -202,5 +207,21 @@ public class User implements Serializable {
 
     public void setOrgName(String orgName) {
         this.orgName = orgName;
+    }
+
+    public Integer getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Integer teamId) {
+        this.teamId = teamId;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 }
