@@ -124,6 +124,7 @@ public class CodeGenerator {
                 add("userrole");
                 add("visit");
                 add("saleForce");
+                add("contract");
             }
         };
         for (String x : list

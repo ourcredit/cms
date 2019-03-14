@@ -134,6 +134,14 @@
         }
       },
       {
+        title: "部门",
+        key: "orgName"
+      },
+      {
+        title: "团队",
+        key: "teamName"
+      },
+      {
         title: "创建时间",
         key: "creationTime",
         render: (h: any, params: any) => {

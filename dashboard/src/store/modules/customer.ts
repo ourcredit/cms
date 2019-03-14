@@ -7,6 +7,7 @@ import PageResult from "@/store/entities/page-result";
 import ListMutations from "@/store/modules/base/list-mutations";
 interface ICustomerState extends IListState<Customer> {
   editCustomer: Customer;
+  contract:any;
 }
 class CustomerMutations extends ListMutations<Customer> { }
 class CustomerModule extends ListModule<ICustomerState, any, Customer> {
@@ -80,7 +81,8 @@ class CustomerModule extends ListModule<ICustomerState, any, Customer> {
     },
     edit(state: ICustomerState, de: Customer): void {
       state.editCustomer = de;
-    }
+    },
+   
   };
 }
 const cateModule: CustomerModule = new CustomerModule();

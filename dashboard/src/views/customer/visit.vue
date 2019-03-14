@@ -24,6 +24,17 @@
                 <Button @click="save" type="primary">保存</Button>
             </div>
         </Modal>
+
+
+        <Modal title="是否新增合同" :value="showComfirm" @on-ok="goto" @on-visible-change="visibleChange">
+            <Select v-model="type" filterable>
+                <Option v-for="item in ContractType" :value="item.name" :key="item.name">{{ item.name }}</Option>
+            </Select>
+            <div slot="footer">
+                <Button @click="cancel">关闭</Button>
+                <Button @click="goto" type="primary">保存</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 <script lang="ts">
@@ -55,15 +66,32 @@
             key: 2,
             name: "约饭"
         }];
+        comfirmShow() {
+            this.showComfirm = true;
+        }
+        showComfirm: boolean = false;
+        type: String = "";
+        get ContractType() {
+            var t = this.$store.state.category.cateList;
+            var res = new Array < any > ();
+            t.forEach(a => {
+                if (a.code == "合同类型") {
+                    a.dic.forEach(b => {
+                        res.push({
+                            key: b.key,
+                            name: b.name
+                        });
+                    });
+                }
+            });
+            return res;
+        }
         get customer() {
             var u = this.$store.state.customer.editCustomer;
             return u;
         }
         save() {
             if (this.customer == null || this.customer.id == null) {
-                this.$router.push({
-                    name: 'customerlist'
-                });
                 return;
             }
             let _ = this;
@@ -75,11 +103,26 @@
                         type: "channel/visit",
                         data: _.visit
                     });
-                    (this.$refs.channelForm as any).resetFields();
-                    this.$emit("save-success");
-                    this.$emit("input", false);
+                    this.comfirmShow();
                 }
             });
+        }
+        async goto() {
+            if (this.type&&this.type!="") {
+                this.$store.commit("customer/setContract", {
+                    type: this.type,
+                    customerId: this.customer.id,
+                    customerCode: this.customer.code,
+                    customerName: this.customer.name
+                });
+                this.$router.push({
+                    name: "contractmodify"
+                });
+            }
+            (this.$refs.channelForm as any).resetFields();
+            this.$emit("save-success");
+            this.$emit("input", false);
+            this.showComfirm = false;
         }
         cancel() {
             (this.$refs.channelForm as any).resetFields();

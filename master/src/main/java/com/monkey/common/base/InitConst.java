@@ -59,6 +59,14 @@ public interface InitConst {
             }}));
             add(new MenuInfo("合同", PermissionConst._contract.show, "", 1, new ArrayList<MenuInfo>() {{
                 add(new MenuInfo("合同列表", PermissionConst._contract._contractList.list, "/device/list", 1, new ArrayList<MenuInfo>() {{
+                    add(new MenuInfo("新合同", PermissionConst._contract._contractList.modify, "", 2, null));
+                    add(new MenuInfo("删除合同", PermissionConst._contract._contractList.delete, "", 2, null));
+                    add(new MenuInfo("批量删除合同", PermissionConst._contract._contractList.batch, "", 2, null));
+                    add(new MenuInfo("转单", PermissionConst._contract._contractList.giveto, "", 2, null));
+                    add(new MenuInfo("新增房产", PermissionConst._contract._contractList.fangchan, "", 2, null));
+                    add(new MenuInfo("新增收入信息", PermissionConst._contract._contractList.shouru, "", 2, null));
+                    add(new MenuInfo("新增征信信息", PermissionConst._contract._contractList.zhengxin, "", 2, null));
+                    add(new MenuInfo("新增影像", PermissionConst._contract._contractList.ziliao, "", 2, null));
                 }}));
                 add(new MenuInfo("转单日志", PermissionConst._contract._shareLog.list, "/device/list", 1, new ArrayList<MenuInfo>() {{
                 }}));

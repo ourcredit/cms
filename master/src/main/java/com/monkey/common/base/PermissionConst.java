@@ -69,6 +69,12 @@ public interface PermissionConst {
             public static final String delete = "contracts:delete";
             public static final String batch = "contracts:batch";
             public static final String first = "contracts:first";
+            public static final String giveto = "contracts:giveto";
+            public static final String share = "contracts:share";
+            public static final String fangchan = "contracts:fangchan";
+            public static final String shouru = "contracts:shouru";
+            public static final String zhengxin = "contracts:zhengxin";
+            public static final String ziliao = "contracts:ziliao";
         }
         public static class _shareLog {
             public static final String list = "conLog:list";

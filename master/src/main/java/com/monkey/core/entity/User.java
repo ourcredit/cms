@@ -21,17 +21,9 @@ import org.mindrot.jbcrypt.BCrypt;
 public class User implements Serializable {
     public User(String acc, String pwd, String name, Integer active) {
         account = acc;
-        password = BCrypt.hashpw(pwd,BCrypt.gensalt());
+        password = BCrypt.hashpw(pwd, BCrypt.gensalt());
         userName = name;
         isActive = active;
-    }
-
-    public User(String acc, String pwd, String name, Integer active, Integer oid) {
-        account = acc;
-        password = BCrypt.hashpw(pwd,BCrypt.gensalt());
-        userName = name;
-        isActive = active;
-        orgId=oid;
     }
 
     public User() {
@@ -54,17 +46,19 @@ public class User implements Serializable {
      * 密码
      */
     private String password;
+    @TableField("currentOrg")
+    private Integer currentOrg;
 
     /**
      * 创建时间
      */
-    @TableField("creationTime")
+    @TableField(value = "creationTime", fill = FieldFill.INSERT)
     private LocalDateTime creationTime;
 
     /**
      * 创建人id
      */
-     @TableField(value = "creatorUserId",fill = FieldFill.INSERT)
+    @TableField(value = "creatorUserId", fill = FieldFill.INSERT)
     private Integer creatorUserId;
 
     /**
@@ -73,10 +67,10 @@ public class User implements Serializable {
     @TableField("userName")
     private String userName;
 
-@TableField("orgId")
+    @TableField("orgId")
     private Integer orgId;
     @TableField("orgName")
-    private  String orgName;
+    private String orgName;
     /**
      * 手机
      */
@@ -104,6 +98,7 @@ public class User implements Serializable {
      */
     @TableField("lastLoginTime")
     private LocalDateTime lastLoginTime;
+
     public Integer getId() {
         return id;
     }
@@ -111,6 +106,7 @@ public class User implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
     public String getAccount() {
         return account;
     }
@@ -118,6 +114,7 @@ public class User implements Serializable {
     public void setAccount(String account) {
         this.account = account;
     }
+
     public String getPassword() {
         return password;
     }
@@ -125,6 +122,7 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public LocalDateTime getCreationTime() {
         return creationTime;
     }
@@ -132,6 +130,7 @@ public class User implements Serializable {
     public void setCreationTime(LocalDateTime creationTime) {
         this.creationTime = creationTime;
     }
+
     public Integer getCreatorUserId() {
         return creatorUserId;
     }
@@ -139,6 +138,7 @@ public class User implements Serializable {
     public void setCreatorUserId(Integer creatorUserId) {
         this.creatorUserId = creatorUserId;
     }
+
     public String getUserName() {
         return userName;
     }
@@ -146,6 +146,7 @@ public class User implements Serializable {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
     public String getMobile() {
         return mobile;
     }
@@ -153,6 +154,7 @@ public class User implements Serializable {
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
+
     public Integer getIsActive() {
         return isActive;
     }
@@ -160,6 +162,7 @@ public class User implements Serializable {
     public void setIsActive(Integer isActive) {
         this.isActive = isActive;
     }
+
     public Integer getIsDeleted() {
         return isDeleted;
     }
@@ -167,6 +170,7 @@ public class User implements Serializable {
     public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
     }
+
     public LocalDateTime getLastLoginTime() {
         return lastLoginTime;
     }
@@ -223,5 +227,13 @@ public class User implements Serializable {
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    public Integer getCurrentOrg() {
+        return currentOrg;
+    }
+
+    public void setCurrentOrg(Integer currentOrg) {
+        this.currentOrg = currentOrg;
     }
 }

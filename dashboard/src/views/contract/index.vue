@@ -38,17 +38,11 @@
             <div class="page-body">
                 <Row :gutter="16">
                     <Col span="2">
-                    <Button @click="Create" icon="android-add" type="primary">新增合同</Button>
-                    </Col>
-                    <Col span="2">
-                    <Button @click="batchShare" type="primary">关注</Button>
-                    </Col>
-                    <Col span="2">
                     <Button @click="ModelShow('giveto',true)" type="primary">转单</Button>
                     </Col>
                 </Row>
                 <div class="margin-top-10">
-                    <SaleTable ref="table" :filters="filters" :type="'customer'" :columns="columns"></SaleTable>
+                    <SaleTable ref="table" :filters="filters" :type="'contract'" :columns="columns"></SaleTable>
                 </div>
             </div>
         </Card>
@@ -196,15 +190,15 @@
             },
             {
                 title: "业务部门",
-                key: "post"
+                key: "teamName"
             },
             {
                 title: "业务团队",
-                key: "post"
+                key: "orgName"
             },
             {
                 title: "客户编号",
-                key: "customerName"
+                key: "customerCode"
             },
             {
                 title: "客户姓名",
@@ -225,7 +219,6 @@
             },
             {
                 title: "贷款金额",
-                key: "business",
                 render: (h: any, params: any) => {
                     let t = params.row.extendField;
                     if (t) {
@@ -239,7 +232,6 @@
             },
             {
                 title: "垫资金额",
-                key: "business",
                 render: (h: any, params: any) => {
                     let t = params.row.extendField;
                     if (t) {
@@ -311,7 +303,6 @@
                 }
 
             },
-
             {
                 title: "操作",
                 key: "Actions",
@@ -338,6 +329,27 @@
                                 }
                             },
                             "详情"
+                        ),
+                        h(
+                            "Button", {
+                                props: {
+                                    type: "primary",
+                                    size: "small"
+                                },
+                                style: {
+                                    marginRight: "5px"
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$store.dispatch({
+                                            type: "customer/get",
+                                            data: params.row.id
+                                        });
+                                        this.ModelShow("visit", true);
+                                    }
+                                }
+                            },
+                            "新合同"
                         ),
                         h(
                             "Button", {

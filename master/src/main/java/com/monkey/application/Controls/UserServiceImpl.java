@@ -5,14 +5,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.monkey.application.Controls.dtos.CreateUserInput;
 import com.monkey.core.dtos.UserDto;
+import com.monkey.core.entity.Tree;
 import com.monkey.core.entity.User;
 import com.monkey.core.entity.UserRole;
+import com.monkey.core.mapper.TreeRepository;
 import com.monkey.core.mapper.UserRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,14 +34,16 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
     @Autowired
     private UserRepository _userRepository;
 
+    @Autowired
+    private TreeRepository _treeRepository;
 
     @Override
     public UserDto selectUserRole(Integer id) {
         UserDto r = _userRepository.selectUserRole(id);
-        if(!r.getRoles().isEmpty()){
-         List<Integer> ids=new ArrayList<>();
-            r.getRoles().forEach(w->ids.add(w.getId()));
-          r.setPermissions(_userRepository.selectRolePermision(ids));
+        if (!r.getRoles().isEmpty()) {
+            List<Integer> ids = new ArrayList<>();
+            r.getRoles().forEach(w -> ids.add(w.getId()));
+            r.setPermissions(_userRepository.selectRolePermision(ids));
         }
         return r;
     }
@@ -55,8 +60,51 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
         User u;
         QueryWrapper ew = new QueryWrapper<>();
         ew.eq("account", input.account);
+        Integer teamId = 0;
+        String teamName = "";
+        Integer orgId = 0;
+        String orgName = "";
+        if (input.orgId != null) {
+            Tree tree = _treeRepository.selectById(input.orgId);
+            if (tree != null) {
+                String[] strs = tree.getLevelCode().split("\\.");
+                if (strs.length == 5) {
+                    String[] aaa = new String[strs.length - 1];
+                    String[] bbb = new String[strs.length - 2];
+                    for (int i = 0; i < aaa.length; i++) {
+                        aaa[i] = strs[i];
+                    }
+                    for (int i = 0; i < bbb.length; i++) {
+                        bbb[i]=strs[i];
+                    }
+                    String filter = String.join(".", aaa);
+                    QueryWrapper qw = new QueryWrapper();
+                    qw.eq("levelCode", filter);
+                    List r = _treeRepository.selectList(qw);
+                    if (!r.isEmpty()) {
+                        Tree tr = (Tree) r.get(0);
+                        teamId = tr.getId();
+                        teamName = tr.getName();
+                    }
+                     filter = String.join(".", bbb);
+                     qw = new QueryWrapper();
+                    qw.eq("levelCode", filter);
+                     r = _treeRepository.selectList(qw);
+                    if (!r.isEmpty()) {
+                        Tree tr = (Tree) r.get(0);
+                        orgId = tr.getId();
+                        orgName = tr.getName();
+                    }
+                }
+            }
+        }
         if (input.id == null) {
-            u = new User(input.account, input.password, input.userName, input.isActive, input.orgId);
+            u = new User(input.account, input.password, input.userName, input.isActive);
+            u.setTeamId(teamId);
+            u.setTeamName(teamName);
+            u.setOrgName(orgName);
+            u.setOrgId(orgId);
+            u.setCurrentOrg(input.orgId);
             this.save(u);
         } else {
             u = this.getOne(ew);
@@ -64,8 +112,11 @@ public class UserServiceImpl extends ServiceImpl<UserRepository, User> implement
                 u.setMobile(input.mobile);
                 u.setIsActive(input.isActive);
                 u.setUserName(input.userName);
-                u.setOrgName(input.orgName);
-                u.setOrgId(input.orgId);
+                u.setOrgName(orgName);
+                u.setOrgId(orgId);
+                u.setTeamId(teamId);
+                u.setCurrentOrg(input.orgId);
+                u.setTeamName(teamName);
                 if (input.password != null && !input.password.isEmpty()) {
                     u.setPassword(BCrypt.hashpw(input.password, BCrypt.gensalt()));
                 }

@@ -20,6 +20,7 @@ import channel from "@/store/modules/channel";
 import visit from "@/store/modules/visit";
 import customer from "@/store/modules/customer";
 import force from "@/store/modules/force";
+import contract from "@/store/modules/contract";
 const store: any = new Vuex.Store({
   state: {
     //
@@ -47,7 +48,8 @@ const store: any = new Vuex.Store({
     channel,
     visit,
     customer,
-    force
+    force,
+    contract
   }
 });
 

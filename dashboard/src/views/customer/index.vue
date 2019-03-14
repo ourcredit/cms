@@ -174,7 +174,6 @@
       this.ModalShow = true;
     }
     ModelShow(type: String, state: boolean) {
-      debugger;
       if (type == "visit") {
         this.VisitShow = state;
       } else if (type == "follow") {
